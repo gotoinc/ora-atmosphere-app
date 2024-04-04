@@ -31,6 +31,7 @@ module.exports = {
         '@typescript-eslint/await-thenable': 'off',
         '@typescript-eslint/no-unsafe-return': 'off',
         '@typescript-eslint/unified-signatures': 'off',
+        '@typescript-eslint/prefer-promise-reject-errors': 'off',
         '@typescript-eslint/no-for-in-array': 'error',
         '@typescript-eslint/no-non-null-asserted-optional-chain': 'error',
         '@typescript-eslint/array-type': [
