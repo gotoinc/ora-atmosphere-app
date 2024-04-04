@@ -1,11 +1,7 @@
 <template>
-    <div>Hello Ora</div>
+    <div class="mt-4 h-4">Hello Ora</div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts"></script>
 
-</script>
-
-<style scoped>
-
-</style>
+<style scoped></style>
