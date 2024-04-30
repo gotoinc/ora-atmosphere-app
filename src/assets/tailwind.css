@@ -3,3 +3,7 @@
 @tailwind utilities;
 
 /* Tailwind common styles */
+body {
+    @apply bg-dark text-white
+}
+

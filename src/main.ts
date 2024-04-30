@@ -5,6 +5,7 @@ import piniaPluginPersistedState from 'pinia-plugin-persistedstate';
 
 // Styles
 import './assets/tailwind.css';
+import './assets/base.css';
 // Router
 import router from '@/router';
 

@@ -1,0 +1,18 @@
+/* Common styles */
+body {
+    font-family: "Mulish", sans-serif;
+    font-weight: 400;
+}
+
+.cont {
+    max-width: 1322px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+

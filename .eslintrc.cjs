@@ -23,7 +23,7 @@ module.exports = {
         ecmaVersion: 2015,
         sourceType: 'module',
         allowImportExportEverywhere: true,
-        project: true,
+        project: './tsconfig.json',
         tsconfigRootDir: __dirname,
     },
     plugins: ['@typescript-eslint', 'prettier', 'simple-import-sort'],
