@@ -7,3 +7,11 @@ body {
     @apply bg-dark text-white
 }
 
+.img-cover {
+    @apply w-full h-full object-cover
+}
+
+.img-contain {
+    @apply w-full h-full object-contain
+}
+

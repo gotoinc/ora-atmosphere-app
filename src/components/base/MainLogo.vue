@@ -1,6 +1,10 @@
 <template>
     <div class="flex items-end gap-4">
-        <router-link to="/" aria-label="ORA Application simulator">
+        <router-link
+            class="transition-transform hover:scale-110"
+            to="/"
+            aria-label="ORA Application simulator"
+        >
             <img src="@img/logo.svg" alt="ORA Application simulator" />
         </router-link>
 

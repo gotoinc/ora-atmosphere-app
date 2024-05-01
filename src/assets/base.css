@@ -7,6 +7,7 @@ body {
 .cont {
     max-width: 1322px;
     margin: 0 auto;
+    width: 100%;
     padding: 0 20px;
 }
 

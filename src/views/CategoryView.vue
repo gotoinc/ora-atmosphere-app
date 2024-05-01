@@ -1,11 +1,7 @@
 <template>
-    <section>
-        <div class="cont">
-            <h1>
-                {{ route.params.category }}
-            </h1>
-        </div>
-    </section>
+    <h2 class="text-xl uppercase">
+        {{ route.params.category }}
+    </h2>
 </template>
 
 <script setup lang="ts">

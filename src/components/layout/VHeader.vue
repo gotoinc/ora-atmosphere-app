@@ -1,5 +1,5 @@
 <template>
-    <header class="bg-gradient py-6">
+    <header class="absolute left-0 top-0 z-50 w-full bg-gradient py-6">
         <div class="cont flex items-center justify-between">
             <main-logo />
         </div>

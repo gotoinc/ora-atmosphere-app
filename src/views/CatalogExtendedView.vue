@@ -1,9 +1,5 @@
 <template>
-    <section>
-        <div class="cont">
-            <h1>Catalog extended</h1>
-        </div>
-    </section>
+    <h2 class="text-xl uppercase">Catalog extended</h2>
 </template>
 
 <script setup lang="ts"></script>
