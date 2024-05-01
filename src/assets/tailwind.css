@@ -4,7 +4,7 @@
 
 /* Tailwind common styles */
 body {
-    @apply bg-dark text-white
+    @apply bg-dark text-white-100
 }
 
 .img-cover {

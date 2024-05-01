@@ -7,7 +7,7 @@
 
             <div class="banner__heading">
                 <div class="mb-2 flex items-center gap-3">
-                    <div class="banner__label">
+                    <div class="banner__label pointer-events-none select-none">
                         <img
                             src="@img/ora-label.svg"
                             class="img-contain"
@@ -19,12 +19,25 @@
                 </div>
 
                 <h1 class="mb-8 text-9xl font-extrabold">Cisco</h1>
+
+                <div class="flex gap-4">
+                    <v-button :icon="IconPlay"> Play in Simulator </v-button>
+
+                    <v-button :icon="IconInfo" variant="info">
+                        More info
+                    </v-button>
+                </div>
             </div>
         </div>
     </section>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+    import IconInfo from '@img/icons/info.svg?component';
+    import IconPlay from '@img/icons/play.svg?component';
+
+    import VButton from '@/components/banner/VButton.vue';
+</script>
 
 <style scoped lang="postcss">
     .banner {
