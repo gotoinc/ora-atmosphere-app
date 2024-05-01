@@ -25,10 +25,11 @@
         position: relative;
         z-index: 10;
         margin-top: -7vw;
+        min-height: 7vw;
         background: linear-gradient(
             180deg,
             rgba(73, 90, 255, 0) 0%,
-            #141414 80px
+            #141414 5.55vw
         );
     }
 </style>

@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 /* Tailwind common styles */
+html {
+    @apply max-lg:text-xs
+}
+
 body {
     @apply bg-dark text-white-100
 }
