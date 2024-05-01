@@ -11,6 +11,7 @@ export default defineConfig({
         eslintPlugin(),
         svgLoader({
             defaultImport: 'url',
+            svgo: false,
         }),
     ],
 
