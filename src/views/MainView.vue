@@ -2,9 +2,7 @@
     <v-header />
 
     <main class="flex-grow">
-        <div class="cont">
-            <h1 class="my-5">Hello Ora</h1>
-        </div>
+        <router-view></router-view>
     </main>
 
     <v-footer />
