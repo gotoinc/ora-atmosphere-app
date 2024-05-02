@@ -20,6 +20,9 @@ dependencies:
   pinia-plugin-persistedstate:
     specifier: ^3.2.1
     version: 3.2.1(pinia@2.1.7)
+  scroll-lock:
+    specifier: ^2.1.5
+    version: 2.1.5
   vee-validate:
     specifier: ^4.12.6
     version: 4.12.6(vue@3.4.21)
@@ -2597,6 +2600,10 @@ packages:
     dependencies:
       queue-microtask: 1.2.3
     dev: true
+
+  /scroll-lock@2.1.5:
+    resolution: {integrity: sha512-GN8Lp0AzXbkrPFUUNkMUruiiv019UvarNKE/SnXi+AxZRjMnDc2R22VB9RcUtL4P/uub04cKibmpHKIKTyWwYQ==}
+    dev: false
 
   /semver@7.6.0:
     resolution: {integrity: sha512-EnwXhrlwXMk9gKu5/flx5sv/an57AkRplG3hTK68W7FRDN+k+OWBj65M7719OkA82XLBxrcX0KSHj+X5COhOVg==}

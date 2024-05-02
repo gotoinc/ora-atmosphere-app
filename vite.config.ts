@@ -8,6 +8,7 @@ import svgLoader from 'vite-svg-loader';
 export default defineConfig({
     plugins: [
         vue(),
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         eslintPlugin(),
         svgLoader({
             defaultImport: 'url',
