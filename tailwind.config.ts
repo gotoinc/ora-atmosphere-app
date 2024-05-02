@@ -65,6 +65,8 @@ export default {
 
             backgroundImage: {
                 gradient: 'linear-gradient(180deg, #0ACFFE 0%, #495AFF 100%)',
+                'gradient-search':
+                    'linear-gradient(180deg, #0ACFFE 0%, #495AFF 7.5%)',
             },
 
             screens: { mob: '415px' },

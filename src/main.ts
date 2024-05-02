@@ -17,6 +17,8 @@ import router from '@/router';
 const pinia = createPinia();
 pinia.use(piniaPluginPersistedState);
 
+import { vuetifyLib } from '@/libs/vuetify.lib.ts';
+
 // Toast options
 const toastOptions: PluginOptions = {
     position: POSITION.BOTTOM_RIGHT,
@@ -26,4 +28,4 @@ const toastOptions: PluginOptions = {
 import App from './App.vue';
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-createApp(App).use(router).use(pinia).use(Toast, toastOptions).mount('#app');
+createApp(App).use(router).use(pinia).use(vuetifyLib).use(Toast, toastOptions).mount('#app');
