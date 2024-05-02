@@ -48,21 +48,28 @@
 
                 <ul class="grid grid-cols-3 gap-3">
                     <li
-                        v-for="i in 6"
-                        :key="i"
-                        class="flex cursor-pointer items-center gap-2.5"
+                        v-for="category in categories"
+                        :key="category.id"
+                        :class="{
+                            '!opacity-100':
+                                category.id === selectedCategory?.id,
+                        }"
+                        class="flex cursor-pointer items-center gap-2.5 opacity-70 transition-opacity"
+                        @click="selectedCategory = category"
                     >
                         <div
                             class="h-14 w-14 flex-shrink-0 rounded-lg bg-white-75"
                         ></div>
 
-                        <h4 class="text-xs font-semibold">Events & Brands</h4>
+                        <h4 class="text-xs font-semibold">
+                            {{ category.name }}
+                        </h4>
                     </li>
                 </ul>
             </div>
 
             <!-- Tags options -->
-            <div class="">
+            <div>
                 <h3 class="mb-3.5">Topics/Tags</h3>
 
                 <ul class="flex flex-wrap gap-2">
@@ -83,8 +90,16 @@
     import { ref } from 'vue';
     import IconSearch from '@img/icons/search.svg?component';
 
+    import type { Category } from '@/ts/interfaces/category';
+
+    import searchCategories from '@/json/search-categories.json';
+
     const isFiltersOpen = ref(false);
     const searchValue = ref('');
+
+    const categories = ref<Category[]>([...searchCategories]);
+
+    const selectedCategory = ref<null | Category>(null);
 </script>
 
 <style scoped>
