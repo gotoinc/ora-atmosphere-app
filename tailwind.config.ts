@@ -69,7 +69,11 @@ export default {
                     'linear-gradient(180deg, #0ACFFE 0%, #495AFF 7.5%)',
             },
 
-            screens: { mob: '415px' },
+            screens: {
+                mob: '415px',
+                '2lg': '1200px',
+                tab: '901px',
+            },
         },
     },
     plugins: [],
