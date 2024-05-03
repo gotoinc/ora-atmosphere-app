@@ -1,12 +1,10 @@
 // Vuetify
 import { createVuetify } from 'vuetify';
-import { ClickOutside, Ripple } from 'vuetify/directives';
-
-import 'vuetify/lib/directives/ripple/VRipple.css';
+import { ClickOutside } from 'vuetify/directives';
 
 export const vuetifyLib = createVuetify({
+    theme: false,
     directives: {
-        Ripple,
         ClickOutside,
     },
 });

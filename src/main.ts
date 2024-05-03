@@ -6,18 +6,19 @@ import Toast from 'vue-toastification';
 import { createPinia } from 'pinia';
 import piniaPluginPersistedState from 'pinia-plugin-persistedstate';
 
+import { vuetifyLib } from '@/libs/vuetify.lib.ts';
+
 // Styles
 import './assets/tailwind.css';
 import 'vue-toastification/dist/index.css';
 import './assets/postcss/base.pcss';
+
 // Router
 import router from '@/router';
 
 // Pinia
 const pinia = createPinia();
 pinia.use(piniaPluginPersistedState);
-
-import { vuetifyLib } from '@/libs/vuetify.lib.ts';
 
 // Toast options
 const toastOptions: PluginOptions = {
