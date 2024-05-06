@@ -1,6 +1,6 @@
 <template>
     <div
-        v-click-outside="() => (isFiltersOpen = false)"
+        v-click-outside="close"
         :class="{
             active: isFiltersOpen,
         }"
@@ -13,7 +13,7 @@
                     v-model="searchValue"
                     type="text"
                     class="w-full bg-transparent"
-                    @focus="toggleSidebar"
+                    @focus="open"
                 />
 
                 <component
@@ -24,13 +24,16 @@
                 <component
                     :is="IconClose"
                     class="block h-4 w-4 flex-shrink-0 cursor-pointer fill-current tab:hidden"
-                    @click="isFiltersOpen = false"
+                    @click="close"
                 />
             </div>
 
             <!-- Search filters -->
             <div class="search__filters">
-                <div class="overflow -mr-5 overflow-y-auto pr-5">
+                <div
+                    ref="filtersScroll"
+                    class="overflow -mr-5 overflow-y-auto pr-5"
+                >
                     <!-- Recent searches list -->
                     <div class="mb-8">
                         <h3 class="mb-2 text-xs font-bold opacity-70">
@@ -103,7 +106,7 @@
             :class="{
                 'bg-white-15': isFiltersOpen,
             }"
-            @click="toggleSidebar"
+            @click="isFiltersOpen ? close() : open()"
         >
             <component :is="IconSearch" class="h-6 w-6 flex-shrink-0" />
         </button>
@@ -114,31 +117,44 @@
     import { ref } from 'vue';
     import IconClose from '@img/icons/close.svg?component';
     import IconSearch from '@img/icons/search.svg?component';
+    import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 
     import type { Category } from '@/ts/interfaces/category';
 
+    import searchCategories from '@/json/search-categories.json';
+
+    /**
+     * Define emits
+     */
     interface Emits {
         (e: 'opened'): void;
+        (e: 'closed'): void;
     }
 
     const emits = defineEmits<Emits>();
 
-    import searchCategories from '@/json/search-categories.json';
-
     const isFiltersOpen = ref(false);
     const searchValue = ref('');
+    const filtersScroll = ref<HTMLElement | null>(null);
 
     const categories = ref<Category[]>([...searchCategories]);
 
     const selectedCategory = ref<null | Category>(null);
 
-    const toggleSidebar = () => {
-        if (isFiltersOpen.value) {
-            isFiltersOpen.value = false;
-        } else {
-            isFiltersOpen.value = true;
-            emits('opened');
-        }
+    const close = () => {
+        isFiltersOpen.value = false;
+        emits('closed');
+
+        // Enable body scroll
+        if (filtersScroll.value) enableBodyScroll(filtersScroll.value);
+    };
+
+    const open = () => {
+        isFiltersOpen.value = true;
+        emits('opened');
+
+        // Disable body scroll
+        if (filtersScroll.value) disableBodyScroll(filtersScroll.value);
     };
 </script>
 
