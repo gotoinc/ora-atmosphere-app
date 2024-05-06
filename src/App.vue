@@ -1,8 +1,14 @@
 <template>
-    <router-view></router-view>
+    <router-view v-slot="{ Component }">
+        <component :is="Component" v-if="Component"></component>
+
+        <v-loader v-else> </v-loader>
+    </router-view>
 </template>
 
 <script setup lang="ts">
+    import VLoader from '@/components/base/VLoader.vue';
+
     // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
     const vhUtils = window.innerHeight * 0.01;
     // Then we set the value in the --vh custom property to the root of the document
@@ -21,3 +27,18 @@
         );
     });
 </script>
+
+<style>
+    .fade {
+        animation: fade 5s linear infinite alternate;
+    }
+    @keyframes fade {
+        0% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+</style>
