@@ -1,5 +1,6 @@
 <template>
     <div
+        ref="sidebar"
         class="sidebar absolute right-0 top-full overflow-y-auto bg-primary py-5 transition-all max-xl:w-full"
         :class="{
             'visible translate-x-0 opacity-100': modelValue,
@@ -70,14 +71,78 @@
                         </ul>
                     </div>
                 </li>
+
+                <li
+                    v-for="category in categories"
+                    :key="category.id"
+                    class="px-10 py-4"
+                >
+                    <div
+                        :class="{
+                            'mb-6': category.isOpen,
+                        }"
+                        class="flex items-center gap-4 transition-all"
+                    >
+                        <router-link
+                            class="sidebar__link uppercase"
+                            :to="{
+                                name: 'categoryView',
+
+                                params: {
+                                    category: useTransformPath(category.name),
+                                },
+                            }"
+                        >
+                            {{ category.name }}
+                        </router-link>
+
+                        <button
+                            :class="{
+                                'rotate-180': category.isOpen,
+                            }"
+                            class="flex h-6 w-6 items-center justify-center transition-transform"
+                            @click="toggleCategory(category.id)"
+                        >
+                            <component :is="IconArrowDown" />
+                        </button>
+                    </div>
+
+                    <div
+                        ref="subNodeList"
+                        :data-id="category.id"
+                        :class="{
+                            'h-0 select-none !opacity-0': !category.isOpen,
+                        }"
+                        class="sidebar__sub-list flex flex-col overflow-hidden opacity-100 transition-all"
+                    >
+                        <ul class="space-y-4">
+                            <li v-for="sub in category.subs" :key="sub.id">
+                                <router-link
+                                    class="sidebar__link"
+                                    :to="{
+                                        name: 'categoryView',
+                                        params: {
+                                            category: useTransformPath(
+                                                sub.name
+                                            ),
+                                        },
+                                    }"
+                                >
+                                    {{ sub.name }}
+                                </router-link>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
             </ul>
         </nav>
     </div>
 </template>
 
 <script setup lang="ts">
-    import { ref } from 'vue';
+    import { ref, watch } from 'vue';
     import IconArrowDown from '@img/icons/arrow-down.svg?component';
+    import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 
     import { useTransformPath } from '@/hooks/useTransformPath.ts';
     import categoriesJson from '@/json/categories.json';
@@ -99,7 +164,9 @@
         subs: Category[];
     }
 
-    defineProps<Props>();
+    const props = defineProps<Props>();
+
+    const sidebar = ref<HTMLElement | null>(null);
 
     /**
      * Node list of sub categories
@@ -139,6 +206,19 @@
             }
         }
     };
+
+    watch(
+        () => props.modelValue,
+        (value) => {
+            if (sidebar.value) {
+                value
+                    ? // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+                      disableBodyScroll(sidebar.value)
+                    : // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+                      enableBodyScroll(sidebar.value);
+            }
+        }
+    );
 </script>
 
 <style scoped>
