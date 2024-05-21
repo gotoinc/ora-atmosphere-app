@@ -5,7 +5,14 @@ export default {
         extend: {
             colors: {
                 dark: '#141414',
-                'dark-grey': '#2B2B2B',
+
+                error: '#F83838',
+
+                grey: {
+                    100: '#80808C',
+                    200: '#3E3F47',
+                    300: '#2B2B2B',
+                },
 
                 primary: {
                     50: '#0ACFFE',
@@ -22,6 +29,28 @@ export default {
                 },
             },
 
+            fontSize: {
+                h1: [
+                    '3.5rem',
+                    {
+                        fontWeight: '700',
+                    },
+                ],
+                h2: [
+                    '2.5rem',
+                    {
+                        fontWeight: '700',
+                        lineHeight: '135%',
+                    },
+                ],
+                h3: [
+                    '2rem',
+                    {
+                        fontWeight: '700',
+                    },
+                ],
+            },
+
             transitionDuration: {
                 DEFAULT: '300ms',
             },
@@ -29,6 +58,8 @@ export default {
             backgroundImage: {
                 gradient: 'linear-gradient(180deg, #0ACFFE 0%, #495AFF 100%)',
             },
+
+            screens: { mob: '414px' },
         },
     },
     plugins: [],

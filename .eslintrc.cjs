@@ -20,6 +20,7 @@ module.exports = {
             ts: '@typescript-eslint/parser',
             '<template>': 'espree',
         },
+        extraFileExtensions: ['.pcss', '.vue'],
         ecmaVersion: 2015,
         sourceType: 'module',
         allowImportExportEverywhere: true,

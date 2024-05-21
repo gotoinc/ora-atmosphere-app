@@ -1,6 +1,6 @@
 <template>
     <section class="banner relative flex items-end">
-        <div class="cont">
+        <div class="cont w-full">
             <div class="banner__img absolute left-0 top-0 h-full w-full">
                 <img src="@img/banner.jpg" alt="Banner" class="img-cover" />
             </div>

@@ -2,6 +2,7 @@
     <router-link
         v-if="to"
         :class="[baseStyles, buttonStyles, withIconStyles]"
+        class="inline-block"
         :to="to"
     >
         <component :is="icon" v-if="icon" :class="iconStyles" />
@@ -62,7 +63,8 @@
     const iconStyles = 'h-6 w-6 fill-current';
 
     const baseStyles = computed(
-        () => 'py-2.5 px-4 font-bold text-base transition-all rounded-[32px]'
+        () =>
+            'py-2.5 px-4 text-center font-bold text-base transition-all rounded-[32px]'
     );
 
     const withIconStyles = computed(() =>
