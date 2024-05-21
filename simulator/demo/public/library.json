@@ -1,0 +1,67 @@
+{
+    "default_room": "expo",
+    "content": [
+        {
+            "name": "orange",
+            "mediaType": "image",
+            "URL": "dev-images/origin_orange-4400.png"
+        },
+        {
+            "name": "menu",
+            "mediaType": "image",
+            "URL": "dev-images/menu_bg.jpg"
+        },
+        { "name": "star", "mediaType": "image", "URL": "dev-images/test.jpg" },
+        {
+            "name": "winter",
+            "mediaType": "image",
+            "URL": "simulator/demo/public/images/origin_Winter.png"
+        },
+        {
+            "name": "tony",
+            "mediaType": "video",
+            "URL": "dev-images/Tony.mp4",
+            "thumbnail": "dev-images/init_bg.png"
+        },
+        {
+            "name": "avengers",
+            "mediaType": "video",
+            "URL": "dev-images/avengers.mp4",
+            "thumbnail": "dev-images/init_bg.png"
+        }
+    ],
+    "rooms": [
+        {
+            "name": "sky",
+            "scene_glb": "simulator/demo/public/images/sky.glb",
+            "environment": "simulator/demo/public/images/environment.env",
+            "content": ["orange", "winter", "star", "menu"]
+        },
+        {
+            "name": "expo",
+            "scene_glb": "simulator/demo/public/images/expo.glb",
+            "content": [
+                "menu",
+                "star",
+                "avengers",
+                "winter",
+                "tony",
+                "orange",
+                "orange",
+                "orange"
+            ]
+        },
+        {
+            "name": "aquarium",
+            "scene_glb": "simulator/demo/public/images/aquarium.glb",
+            "environment": "simulator/demo/public/images/environment.env",
+            "content": ["orange", "winter", "star", "menu"]
+        },
+        {
+            "name": "classroom",
+            "scene_glb": "simulator/demo/public/images/classroom.glb",
+            "environment": "simulator/demo/public/images/environment.env",
+            "content": ["orange", "winter", "star", "menu"]
+        }
+    ]
+}

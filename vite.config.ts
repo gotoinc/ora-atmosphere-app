@@ -16,9 +16,12 @@ export default defineConfig({
         }),
     ],
 
+    assetsInclude: ['**/*.glb', '**/*.env'],
+
     resolve: {
         alias: {
             '@': path.resolve(__dirname, './src'),
+            '@simulator': path.resolve(__dirname, './simulator'),
             '@img': path.resolve(__dirname, './public/images'),
         },
     },
