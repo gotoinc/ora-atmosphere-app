@@ -1,5 +1,9 @@
 <template>
-    <router-link v-if="to" :class="[buttonStyles, withIconStyles]" :to="to">
+    <router-link
+        v-if="to"
+        :class="[baseStyles, buttonStyles, withIconStyles]"
+        :to="to"
+    >
         <component :is="icon" v-if="icon" :class="iconStyles" />
 
         <slot></slot>
@@ -7,7 +11,7 @@
 
     <button
         v-else
-        :class="[buttonStyles, withIconStyles]"
+        :class="[baseStyles, buttonStyles, withIconStyles]"
         @click="emits('click')"
     >
         <component :is="icon" v-if="icon" :class="iconStyles" />
@@ -24,7 +28,7 @@
     interface Props {
         to?: RouteLocationRaw;
         icon?: Component;
-        variant?: 'white' | 'info' | 'outline';
+        variant?: 'primary' | 'white' | 'info' | 'outline';
     }
 
     interface Emits {
@@ -32,7 +36,7 @@
     }
 
     const props = withDefaults(defineProps<Props>(), {
-        variant: 'white',
+        variant: 'primary',
     });
 
     const emits = defineEmits<Emits>();
@@ -42,18 +46,24 @@
      */
     const buttonStyles = computed(() => {
         switch (props.variant) {
+            case 'primary':
+                return 'bg-primary-100 text-white-100 hover:bg-primary-200';
             case 'white':
-                return 'py-2 transition-all text-sm px-4 bg-white-100 font-extrabold rounded text-dark-grey hover:bg-white-75';
+                return 'bg-white-100 text-primary-100 hover:bg-primary-100 hover:text-white-100';
             case 'info':
-                return 'py-2 transition-all text-sm px-4 bg-white-50 rounded font-extrabold hover:bg-white-25';
+                return 'bg-white-50 hover:bg-white-25';
             case 'outline':
-                return 'py-2 transition-all text-sm px-6 border border-solid border-white-100 rounded-[30px] font-light hover:bg-white-100 hover:text-dark-grey';
+                return 'border border-solid border-primary-100 text-primary-100 hover:bg-primary-100 hover:text-white-100';
             default:
                 return '';
         }
     });
 
     const iconStyles = 'h-6 w-6 fill-current';
+
+    const baseStyles = computed(
+        () => 'py-2.5 px-4 font-bold text-base transition-all rounded-[32px]'
+    );
 
     const withIconStyles = computed(() =>
         props.icon ? 'flex gap-1 items-center' : ''

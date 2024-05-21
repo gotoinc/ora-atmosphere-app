@@ -4,14 +4,6 @@
             <main-logo />
 
             <div class="relative flex items-center gap-10">
-                <v-button
-                    class="text-xs"
-                    variant="outline"
-                    :to="{ name: 'catalogView' }"
-                >
-                    Catalog
-                </v-button>
-
                 <v-burger
                     v-model="isSidebarOpen"
                     @click="isSidebarOpen = !isSidebarOpen"
@@ -26,7 +18,6 @@
 <script setup lang="ts">
     import { ref } from 'vue';
 
-    import VButton from '@/components/banner/VButton.vue';
     import MainLogo from '@/components/base/MainLogo.vue';
     import VBurger from '@/components/base/VBurger.vue';
     import VSidebar from '@/components/layout/VSidebar.vue';

@@ -4,10 +4,14 @@ export default {
     theme: {
         extend: {
             colors: {
-                primary: '#495AFF',
-                'primary-light': '#0ACFFE',
                 dark: '#141414',
                 'dark-grey': '#2B2B2B',
+
+                primary: {
+                    50: '#0ACFFE',
+                    100: '#495AFF',
+                    200: '#0839FB',
+                },
 
                 white: {
                     100: 'rgba(255, 255, 255, 1)',

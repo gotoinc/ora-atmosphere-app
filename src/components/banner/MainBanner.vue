@@ -21,7 +21,7 @@
                 <h1 class="mb-8 text-9xl font-extrabold">Cisco</h1>
 
                 <div class="flex gap-4">
-                    <v-button :icon="IconPlay"> Play in Simulator </v-button>
+                    <v-button variant="white" :icon="IconPlay"> Play </v-button>
 
                     <v-button :icon="IconInfo" variant="info">
                         More info

@@ -1,7 +1,7 @@
 <template>
     <div
         ref="sidebar"
-        class="sidebar absolute right-0 top-full overflow-y-auto bg-primary py-5 transition-all max-xl:w-full"
+        class="sidebar absolute right-0 top-full overflow-y-auto bg-primary-100 py-5 transition-all max-xl:w-full"
         :class="{
             'visible translate-x-0 opacity-100': modelValue,
             'invisible translate-x-full opacity-0': !modelValue,
@@ -235,7 +235,7 @@
         }
 
         &__link {
-            @apply transition-colors hover:text-primary-light;
+            @apply transition-colors hover:text-primary-50;
         }
     }
 </style>
