@@ -61,13 +61,14 @@ module.exports = {
                 patterns: ['../'],
             },
         ],
+        '@typescript-eslint/restrict-template-expressions': 'off',
         '@typescript-eslint/no-duplicate-enum-values': 'error',
         '@typescript-eslint/no-duplicate-type-constituents': 'error',
         '@typescript-eslint/no-inferrable-types': 'error',
         '@typescript-eslint/method-signature-style': ['error', 'property'],
         '@typescript-eslint/no-unsafe-member-access': 'error',
         '@typescript-eslint/naming-convention': [
-            'error',
+            'warn',
             {
                 selector: 'variable',
                 types: ['boolean'],

@@ -5,8 +5,9 @@ import { useAuthStore } from '@/stores/auth.store.ts';
 import authRoute from '@/router/routes/auth.route.ts';
 import baseRoute from '@/router/routes/base.route.ts';
 import profileRoute from '@/router/routes/profile.route.ts';
+import simulatorRoute from '@/router/routes/simulator.route.ts';
 
-export const routes = [baseRoute, authRoute, profileRoute];
+export const routes = [baseRoute, authRoute, profileRoute, simulatorRoute];
 
 const router = createRouter({
     history: createWebHistory(),

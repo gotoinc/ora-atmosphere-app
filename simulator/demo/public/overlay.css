@@ -1,0 +1,176 @@
+#content-bar {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translate(-50%, 0);
+
+    backdrop-filter: blur(10px);
+    background-color: rgba(42, 61, 59, 0.5);
+    border-radius: 10px 10px 0 0;
+    color: white;
+    display: flex;
+    padding-bottom: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    flex-direction: row;
+    align-items: center;
+    height: 40px;
+    outline: 1px solid #4d4d4d;
+}
+
+.overlay-content {
+    position: relative;
+    z-index: 1;
+    width: 66px;
+    height: 60px;
+    margin-bottom: 20px;
+    user-select: none;
+}
+
+.overlay-content img {
+    position: relative;
+    border-radius: 50%;
+    width: calc(100% - 6px);
+    height: 100%;
+    object-fit: cover;
+    user-select: none;
+}
+
+.overlay-content-active::before {
+    background-image: url("../public/images/spinner.png");
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    content: "";
+    position: absolute;
+    top: calc(-5%);
+    left: calc(-5%);
+    width: calc(110% - 6px);
+    height: 110%;
+    border-radius: 50%;
+}
+
+.play-button {
+    position: absolute!important;
+    top: 25%;
+    left: calc(25% - 3px);
+    width: 50%!important;
+    height: 50%!important;
+    z-index: 2;
+    transition: opacity 0.3s;
+}
+
+.overlay-content:hover .play-button {
+    opacity: 0.2;
+}
+
+#sphere-size {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+#sphere-button-60 {
+    width: 50px;
+    height: 50px;
+    margin-left: 3px;
+}
+
+#sphere-button-80 {
+    width: 70px;
+    height: 70px;
+    margin-left: 3px;
+}
+
+#sphere-button-100 {
+    width: 90px;
+    height: 90px;
+    margin-left: 3px;
+}
+
+.sphere-size-button {
+    font-family: sans-serif;
+    background-color: rgba(128, 128, 128, 0.3);
+    border: 2px solid rgba(31, 42, 40, 0.9);
+    border-radius: 50%;
+    color: white;
+    font-size: 15px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sphere-size-button:hover {
+    background-color: #1f2a28;
+    cursor: pointer;
+}
+
+.sphere-button-active {
+    background-color: #1f2a28;
+}
+
+.sphere-button-active:hover {
+    cursor: unset;
+}
+
+#settings {
+    color: white;
+    flex-direction: column;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(42, 61, 59, 0.5);
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 10px;
+    outline: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+#settings-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+#settings:hover {
+    background-color: rgba(42, 61, 59, 1.0);
+    cursor: pointer;
+}
+
+.settings-open {
+    border-radius: 10px!important;
+}
+
+#settings-content {
+    display: flex;
+    flex-direction: column;
+}
+
+#settings-people-visible {
+    padding: 10px;
+    background-color: rgba(128, 128, 128, 0.3);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    user-select: none;
+}
+
+#settings-people-visible:hover {
+    cursor: pointer;
+    background-color: #1f2a28;
+}
+
+#settings-people-visible img {
+    padding-right: 10px;
+}
+
+.hidden {
+    display: none!important;
+}

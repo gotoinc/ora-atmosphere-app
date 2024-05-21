@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>ORA Atmosphere</title>
+        <link rel="stylesheet" href="index.css" />
+        <link rel="stylesheet" href="overlay.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="icon" href="images/icon.png" sizes="32x32" />
+    </head>
+    <body>
+        <div id="root">
+            <div id="simulatorRoot"></div>
+
+            <div id="content-bar"></div>
+            <div id="settings">
+                <div id="settings-title">
+                    <div id="settings-title-text"></div>
+                    <img
+                        id="settings-button"
+                        src="demo/public/images/settings.svg"
+                        alt="settings"
+                    />
+                </div>
+                <div id="settings-content" class="hidden">
+                    <div id="sphere-size">
+                        <div id="sphere-button-60" class="sphere-size-button">
+                            60
+                        </div>
+                        <div id="sphere-button-80" class="sphere-size-button">
+                            80
+                        </div>
+                        <div id="sphere-button-100" class="sphere-size-button">
+                            100
+                        </div>
+                    </div>
+                    <div id="settings-people-visible" style="display: none">
+                        <img
+                            id="show-people-button"
+                            src="images/people.svg"
+                            alt="show-people"
+                        />
+                        Show People
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+    <script>
+        let settings = document.getElementById('settings');
+        let settingsContent = document.getElementById('settings-content');
+        let settingsButton = document.getElementById('settings-button');
+        let settingsTitleText = document.getElementById('settings-title-text');
+        settingsButton.onclick = function () {
+            settings.className =
+                settings.className === 'settings-open' ? '' : 'settings-open';
+            settingsContent.className =
+                settingsContent.className === 'hidden' ? '' : 'hidden';
+            settingsButton.src =
+                settingsContent.className === 'hidden'
+                    ? 'images/settings.svg'
+                    : 'images/close.svg';
+            settingsTitleText.innerHTML =
+                settingsContent.className === 'hidden' ? '' : 'Settings';
+        };
+    </script>
+</html>
