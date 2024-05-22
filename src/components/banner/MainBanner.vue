@@ -41,7 +41,7 @@
 
 <style scoped lang="postcss">
     .banner {
-        min-height: 445px;
+        min-height: 600px;
         height: 56.25vw;
         max-height: 90vh;
         padding-bottom: 13vw;
