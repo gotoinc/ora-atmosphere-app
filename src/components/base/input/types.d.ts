@@ -1,7 +1,7 @@
 import type { Component } from 'vue';
 
 export interface InputProps {
-    modelValue: string | number;
+    modelValue: string | number | undefined;
     type?: string;
     name?: string;
     placeholder?: string;

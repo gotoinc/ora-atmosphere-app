@@ -21,6 +21,7 @@
                 class="input"
                 :class="{
                     '!text-grey-100': !modelValue,
+                    '!border-error': error,
                 }"
                 :name="name"
                 @focus="isOpen = true"
@@ -50,6 +51,10 @@
                 }"
             />
         </div>
+
+        <p v-show="error" class="error mt-1 text-error transition">
+            {{ error }}
+        </p>
     </div>
 </template>
 
@@ -65,6 +70,7 @@
         required?: boolean;
         disabled?: boolean;
         placeholder?: string;
+        error?: string;
         variant?: 'dark' | 'white';
     }
 

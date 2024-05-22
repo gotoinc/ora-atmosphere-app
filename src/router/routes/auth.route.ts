@@ -1,3 +1,6 @@
+import { useAuthStore } from '@/stores/auth.store.ts';
+import { useSignUpStore } from '@/stores/sign-up.store.ts';
+
 export default {
     path: '/auth',
     name: 'auth',
@@ -36,6 +39,15 @@ export default {
                     name: 'signUpSecondStep',
                     component: () =>
                         import('@/views/auth/SignUpSecondStepView.vue'),
+
+                    beforeEnter: () => {
+                        const { firstStepValues, validateObject } =
+                            useSignUpStore();
+
+                        if (!validateObject(firstStepValues)) {
+                            return { name: 'signUpFirstStep' };
+                        }
+                    },
                 },
             ],
         },
@@ -51,6 +63,14 @@ export default {
             path: '/set-new-password',
             name: 'setNewPasswordView',
             component: () => import('@/views/auth/SetNewPasswordView.vue'),
+
+            beforeEnter: () => {
+                const { isEmailConfirmed } = useAuthStore();
+
+                if (!isEmailConfirmed) {
+                    return { name: 'main' };
+                }
+            },
         },
     ],
 };

@@ -1,5 +1,5 @@
 <template>
-    <form class="mb-6" @submit.prevent>
+    <form class="mb-6" @submit.prevent="onSubmit">
         <div class="mb-6 grid gap-4">
             <v-input
                 v-model="companyName"
@@ -7,6 +7,7 @@
                 placeholder="Enter your company name"
                 name="companyName"
                 required
+                :error="secondStepErrors.companyName"
             />
 
             <v-select
@@ -14,8 +15,9 @@
                 required
                 name="activity"
                 label="Activity"
-                :options="['Museum', 'School', 'Cinema']"
+                :options="activitiesList"
                 placeholder="Choose your activity"
+                :error="secondStepErrors.activity"
             />
 
             <v-input
@@ -23,6 +25,7 @@
                 label="Job Title"
                 name="jobTitle"
                 placeholder="Enter your job title"
+                :error="secondStepErrors.jobTitle"
             />
 
             <v-input
@@ -30,14 +33,15 @@
                 name="companyWebsite"
                 label="Company Website"
                 placeholder="Enter your company website"
+                :error="secondStepErrors.companyWebsite"
             />
 
             <v-input
                 v-model="phone"
                 name="phone"
-                type="number"
                 label="Phone Number"
                 placeholder="Enter your phone number"
+                :error="secondStepErrors.phone"
             />
         </div>
 
@@ -50,12 +54,14 @@
                 Back
             </v-button>
 
-            <v-button class="w-full"> Sign Up </v-button>
+            <v-button type="submit" class="w-full"> Sign Up </v-button>
         </div>
     </form>
 </template>
 
 <script setup lang="ts">
+    import { useRouter } from 'vue-router';
+
     import VButton from '@/components/banner/VButton.vue';
     import VInput from '@/components/base/input/VInput.vue';
     import VSelect from '@/components/base/VSelect.vue';
@@ -63,8 +69,24 @@
     import { storeToRefs } from 'pinia';
     import { useSignUpStore } from '@/stores/sign-up.store.ts';
 
-    const { companyName, jobTitle, activity, companyWebsite, phone } =
-        storeToRefs(useSignUpStore());
+    import activitiesList from '@/constants/activities-list.ts';
+
+    const signUpStore = useSignUpStore();
+
+    const router = useRouter();
+
+    const {
+        companyName,
+        jobTitle,
+        activity,
+        companyWebsite,
+        phone,
+        secondStepErrors,
+    } = storeToRefs(signUpStore);
+
+    const onSubmit = signUpStore.submitSecondStep(() => {
+        void router.push({ name: 'main' });
+    });
 </script>
 
 <style scoped lang="postcss"></style>

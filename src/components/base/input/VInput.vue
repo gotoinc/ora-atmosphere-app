@@ -52,7 +52,7 @@
             </template>
         </div>
 
-        <p v-show="error" class="error mt-2 text-red-500 transition">
+        <p v-show="error" class="error mt-1 text-error transition">
             {{ error }}
         </p>
     </fieldset>

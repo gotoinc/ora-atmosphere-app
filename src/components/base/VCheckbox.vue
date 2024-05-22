@@ -1,6 +1,6 @@
 <template>
     <label
-        :class="{ 'pointer-events-none opacity-50': disabled }"
+        :class="{ 'pointer-events-none opacity-50': disabled, error }"
         class="checkbox"
     >
         <input
@@ -21,6 +21,7 @@
     interface Props {
         modelValue: boolean;
         disabled?: boolean;
+        error?: boolean | string;
     }
 
     interface Emits {
@@ -45,6 +46,12 @@
         display: flex;
         position: relative;
         width: fit-content;
+
+        &.error {
+            span:before {
+                @apply border-error;
+            }
+        }
 
         input {
             @apply hidden;

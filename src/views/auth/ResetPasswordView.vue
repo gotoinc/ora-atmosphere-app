@@ -1,8 +1,9 @@
 <template>
     <div class="mx-auto">
+        <!-- If request link has been sent -->
         <template v-if="isRequestSent">
             <div class="mb-6">
-                <h1 class="mb-2 text-h2">Link sent!</h1>
+                <h1 class="mb-2 text-center text-h2">Link sent!</h1>
 
                 <p class="text-base text-grey-100">
                     A password reset link has been sent to your email address
@@ -14,6 +15,7 @@
             </v-button>
         </template>
 
+        <!-- Reset password form -->
         <template v-else>
             <div class="mb-6">
                 <h1 class="mb-2 text-h2">Forgot your password</h1>
@@ -24,7 +26,7 @@
                 </p>
             </div>
 
-            <form class="mb-6" @submit.prevent>
+            <form class="mb-6" @submit.prevent="onSubmit">
                 <v-input
                     v-model="email"
                     name="email"
@@ -32,11 +34,10 @@
                     type="email"
                     placeholder="Enter your email"
                     class="mb-6"
+                    :error="errors.email"
                 />
 
-                <v-button class="w-full" @click="isRequestSent = true">
-                    Continue
-                </v-button>
+                <v-button class="w-full" type="submit"> Continue </v-button>
             </form>
 
             <p>
@@ -54,12 +55,32 @@
 
 <script setup lang="ts">
     import { ref } from 'vue';
+    import { useForm } from 'vee-validate';
 
     import VButton from '@/components/banner/VButton.vue';
     import VInput from '@/components/base/input/VInput.vue';
 
-    const email = ref('');
+    import { forgotPasswordSchema } from '@/validations/schemas/auth.schema.ts';
+    import type { EmailType } from '@/validations/types/auth';
+
+    const { defineField, handleSubmit, resetForm, errors } = useForm<EmailType>(
+        {
+            validationSchema: forgotPasswordSchema,
+            initialValues: {
+                email: '',
+            },
+        }
+    );
+
+    const [email] = defineField('email');
+
     const isRequestSent = ref(false);
+
+    const onSubmit = handleSubmit(() => {
+        isRequestSent.value = true;
+
+        resetForm();
+    });
 </script>
 
 <style scoped></style>

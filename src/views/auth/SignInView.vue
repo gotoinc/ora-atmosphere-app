@@ -2,7 +2,7 @@
     <div class="mx-auto">
         <h1 class="mb-6 text-h2">Sign In</h1>
 
-        <form class="mb-6" @submit.prevent>
+        <form class="mb-6" @submit.prevent="onSubmit">
             <div class="grid gap-4">
                 <v-input
                     v-model="email"
@@ -10,6 +10,7 @@
                     label="Email"
                     type="email"
                     placeholder="Enter your email"
+                    :error="errors.email"
                 />
 
                 <v-input
@@ -18,6 +19,7 @@
                     type="password"
                     label="Password"
                     placeholder="Set your password"
+                    :error="errors.password"
                 />
             </div>
 
@@ -34,7 +36,7 @@
                 </router-link>
             </div>
 
-            <v-button class="w-full"> Sign In </v-button>
+            <v-button class="w-full" type="submit"> Sign In </v-button>
         </form>
 
         <p>
@@ -51,14 +53,37 @@
 
 <script setup lang="ts">
     import { ref } from 'vue';
+    import { useRouter } from 'vue-router';
+    import { useForm } from 'vee-validate';
 
     import VButton from '@/components/banner/VButton.vue';
     import VInput from '@/components/base/input/VInput.vue';
     import VCheckbox from '@/components/base/VCheckbox.vue';
 
-    const email = ref('');
-    const password = ref('');
+    import { signInSchema } from '@/validations/schemas/auth.schema.ts';
+    import type { SignInType } from '@/validations/types/auth';
+
+    const router = useRouter();
+
     const isRememberChecked = ref(false);
+
+    const { defineField, handleSubmit, errors, resetForm } =
+        useForm<SignInType>({
+            validationSchema: signInSchema,
+            initialValues: {
+                email: '',
+                password: '',
+            },
+        });
+
+    const [email] = defineField('email');
+    const [password] = defineField('password');
+
+    const onSubmit = handleSubmit(() => {
+        void router.push({ name: 'main' });
+
+        resetForm();
+    });
 </script>
 
 <style scoped></style>

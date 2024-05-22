@@ -2,18 +2,15 @@
     <main
         class="flex min-h-screen bg-white-100 max-lg:flex-col max-lg:pt-[60px]"
     >
-        <div
-            class="banner relative w-full w-full p-12 max-lg:!max-w-full max-lg:p-0"
-        >
+        <div class="banner relative w-full p-12 max-lg:!max-w-full max-lg:p-0">
             <div class="cont">
-                <main-logo
-                    variant="white"
-                    class="relative z-10 max-lg:hidden"
-                />
+                <main-logo variant="white" class="fixed z-10 max-lg:hidden" />
 
                 <main-logo variant="dark" class="relative z-10 lg:hidden" />
 
-                <div class="absolute left-0 top-0 h-full w-full max-lg:hidden">
+                <div
+                    class="banner-bg fixed left-0 top-0 h-full w-full max-lg:hidden"
+                >
                     <img
                         class="img-cover"
                         :src="backgroundURL"
@@ -48,7 +45,9 @@
     const route = useRoute();
 
     const backgroundURL = computed(() =>
-        route.name === 'signUpView' ? signUpBG : signInBG
+        route.name === 'signUpFirstStep' || route.name === 'signUpSecondStep'
+            ? signUpBG
+            : signInBG
     );
 </script>
 
@@ -56,5 +55,20 @@
     .banner {
         max-width: 973px;
         min-width: 536px;
+        animation: fade 0.3s ease;
+    }
+
+    .banner-bg {
+        max-width: 50.7vw;
+    }
+
+    @keyframes fade {
+        0% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
     }
 </style>

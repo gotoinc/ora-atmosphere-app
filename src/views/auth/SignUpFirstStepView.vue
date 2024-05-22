@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent>
+    <form @submit.prevent="onSubmit">
         <div class="mb-6 grid gap-4">
             <v-input
                 v-model="firstName"
@@ -7,6 +7,7 @@
                 placeholder="Enter your first name"
                 name="firstName"
                 required
+                :error="firstStepErrors.firstName"
             />
 
             <v-input
@@ -15,6 +16,7 @@
                 name="lastName"
                 placeholder="Enter your last name"
                 required
+                :error="firstStepErrors.lastName"
             />
 
             <v-input
@@ -24,6 +26,7 @@
                 type="email"
                 required
                 placeholder="Enter your email"
+                :error="firstStepErrors.email"
             />
 
             <v-input
@@ -33,6 +36,7 @@
                 label="Password"
                 required
                 placeholder="Set your password"
+                :error="firstStepErrors.password"
             />
 
             <v-input
@@ -42,10 +46,15 @@
                 label="Confirm Password"
                 required
                 placeholder="Confirm your password"
+                :error="firstStepErrors.confirmPassword"
             />
         </div>
 
-        <v-checkbox v-model="isTermsChecked" class="mb-6">
+        <v-checkbox
+            v-model="isTermsAgreed"
+            :error="firstStepErrors.isTermsAgreed"
+            class="mb-6"
+        >
             <span>
                 Agree to our
                 <a href="#" class="underline hover:text-primary-100">
@@ -60,13 +69,13 @@
             </span>
         </v-checkbox>
 
-        <v-button :to="{ name: 'signUpSecondStep' }" class="w-full">
-            Next
-        </v-button>
+        <v-button class="w-full" type="submit"> Next </v-button>
     </form>
 </template>
 
 <script setup lang="ts">
+    import { useRouter } from 'vue-router';
+
     import VButton from '@/components/banner/VButton.vue';
     import VInput from '@/components/base/input/VInput.vue';
     import VCheckbox from '@/components/base/VCheckbox.vue';
@@ -74,14 +83,23 @@
     import { storeToRefs } from 'pinia';
     import { useSignUpStore } from '@/stores/sign-up.store.ts';
 
+    const router = useRouter();
+
+    const signUpStore = useSignUpStore();
+
     const {
         confirmPassword,
         password,
-        isTermsChecked,
+        isTermsAgreed,
         email,
         firstName,
         lastName,
-    } = storeToRefs(useSignUpStore());
+        firstStepErrors,
+    } = storeToRefs(signUpStore);
+
+    const onSubmit = signUpStore.submitFirstStep(() => {
+        void router.push({ name: 'signUpSecondStep' });
+    });
 </script>
 
 <style scoped></style>
