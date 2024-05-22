@@ -12,7 +12,10 @@
         </router-link>
 
         <span
-            :class="{ 'text-dark': variant === 'dark' }"
+            :class="{
+                'text-dark': variant === 'dark',
+                'max-sm:hidden': hideLabelOnMobile,
+            }"
             class="pointer-events-none text-xs uppercase"
         >
             Application simulator
@@ -25,6 +28,7 @@
     import LogoDarkImg from '@img/logo-dark.svg';
 
     interface Props {
+        hideLabelOnMobile?: boolean;
         variant?: 'white' | 'dark';
     }
 

@@ -60,12 +60,17 @@
     import VInput from '@/components/base/input/VInput.vue';
     import VCheckbox from '@/components/base/VCheckbox.vue';
 
+    import { storeToRefs } from 'pinia';
+    import { useAuthStore } from '@/stores/auth.store.ts';
+
     import { signInSchema } from '@/validations/schemas/auth.schema.ts';
     import type { SignInType } from '@/validations/types/auth';
 
     const router = useRouter();
 
     const isRememberChecked = ref(false);
+
+    const { isAuthenticated } = storeToRefs(useAuthStore());
 
     const { defineField, handleSubmit, errors, resetForm } =
         useForm<SignInType>({
@@ -81,6 +86,8 @@
 
     const onSubmit = handleSubmit(() => {
         void router.push({ name: 'main' });
+
+        isAuthenticated.value = true;
 
         resetForm();
     });

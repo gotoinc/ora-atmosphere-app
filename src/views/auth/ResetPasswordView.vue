@@ -46,7 +46,7 @@
                     class="underline hover:text-primary-100"
                     :to="{ name: 'signUpView' }"
                 >
-                    Sign In
+                    Sign up
                 </router-link>
             </p>
         </template>

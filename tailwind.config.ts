@@ -12,6 +12,7 @@ export default {
                     100: '#80808C',
                     200: '#3E3F47',
                     300: '#2B2B2B',
+                    400: '#29292D',
                 },
 
                 primary: {
@@ -45,6 +46,12 @@ export default {
                 ],
                 h3: [
                     '2rem',
+                    {
+                        fontWeight: '700',
+                    },
+                ],
+                h4: [
+                    '1.5rem',
                     {
                         fontWeight: '700',
                     },
