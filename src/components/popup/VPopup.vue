@@ -36,6 +36,7 @@
 
     interface Emits {
         (e: 'update:modelValue', value: boolean): void;
+        (e: 'close'): void;
     }
 
     const props = withDefaults(defineProps<Props>(), {
@@ -52,8 +53,6 @@
         async (value) => {
             await nextTick();
 
-            console.log(modalElement.value);
-
             if (modalElement.value) {
                 value
                     ? disableBodyScroll(modalElement.value)
@@ -64,6 +63,7 @@
 
     function close() {
         emits('update:modelValue', false);
+        emits('close');
         if (modalElement.value) enableBodyScroll(modalElement.value);
     }
 

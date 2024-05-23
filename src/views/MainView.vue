@@ -18,6 +18,10 @@
 </script>
 
 <style scoped lang="postcss">
+    main {
+        margin-top: -82px;
+    }
+
     .bottom-section {
         position: relative;
         z-index: 10;

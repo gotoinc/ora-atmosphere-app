@@ -30,7 +30,7 @@
     interface Props {
         to?: RouteLocationRaw;
         icon?: Component;
-        type?: string;
+        type?: 'button' | 'submit' | 'reset' | undefined;
         variant?: 'primary' | 'white' | 'info' | 'outline' | 'text';
     }
 

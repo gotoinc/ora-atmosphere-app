@@ -10,7 +10,9 @@ export interface InputProps {
     icon?: Component;
     error?: string;
     required?: boolean;
+    optional?: boolean;
     disabled?: boolean;
+    hint?: string;
 }
 
 export interface InputEmits {

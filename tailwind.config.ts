@@ -56,6 +56,7 @@ export default {
                         fontWeight: '700',
                     },
                 ],
+                small: '0.813rem',
             },
 
             transitionDuration: {

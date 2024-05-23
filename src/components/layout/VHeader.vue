@@ -29,8 +29,4 @@
     const { isAuthenticated } = storeToRefs(useAuthStore());
 </script>
 
-<style scoped>
-    header {
-        margin-bottom: -82px;
-    }
-</style>
+<style scoped></style>

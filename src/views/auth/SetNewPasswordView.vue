@@ -12,6 +12,7 @@
                     required
                     placeholder="Set your password"
                     :error="errors.password"
+                    hint="Use 8 or more characters with a mix of letters, numbers & symbols"
                 />
 
                 <v-input

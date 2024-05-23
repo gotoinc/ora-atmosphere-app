@@ -17,6 +17,7 @@
             class="relative"
         >
             <select
+                ref="selectElement"
                 :disabled="disabled"
                 class="input"
                 :class="{
@@ -26,7 +27,7 @@
                 :name="name"
                 @focus="isOpen = true"
                 @blur="isOpen = false"
-                @change="select($event)"
+                @change="selectOption($event)"
             >
                 <option
                     v-if="placeholder"
@@ -37,7 +38,12 @@
                     {{ placeholder }}
                 </option>
 
-                <option v-for="item in options" :key="item" :value="item">
+                <option
+                    v-for="item in options"
+                    :key="item"
+                    class="text-grey-100"
+                    :value="item"
+                >
                     {{ item }}
                 </option>
             </select>
@@ -59,7 +65,7 @@
 </template>
 
 <script setup lang="ts">
-    import { ref } from 'vue';
+    import { ref, watch } from 'vue';
     import IconChevronDown from '@img/icons/chevron-down.svg?component';
 
     interface Props {
@@ -71,11 +77,13 @@
         disabled?: boolean;
         placeholder?: string;
         error?: string;
+        reset?: boolean;
         variant?: 'dark' | 'white';
     }
 
     interface Emits {
         (e: 'update:modelValue', value: Props['modelValue']): void;
+        (e: 'update:reset', value: Props['reset']): void;
     }
 
     const props = defineProps<Props>();
@@ -84,7 +92,23 @@
 
     const isOpen = ref(false);
 
-    const select = (event: Event) => {
+    const selectElement = ref<HTMLSelectElement | null>(null);
+
+    /**
+     * Handle reset select
+     */
+    watch(
+        () => props.modelValue,
+        () => {
+            if (props.reset && selectElement.value) {
+                selectElement.value.selectedIndex = 0;
+
+                emits('update:reset', false);
+            }
+        }
+    );
+
+    const selectOption = (event: Event) => {
         const target = event.target as HTMLSelectElement;
 
         emits(
