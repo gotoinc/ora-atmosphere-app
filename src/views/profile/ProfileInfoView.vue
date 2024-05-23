@@ -83,6 +83,7 @@
 </template>
 
 <script setup lang="ts">
+    import { useToast } from 'vue-toastification';
     import { useForm } from 'vee-validate';
 
     import VButton from '@/components/banner/VButton.vue';
@@ -100,6 +101,8 @@
         SignUpFirstStep,
         SignUpSecondStep,
     } from '@/validations/types/auth';
+
+    const toast = useToast();
 
     const profileInfoSchema = signUpFirstStepSchema
         .omit(['password', 'confirmPassword', 'isTermsAgreed'])
@@ -128,7 +131,11 @@
     const [email] = defineField('email');
 
     const onSubmit = handleSubmit((values) => {
-        console.log(useCompareObjects(profileJSON, values));
+        if (useCompareObjects(profileJSON, values)) {
+            toast.error('No changes were captured');
+        } else {
+            toast.success('Saved successfully');
+        }
     });
 </script>
 

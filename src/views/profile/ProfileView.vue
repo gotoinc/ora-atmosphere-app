@@ -77,7 +77,9 @@
                         Cancel
                     </v-button>
 
-                    <v-button class="flex-grow"> Yes, delete </v-button>
+                    <v-button class="flex-grow" @click="deleteProfile">
+                        Yes, delete
+                    </v-button>
                 </div>
             </div>
         </v-popup>
@@ -87,13 +89,20 @@
 <script setup lang="ts">
     import { ref } from 'vue';
     import { useRouter } from 'vue-router';
+    import { useToast } from 'vue-toastification';
 
     import VButton from '@/components/banner/VButton.vue';
     import VSelect from '@/components/base/VSelect.vue';
     import VHeader from '@/components/layout/VHeader.vue';
     import VPopup from '@/components/popup/VPopup.vue';
 
+    import { storeToRefs } from 'pinia';
+    import { useAuthStore } from '@/stores/auth.store.ts';
+
     const router = useRouter();
+    const toast = useToast();
+
+    const { isAuthenticated } = storeToRefs(useAuthStore());
 
     enum ProfileLinks {
         Info = 'Personal information',
@@ -121,6 +130,15 @@
         isDeleteOpen.value = false;
 
         void router.push({ name: 'profileInfoView' });
+    };
+
+    const deleteProfile = () => {
+        isDeleteOpen.value = false;
+        isAuthenticated.value = false;
+
+        void router.replace({ name: 'main' });
+
+        toast.success('Deleted successfully');
     };
 </script>
 

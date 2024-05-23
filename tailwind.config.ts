@@ -67,7 +67,7 @@ export default {
                 gradient: 'linear-gradient(180deg, #0ACFFE 0%, #495AFF 100%)',
             },
 
-            screens: { mob: '414px' },
+            screens: { mob: '415px' },
         },
     },
     plugins: [],

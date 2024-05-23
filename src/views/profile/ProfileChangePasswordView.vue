@@ -29,6 +29,7 @@
 </template>
 
 <script setup lang="ts">
+    import { useToast } from 'vue-toastification';
     import { useForm } from 'vee-validate';
 
     import VButton from '@/components/banner/VButton.vue';
@@ -36,6 +37,8 @@
 
     import { setNewPasswordSchema } from '@/validations/schemas/auth.schema.ts';
     import type { SetNewPasswordType } from '@/validations/types/auth';
+
+    const toast = useToast();
 
     const { defineField, handleSubmit, resetForm, errors } =
         useForm<SetNewPasswordType>({
@@ -50,6 +53,8 @@
     const [confirmPassword] = defineField('confirmPassword');
 
     const onSubmit = handleSubmit(() => {
+        toast.success('Saved successfully');
+
         resetForm();
     });
 </script>
