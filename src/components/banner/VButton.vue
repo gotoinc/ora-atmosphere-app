@@ -2,6 +2,7 @@
     <router-link
         v-if="to"
         :class="[baseStyles, buttonStyles, withIconStyles]"
+        class="inline-block"
         :to="to"
     >
         <component :is="icon" v-if="icon" :class="iconStyles" />
@@ -11,6 +12,7 @@
 
     <button
         v-else
+        :type="type"
         :class="[baseStyles, buttonStyles, withIconStyles]"
         @click="emits('click')"
     >
@@ -28,7 +30,8 @@
     interface Props {
         to?: RouteLocationRaw;
         icon?: Component;
-        variant?: 'primary' | 'white' | 'info' | 'outline';
+        type?: string;
+        variant?: 'primary' | 'white' | 'info' | 'outline' | 'text';
     }
 
     interface Emits {
@@ -37,6 +40,7 @@
 
     const props = withDefaults(defineProps<Props>(), {
         variant: 'primary',
+        type: 'button',
     });
 
     const emits = defineEmits<Emits>();
@@ -52,6 +56,8 @@
                 return 'bg-white-100 text-primary-100 hover:bg-primary-100 hover:text-white-100';
             case 'info':
                 return 'bg-white-50 hover:bg-white-25';
+            case 'text':
+                return 'bg-transparent hover:underline';
             case 'outline':
                 return 'border border-solid border-primary-100 text-primary-100 hover:bg-primary-100 hover:text-white-100';
             default:
@@ -62,7 +68,8 @@
     const iconStyles = 'h-6 w-6 fill-current';
 
     const baseStyles = computed(
-        () => 'py-2.5 px-4 font-bold text-base transition-all rounded-[32px]'
+        () =>
+            'py-2.5 px-6 text-center font-bold text-base transition-all rounded-[32px]'
     );
 
     const withIconStyles = computed(() =>

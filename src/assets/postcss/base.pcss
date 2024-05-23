@@ -1,0 +1,67 @@
+/* Common styles */
+body {
+    font-family: 'Mulish', sans-serif;
+    font-weight: 400;
+    right: 0;
+}
+
+.cont {
+    max-width: 1823px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.input {
+    @apply w-full rounded-[32px] border border-solid border-grey-100 bg-transparent px-6 py-2.5 text-base text-dark outline-none transition-colors hover:border-grey-200 focus:border-grey-200;
+
+    &::placeholder {
+        @apply text-grey-100;
+    }
+}
+
+svg {
+    fill: currentColor;
+}
+
+.white-variant {
+    .input {
+        @apply border-white-100 text-white-100 hover:border-primary-50 focus:border-primary-50;
+
+        &::placeholder {
+            @apply text-white-50;
+        }
+    }
+
+    .icon-password {
+        @apply hover:text-white-100;
+    }
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type='number'] {
+    -moz-appearance: textfield;
+}

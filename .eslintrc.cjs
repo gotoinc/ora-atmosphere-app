@@ -20,6 +20,7 @@ module.exports = {
             ts: '@typescript-eslint/parser',
             '<template>': 'espree',
         },
+        extraFileExtensions: ['.pcss', '.vue'],
         ecmaVersion: 2015,
         sourceType: 'module',
         allowImportExportEverywhere: true,
@@ -44,6 +45,7 @@ module.exports = {
         'no-unused-vars': 'off',
         '@typescript-eslint/no-unused-vars': 'warn',
         'require-await': 'off',
+        'no-prototype-builtins': 'off',
         '@typescript-eslint/require-await': 'error',
         'default-param-last': ['error'],
         '@typescript-eslint/consistent-type-imports': [
