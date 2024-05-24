@@ -6,7 +6,7 @@
             class="fixed inset-0 z-50 overflow-y-auto bg-grey-400/40 backdrop-blur-sm"
         >
             <div
-                class="flex min-h-full items-center justify-center p-4 text-center"
+                class="flex min-h-full items-center justify-center p-4 text-center max-mob:items-end max-mob:p-0"
                 @click.self="close()"
             >
                 <div
@@ -14,7 +14,7 @@
                         'max-w-5xl': props.size === 'lg',
                         'max-w-[484px]': props.size === 'sm',
                     }"
-                    class="zoom-in relative flex w-full flex-col overflow-hidden rounded-2xl bg-dark p-11 text-left shadow-xl"
+                    class="zoom-in relative flex w-full flex-col overflow-hidden rounded-2xl bg-dark p-11 text-left"
                 >
                     <slot :close="close"></slot>
                 </div>
@@ -36,6 +36,7 @@
 
     interface Emits {
         (e: 'update:modelValue', value: boolean): void;
+        (e: 'close'): void;
     }
 
     const props = withDefaults(defineProps<Props>(), {
@@ -52,8 +53,6 @@
         async (value) => {
             await nextTick();
 
-            console.log(modalElement.value);
-
             if (modalElement.value) {
                 value
                     ? disableBodyScroll(modalElement.value)
@@ -64,6 +63,7 @@
 
     function close() {
         emits('update:modelValue', false);
+        emits('close');
         if (modalElement.value) enableBodyScroll(modalElement.value);
     }
 

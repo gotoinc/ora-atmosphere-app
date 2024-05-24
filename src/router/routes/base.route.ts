@@ -7,8 +7,6 @@ export default {
     name: 'main',
     component: () => import('@/views/MainView.vue'),
 
-    meta: { requiresAuth: true },
-
     redirect: { name: 'catalogView' },
 
     children: [catalogRoute, catalogExtendedRoute, categoryRoute],

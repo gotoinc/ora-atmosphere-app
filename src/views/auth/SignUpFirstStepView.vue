@@ -37,6 +37,7 @@
                 required
                 placeholder="Set your password"
                 :error="firstStepErrors.password"
+                hint="Use 8 or more characters with a mix of letters, numbers & symbols"
             />
 
             <v-input

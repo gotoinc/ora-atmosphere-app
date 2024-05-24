@@ -18,7 +18,11 @@
     >
         <component :is="icon" v-if="icon" :class="iconStyles" />
 
-        <slot></slot>
+        <span :class="{ hidden: loading }">
+            <slot></slot>
+        </span>
+
+        <span :class="{ '!hidden': !loading }" class="loader-btn"></span>
     </button>
 </template>
 
@@ -30,8 +34,9 @@
     interface Props {
         to?: RouteLocationRaw;
         icon?: Component;
-        type?: string;
+        type?: 'button' | 'submit' | 'reset' | undefined;
         variant?: 'primary' | 'white' | 'info' | 'outline' | 'text';
+        loading?: boolean;
     }
 
     interface Emits {
@@ -69,7 +74,7 @@
 
     const baseStyles = computed(
         () =>
-            'py-2.5 px-6 text-center font-bold text-base transition-all rounded-[32px]'
+            'py-2.5 px-6 min-h-11 text-center font-bold text-base transition-all rounded-[32px]'
     );
 
     const withIconStyles = computed(() =>
@@ -77,4 +82,22 @@
     );
 </script>
 
-<style scoped></style>
+<style scoped lang="postcss">
+    .loader-btn {
+        @apply mx-auto block h-6 w-6 rounded-full border-4 border-solid border-white-100 border-l-transparent;
+    }
+
+    .loader-btn {
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+</style>

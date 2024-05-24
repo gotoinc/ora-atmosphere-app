@@ -24,8 +24,10 @@
             v-show="isActionsOpen"
             class="actions absolute right-0 overflow-hidden rounded-lg bg-grey-400"
         >
-            <li class="link">
-                <router-link to="#"> My Profile </router-link>
+            <li>
+                <router-link class="link" :to="{ name: 'profileView' }">
+                    My Profile
+                </router-link>
             </li>
 
             <li class="link" @click="isLogOutOpen = true">Log Out</li>
@@ -59,6 +61,7 @@
 
 <script setup lang="ts">
     import { onMounted, onUnmounted, ref } from 'vue';
+    import { useRouter } from 'vue-router';
     import IconChevronDown from '@img/icons/chevron-down.svg?component';
     import IconUser from '@img/icons/user.svg?component';
 
@@ -68,6 +71,8 @@
     import { useAuthStore } from '@/stores/auth.store.ts';
 
     const isActionsOpen = ref(false);
+
+    const router = useRouter();
 
     const actionsElement = ref<HTMLDivElement | null>(null);
 
@@ -87,6 +92,8 @@
 
     const handleLogout = () => {
         logout();
+
+        void router.replace({ name: 'main' });
 
         isLogOutOpen.value = false;
     };
@@ -108,7 +115,7 @@
     }
 
     .link {
-        @apply px-4 py-2.5 text-white-100 transition-colors hover:bg-grey-200;
+        @apply block px-4 py-2.5 text-white-100 transition-colors hover:bg-grey-200;
     }
 
     @keyframes fade-up {

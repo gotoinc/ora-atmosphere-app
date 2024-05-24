@@ -25,7 +25,7 @@ export const phoneValidation = string()
     .test(
         'is-valid-phone',
         'Must be only digits',
-        (value) => !value || /^[0-9]+$/.test(value)
+        (value) => !value || /^[0-9+]+$/.test(value)
     )
     .test(
         'min-digits',

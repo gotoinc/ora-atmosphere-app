@@ -2,12 +2,13 @@
     <fieldset>
         <label
             v-if="label"
-            class="mb-1 inline-block text-base font-semibold"
+            class="mb-1.5 inline-block text-base font-semibold"
             :class="{ 'text-white-100': variant === 'white' }"
         >
             <span v-if="required">*</span>
 
             {{ label }}
+            <span v-if="optional" class="text-white-50"> (optional) </span>
         </label>
 
         <div
@@ -52,8 +53,16 @@
             </template>
         </div>
 
-        <p v-show="error" class="error mt-1 text-error transition">
+        <p v-show="error" class="mt-1 text-error transition">
             {{ error }}
+        </p>
+
+        <p
+            v-show="hint && !modelValue && !error"
+            class="mt-1 text-small text-grey-100 transition"
+            :class="{ 'text-white-50': variant === 'white' }"
+        >
+            {{ hint }}
         </p>
     </fieldset>
 </template>

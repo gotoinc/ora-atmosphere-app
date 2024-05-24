@@ -87,6 +87,8 @@
     const onSubmit = handleSubmit(() => {
         void router.push({ name: 'main' });
 
+        // setFieldError('email', 'Email already exists');
+
         isAuthenticated.value = true;
 
         resetForm();
