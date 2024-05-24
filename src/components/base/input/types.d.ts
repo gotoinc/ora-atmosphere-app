@@ -9,6 +9,7 @@ export interface InputProps {
     label?: string;
     icon?: Component;
     iconClass?: string;
+    iconClickable?: boolean;
     inputClass?: string;
     error?: string;
     required?: boolean;

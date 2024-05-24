@@ -16,6 +16,7 @@
                 class="search__input relative z-20"
                 :input-class="[inputClass, '!placeholder-white-100'].join(' ')"
                 :icon-class="iconClass"
+                icon-clickable
                 @click="open"
             />
 
@@ -27,22 +28,36 @@
                 >
                     <!-- Recent searches list -->
                     <div class="mb-8">
-                        <h3 class="mb-2 text-[10px] font-bold opacity-70">
-                            Recent searches
-                        </h3>
+                        <template v-if="!searchValue">
+                            <h3 class="mb-2 text-[10px] font-bold opacity-70">
+                                Recent searches
+                            </h3>
 
-                        <ul>
-                            <li
-                                v-for="i in 3"
-                                :key="i"
-                                class="flex cursor-pointer items-center gap-3 rounded p-1 text-xs font-bold transition-colors hover:bg-white-25"
-                            >
+                            <ul>
+                                <li
+                                    v-for="i in 3"
+                                    :key="i"
+                                    class="search__result"
+                                >
+                                    <component
+                                        :is="IconRecent"
+                                        class="h-4 w-4 flex-shrink-0 opacity-70"
+                                    />
+
+                                    Search
+                                </li>
+                            </ul>
+                        </template>
+
+                        <!-- Matched results -->
+                        <ul v-else>
+                            <li v-for="i in 3" :key="i" class="search__result">
                                 <component
-                                    :is="IconRecent"
+                                    :is="IconSearch"
                                     class="h-4 w-4 flex-shrink-0 opacity-70"
                                 />
 
-                                Search
+                                Result
                             </li>
                         </ul>
                     </div>
@@ -158,10 +173,16 @@
 
     const emits = defineEmits<Emits>();
 
+    /**
+     * DOM elements
+     */
     const searchElement = ref<HTMLDivElement | null>(null);
     const filtersScroll = ref<HTMLElement | null>(null);
     const inputElement = ref<HTMLInputElement | null>(null);
 
+    /**
+     * Filters data
+     */
     const isFiltersOpen = ref(false);
     const searchValue = ref('');
 
@@ -179,11 +200,14 @@
     );
     const iconClass = computed(() =>
         [
-            '!h-6 !w-6 !text-white-100',
+            '!h-6 !w-6 !text-white-100 rounded hover:bg-white-25',
             isFiltersOpen.value ? '!right-0' : '',
         ].join(' ')
     );
 
+    /**
+     * Function for close filters
+     */
     const close = () => {
         isFiltersOpen.value = false;
         emits('closed');
@@ -192,6 +216,9 @@
         if (filtersScroll.value) enableBodyScroll(filtersScroll.value);
     };
 
+    /**
+     * Function for opening filters
+     */
     const open = () => {
         isFiltersOpen.value = true;
         emits('opened');
@@ -203,6 +230,9 @@
         if (filtersScroll.value) disableBodyScroll(filtersScroll.value);
     };
 
+    /**
+     * Function for handle click and close filters when user clicks outside of component
+     */
     const setClickEvent = (e: Event) => {
         if (
             e.target !== searchElement.value &&
@@ -239,7 +269,7 @@
         }
 
         &__input {
-            @apply h-11 max-w-[389px] transition-all;
+            @apply h-11 max-w-[389px] transition-all max-lg:px-6;
         }
 
         &__wrap {
@@ -247,7 +277,7 @@
         }
 
         &__filters {
-            @apply bordered absolute left-0 top-full z-10 w-full transform p-6 pt-14 opacity-0 transition-all max-lg:rounded-none max-lg:border-none max-lg:bg-primary-100 lg:bg-primary-100;
+            @apply bordered invisible absolute left-0 top-full z-10 w-full transform p-6 pt-[50px] opacity-0 transition-all max-lg:rounded-none max-lg:border-none max-lg:bg-primary-100 lg:bg-primary-100;
         }
 
         &__btn {
@@ -256,6 +286,10 @@
 
         &__icon {
             @apply absolute right-0 top-1/2 h-6 w-6 flex-shrink-0 -translate-y-1/2 cursor-pointer rounded transition-colors hover:bg-white-25;
+        }
+
+        &__result {
+            @apply flex cursor-pointer items-center gap-3 rounded p-1 text-xs font-bold transition-colors hover:bg-white-25;
         }
 
         /* When search is active  */
@@ -267,11 +301,11 @@
             }
 
             .search__filters {
-                @apply top-0 opacity-100;
+                @apply visible top-0 opacity-100;
             }
 
             .search__input {
-                @apply max-w-full translate-y-3 px-6;
+                @apply max-w-full lg:translate-y-3 lg:px-6;
             }
         }
     }

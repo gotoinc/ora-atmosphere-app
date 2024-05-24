@@ -39,7 +39,12 @@
             <component
                 :is="icon"
                 v-if="icon"
-                :class="[iconClass]"
+                :class="[
+                    iconClass,
+                    {
+                        '!pointer-events-auto cursor-pointer': iconClickable,
+                    },
+                ]"
                 class="input-icon"
             />
 
