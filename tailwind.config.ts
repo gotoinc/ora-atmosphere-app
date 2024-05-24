@@ -74,6 +74,7 @@ export default {
                 mob: '415px',
                 '2lg': '1200px',
                 tab: '901px',
+                lg: '1025px',
                 xs: '375px',
             },
 

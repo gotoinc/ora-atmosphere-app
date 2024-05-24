@@ -6,13 +6,10 @@ import Toast from 'vue-toastification';
 import { createPinia } from 'pinia';
 import piniaPluginPersistedState from 'pinia-plugin-persistedstate';
 
-import { vuetifyLib } from '@/libs/vuetify.lib.ts';
-
 // Styles
 import './assets/tailwind.css';
 import 'vue-toastification/dist/index.css';
 import './assets/postcss/base.pcss';
-
 // Router
 import router from '@/router';
 
@@ -29,4 +26,4 @@ const toastOptions: PluginOptions = {
 import App from './App.vue';
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-createApp(App).use(router).use(pinia).use(vuetifyLib).use(Toast, toastOptions).mount('#app');
+createApp(App).use(router).use(pinia).use(Toast, toastOptions).mount('#app');

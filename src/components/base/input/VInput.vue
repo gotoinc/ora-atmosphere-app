@@ -23,18 +23,25 @@
                 :disabled="disabled"
                 :placeholder="placeholder"
                 :name="name"
-                :class="{
-                    'white-variant': variant === 'white',
-                    '!pr-11': icon || type === 'password',
-                    '!border-error': error,
-                }"
+                :class="[
+                    {
+                        'with-icon': icon || type === 'password',
+                        '!border-error': error,
+                    },
+                    inputClass,
+                ]"
                 class="input"
                 @input="onInput($event)"
                 @blur="emits('blur')"
                 @keyup.enter="onEnter($event)"
             />
 
-            <component :is="icon" v-if="icon" class="input-icon" />
+            <component
+                :is="icon"
+                v-if="icon"
+                :class="[iconClass]"
+                class="input-icon"
+            />
 
             <template v-else-if="type === 'password'">
                 <component

@@ -1,32 +1,23 @@
 <template>
     <div
-        v-click-outside="close"
+        ref="searchElement"
         :class="{
             active: isFiltersOpen,
         }"
-        class="search bordered relative w-full transition-all max-tab:static max-tab:ml-auto max-tab:w-fit max-tab:!border-none"
+        class="search relative transition-all max-lg:static max-lg:w-fit max-lg:!border-none"
     >
         <form class="search__wrap">
             <!-- Search input -->
-            <div class="search__input">
-                <input
-                    v-model="searchValue"
-                    type="text"
-                    class="w-full bg-transparent"
-                    @focus="open"
-                />
-
-                <component
-                    :is="IconSearch"
-                    class="h-6 w-6 flex-shrink-0 max-tab:hidden"
-                />
-
-                <component
-                    :is="IconClose"
-                    class="block h-4 w-4 flex-shrink-0 cursor-pointer fill-current tab:hidden"
-                    @click="close"
-                />
-            </div>
+            <v-input
+                v-model="searchValue"
+                placeholder="Search"
+                :icon="IconSearch"
+                variant="white"
+                class="search__input relative z-20"
+                :input-class="[inputClass, '!placeholder-white-100'].join(' ')"
+                :icon-class="iconClass"
+                @click="open"
+            />
 
             <!-- Search filters -->
             <div class="search__filters">
@@ -36,7 +27,7 @@
                 >
                     <!-- Recent searches list -->
                     <div class="mb-8">
-                        <h3 class="mb-2 text-xs font-bold opacity-70">
+                        <h3 class="mb-2 text-[10px] font-bold opacity-70">
                             Recent searches
                         </h3>
 
@@ -47,7 +38,7 @@
                                 class="flex cursor-pointer items-center gap-3 rounded p-1 text-xs font-bold transition-colors hover:bg-white-25"
                             >
                                 <component
-                                    :is="IconSearch"
+                                    :is="IconRecent"
                                     class="h-4 w-4 flex-shrink-0 opacity-70"
                                 />
 
@@ -57,8 +48,10 @@
                     </div>
 
                     <!-- Categories options -->
-                    <div class="mb-6 text-sm font-bold">
-                        <h3 class="mb-3.5">Categories</h3>
+                    <div class="mb-4">
+                        <h3 class="mb-3.5 text-base font-semibold">
+                            Categories
+                        </h3>
 
                         <ul class="grid grid-cols-3 gap-3 max-mob:grid-cols-2">
                             <li
@@ -82,9 +75,28 @@
                         </ul>
                     </div>
 
+                    <!-- Language Contents -->
+                    <div class="mb-4">
+                        <h3 class="mb-3.5 text-base font-semibold">
+                            Language Contents
+                        </h3>
+
+                        <ul class="flex flex-wrap gap-2">
+                            <li
+                                v-for="i in 4"
+                                :key="i"
+                                class="bordered cursor-pointer !rounded-md px-2 py-[3px] uppercase transition-colors hover:bg-white-100 hover:text-dark"
+                            >
+                                EN
+                            </li>
+                        </ul>
+                    </div>
+
                     <!-- Tags options -->
                     <div>
-                        <h3 class="mb-3.5">Topics/Tags</h3>
+                        <h3 class="mb-3.5 text-base font-semibold">
+                            Topics/Tags
+                        </h3>
 
                         <ul class="flex flex-wrap gap-2">
                             <li
@@ -108,16 +120,29 @@
             }"
             @click="isFiltersOpen ? close() : open()"
         >
-            <component :is="IconSearch" class="h-6 w-6 flex-shrink-0" />
+            <component
+                :is="IconSearch"
+                v-show="!isFiltersOpen"
+                class="h-6 w-6 flex-shrink-0"
+            />
+
+            <component
+                :is="IconClose"
+                v-show="isFiltersOpen"
+                class="h-3.5 w-3.5 flex-shrink-0"
+            />
         </button>
     </div>
 </template>
 
 <script setup lang="ts">
-    import { ref } from 'vue';
+    import { computed, onMounted, onUnmounted, ref } from 'vue';
     import IconClose from '@img/icons/close.svg?component';
+    import IconRecent from '@img/icons/recent.svg?component';
     import IconSearch from '@img/icons/search.svg?component';
     import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
+
+    import VInput from '@/components/base/input/VInput.vue';
 
     import type { Category } from '@/ts/interfaces/category';
 
@@ -133,13 +158,31 @@
 
     const emits = defineEmits<Emits>();
 
+    const searchElement = ref<HTMLDivElement | null>(null);
+    const filtersScroll = ref<HTMLElement | null>(null);
+    const inputElement = ref<HTMLInputElement | null>(null);
+
     const isFiltersOpen = ref(false);
     const searchValue = ref('');
-    const filtersScroll = ref<HTMLElement | null>(null);
 
     const categories = ref<Category[]>([...searchCategories]);
 
     const selectedCategory = ref<null | Category>(null);
+
+    /**
+     * Define styles for input component
+     */
+    const inputClass = computed(() =>
+        isFiltersOpen.value
+            ? '!pb-1 !p-0 !border-transparent !rounded-none !border-b-white-100'
+            : ''
+    );
+    const iconClass = computed(() =>
+        [
+            '!h-6 !w-6 !text-white-100',
+            isFiltersOpen.value ? '!right-0' : '',
+        ].join(' ')
+    );
 
     const close = () => {
         isFiltersOpen.value = false;
@@ -153,20 +196,41 @@
         isFiltersOpen.value = true;
         emits('opened');
 
+        // Focus input in filters
+        if (inputElement.value) inputElement.value.focus();
+
         // Disable body scroll
         if (filtersScroll.value) disableBodyScroll(filtersScroll.value);
     };
+
+    const setClickEvent = (e: Event) => {
+        if (
+            e.target !== searchElement.value &&
+            searchElement.value &&
+            !searchElement.value.contains(e.target as Node)
+        ) {
+            isFiltersOpen.value = false;
+        }
+    };
+
+    onMounted(() => {
+        document.addEventListener('click', setClickEvent);
+    });
+
+    onUnmounted(() => {
+        document.removeEventListener('click', setClickEvent);
+    });
 </script>
 
-<style scoped>
+<style scoped lang="postcss">
     .search {
-        max-width: 514px;
+        @apply w-full max-w-[535px] max-lg:max-w-fit;
 
         .overflow {
-            max-height: calc(var(--screen) - 145px);
+            max-height: calc(calc(var(--vh, 1vh) * 100) - 150px);
 
             &::-webkit-scrollbar {
-                @apply w-1.5;
+                @apply h-1.5 w-1.5;
             }
 
             &::-webkit-scrollbar-thumb {
@@ -175,25 +239,26 @@
         }
 
         &__input {
-            @apply relative z-10 flex items-center gap-2 px-3.5 py-1.5 transition-all;
-
-            input {
-                @apply -mb-2 border-b border-solid border-transparent pb-2 transition-all max-tab:mb-0;
-            }
+            @apply h-11 max-w-[389px] transition-all;
         }
 
         &__wrap {
-            @apply transition-all max-tab:invisible max-tab:absolute max-tab:left-1/2 max-tab:top-full max-tab:w-full max-tab:-translate-x-1/2 max-tab:opacity-0;
+            @apply transition-all max-lg:invisible max-lg:absolute max-lg:left-1/2 max-lg:top-full max-lg:w-full max-lg:-translate-x-1/2 max-lg:opacity-0;
         }
 
         &__filters {
-            @apply bordered absolute -top-1.5 left-0 w-full pt-14 opacity-0 transition-all max-tab:top-0 max-tab:h-vh max-tab:rounded-none max-tab:border-none max-tab:bg-primary tab:bg-gradient-search;
+            @apply bordered absolute left-0 top-full z-10 w-full transform p-6 pt-14 opacity-0 transition-all max-lg:rounded-none max-lg:border-none max-lg:bg-primary-100 lg:bg-primary-100;
         }
 
         &__btn {
-            @apply flex h-8 w-8 items-center justify-center rounded-md transition-colors tab:hidden;
+            @apply flex h-8 w-8 items-center justify-center rounded-md transition-colors lg:hidden;
         }
 
+        &__icon {
+            @apply absolute right-0 top-1/2 h-6 w-6 flex-shrink-0 -translate-y-1/2 cursor-pointer rounded transition-colors hover:bg-white-25;
+        }
+
+        /* When search is active  */
         &.active {
             @apply border-transparent;
 
@@ -201,16 +266,12 @@
                 @apply visible opacity-100;
             }
 
-            .search__input {
-                @apply px-9 max-tab:gap-6 max-tab:pr-6;
-
-                input {
-                    @apply border-white-100;
-                }
+            .search__filters {
+                @apply top-0 opacity-100;
             }
 
-            .search__filters {
-                @apply px-9 pb-9 opacity-100;
+            .search__input {
+                @apply max-w-full translate-y-3 px-6;
             }
         }
     }

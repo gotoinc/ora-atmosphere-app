@@ -29,7 +29,7 @@ select {
 }
 
 .input {
-    @apply w-full rounded-[32px] border border-solid border-grey-100 bg-transparent px-6 py-2.5 text-base text-dark outline-none transition-colors hover:border-grey-200 focus:border-grey-200;
+    @apply w-full rounded-[32px] border border-solid border-grey-100 bg-transparent px-6 py-2.5 text-base text-dark outline-none transition-all hover:border-grey-200 focus:border-grey-200;
 
     &::placeholder {
         @apply text-grey-100;
@@ -46,6 +46,10 @@ svg {
 
         &::placeholder {
             @apply text-white-50;
+        }
+
+        &.with-icon {
+            @apply pr-11;
         }
     }
 
@@ -64,6 +68,10 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type='number'] {
     -moz-appearance: textfield;
+}
+
+input {
+    border-radius: 0;
 }
 
 /* Vue toast */
