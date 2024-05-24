@@ -10,13 +10,10 @@
             </div>
         </section>
     </main>
-
-    <v-footer />
 </template>
 
 <script setup lang="ts">
     import MainBanner from '@/components/banner/MainBanner.vue';
-    import VFooter from '@/components/layout/VFooter.vue';
     import VHeader from '@/components/layout/VHeader.vue';
 </script>
 

@@ -1,6 +1,6 @@
 <template>
     <header class="relative left-0 top-0 z-50 w-full bg-gradient">
-        <div class="cont flex items-center justify-between !py-6 xl:relative">
+        <div class="cont flex items-center justify-between !py-4 xl:relative">
             <main-logo hide-label-on-mobile />
 
             <div v-if="!isAuthenticated" class="flex gap-2">
