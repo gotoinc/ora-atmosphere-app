@@ -6,7 +6,11 @@
             <main-search class="mr-auto max-lg:ml-auto max-lg:mr-2.5" />
 
             <div v-if="!isAuthenticated" class="flex gap-2">
-                <v-button :to="{ name: 'signInView' }" variant="text">
+                <v-button
+                    class="max-mob-lg:hidden"
+                    :to="{ name: 'signInView' }"
+                    variant="text"
+                >
                     Sign in
                 </v-button>
 

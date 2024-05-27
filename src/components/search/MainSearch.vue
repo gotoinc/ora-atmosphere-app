@@ -44,7 +44,7 @@
                                         class="h-4 w-4 flex-shrink-0 opacity-70"
                                     />
 
-                                    Search
+                                    Schools
                                 </li>
                             </ul>
                         </template>
@@ -68,26 +68,42 @@
                             Categories
                         </h3>
 
-                        <ul class="grid grid-cols-3 gap-3 max-mob:grid-cols-2">
-                            <li
+                        <!-- Categories for desktop -->
+                        <div
+                            class="grid grid-cols-3 gap-3 max-sm:hidden max-mob:grid-cols-2"
+                        >
+                            <category-filter
                                 v-for="category in categories"
                                 :key="category.id"
                                 :class="{
                                     '!opacity-100':
                                         category.id === selectedCategory?.id,
                                 }"
-                                class="flex cursor-pointer items-center gap-2.5 opacity-70 transition-opacity"
+                                :name="category.name"
                                 @click="selectedCategory = category"
                             >
-                                <div
-                                    class="h-14 w-14 flex-shrink-0 rounded-lg bg-white-75"
-                                ></div>
+                            </category-filter>
+                        </div>
 
-                                <h4 class="text-xs font-semibold">
-                                    {{ category.name }}
-                                </h4>
-                            </li>
-                        </ul>
+                        <!-- Categories for mobile -->
+                        <fancy-carousel class="sm:hidden">
+                            <category-filter
+                                v-for="category in categories"
+                                :key="category.id"
+                                :class="{
+                                    '!opacity-100':
+                                        category.id === selectedCategory?.id,
+                                }"
+                                :name="category.name"
+                                class="f-carousel__slide !mr-5 !w-fit"
+                                @click="selectedCategory = category"
+                            >
+                            </category-filter>
+                        </fancy-carousel>
+
+                        <div
+                            class="grid grid-cols-3 gap-3 max-mob:grid-cols-2"
+                        ></div>
                     </div>
 
                     <!-- Language Contents -->
@@ -105,7 +121,7 @@
                                         lang.name ===
                                         getItemByName(selectedLangs, lang.name),
                                 }"
-                                class="bordered cursor-pointer !rounded-md px-2 py-[3px] uppercase transition-colors hover:bg-white-100 hover:text-dark"
+                                class="search__checkbox !rounded-md !px-2 !py-[3px] !uppercase"
                             >
                                 <input
                                     v-model="selectedLangs"
@@ -133,7 +149,7 @@
                                         tag.name ===
                                         getItemByName(selectedTags, tag.name),
                                 }"
-                                class="bordered cursor-pointer px-4 py-1 text-xs font-semibold lowercase transition-colors hover:bg-white-100 hover:text-dark"
+                                class="search__checkbox"
                             >
                                 <input
                                     v-model="selectedTags"
@@ -173,13 +189,15 @@
 </template>
 
 <script setup lang="ts">
-    import { computed, onMounted, onUnmounted, ref } from 'vue';
+    import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
     import IconClose from '@img/icons/close.svg?component';
     import IconRecent from '@img/icons/recent.svg?component';
     import IconSearch from '@img/icons/search.svg?component';
     import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 
     import VInput from '@/components/base/input/VInput.vue';
+    import FancyCarousel from '@/components/carousel/FancyCarousel.vue';
+    import CategoryFilter from '@/components/search/CategoryFilter.vue';
 
     import type { Category } from '@/ts/interfaces/category';
 
@@ -238,9 +256,6 @@
     const close = () => {
         isFiltersOpen.value = false;
         emits('closed');
-
-        // Enable body scroll
-        if (filtersScroll.value) enableBodyScroll(filtersScroll.value);
     };
 
     /**
@@ -252,9 +267,6 @@
 
         // Focus input in filters
         if (inputElement.value) inputElement.value.focus();
-
-        // Disable body scroll
-        if (filtersScroll.value) disableBodyScroll(filtersScroll.value);
     };
 
     const getItemByName = (searchArray: string[], name: string) => {
@@ -270,6 +282,17 @@
                 isFiltersOpen.value = false;
             });
     };
+
+    /**
+     * Watch state of filters to manipulate with scroll
+     */
+    watch(isFiltersOpen, (value) => {
+        if (filtersScroll.value) {
+            value
+                ? disableBodyScroll(filtersScroll.value)
+                : enableBodyScroll(filtersScroll.value);
+        }
+    });
 
     onMounted(() => {
         document.addEventListener('click', setClickEvent);
@@ -306,6 +329,10 @@
 
         &__filters {
             @apply bordered invisible absolute left-0 top-full z-10 w-full transform p-6 pt-[50px] opacity-0 transition-all max-lg:rounded-none max-lg:border-none max-lg:bg-primary-100 lg:bg-primary-100;
+        }
+
+        &__checkbox {
+            @apply bordered cursor-pointer overflow-hidden px-4 py-1 text-sm font-semibold lowercase transition-colors xl:hover:bg-white-100 xl:hover:text-dark;
         }
 
         &__btn {

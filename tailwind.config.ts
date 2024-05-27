@@ -72,6 +72,7 @@ export default {
 
             screens: {
                 mob: '415px',
+                'mob-lg': '551px',
                 '2lg': '1200px',
                 tab: '901px',
                 lg: '1025px',

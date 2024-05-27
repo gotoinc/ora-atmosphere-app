@@ -26,7 +26,11 @@
 <script setup lang="ts">
     import { nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
     // Plugin to disable scroll in all browsers
-    import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
+    import {
+        clearAllBodyScrollLocks,
+        disableBodyScroll,
+        enableBodyScroll,
+    } from 'body-scroll-lock';
 
     interface Props {
         modelValue: boolean;
@@ -64,7 +68,6 @@
     function close() {
         emits('update:modelValue', false);
         emits('close');
-        if (modalElement.value) enableBodyScroll(modalElement.value);
     }
 
     onMounted(() => {
@@ -73,7 +76,7 @@
     });
 
     onUnmounted(() => {
-        if (modalElement.value) enableBodyScroll(modalElement.value);
+        clearAllBodyScrollLocks();
     });
 </script>
 
