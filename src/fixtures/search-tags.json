@@ -1,0 +1,34 @@
+[
+    {
+        "name": "school",
+        "id": 1
+    },
+    {
+        "name": "future",
+        "id": 2
+    },
+    {
+        "name": "environment",
+        "id": 3
+    },
+    {
+        "name": "museum",
+        "id": 4
+    },
+    {
+        "name": "luxury",
+        "id": 5
+    },
+    {
+        "name": "art",
+        "id": 6
+    },
+    {
+        "name": "video games",
+        "id": 7
+    },
+    {
+        "id": 8,
+        "name": "earthquake"
+    }
+]

@@ -96,15 +96,26 @@
                             Language Contents
                         </h3>
 
-                        <ul class="flex flex-wrap gap-2">
-                            <li
-                                v-for="i in 4"
-                                :key="i"
+                        <div class="flex flex-wrap gap-2">
+                            <label
+                                v-for="lang in searchLangs"
+                                :key="lang.id"
+                                :class="{
+                                    'bg-white-100 text-dark':
+                                        lang.name ===
+                                        getItemByName(selectedLangs, lang.name),
+                                }"
                                 class="bordered cursor-pointer !rounded-md px-2 py-[3px] uppercase transition-colors hover:bg-white-100 hover:text-dark"
                             >
-                                EN
-                            </li>
-                        </ul>
+                                <input
+                                    v-model="selectedLangs"
+                                    class="hidden"
+                                    type="checkbox"
+                                    :value="lang.name"
+                                />
+                                {{ lang.name }}
+                            </label>
+                        </div>
                     </div>
 
                     <!-- Tags options -->
@@ -113,15 +124,26 @@
                             Topics/Tags
                         </h3>
 
-                        <ul class="flex flex-wrap gap-2">
-                            <li
-                                v-for="i in 9"
-                                :key="i"
+                        <div class="flex flex-wrap gap-2">
+                            <label
+                                v-for="tag in searchTags"
+                                :key="tag.id"
+                                :class="{
+                                    'bg-white-100 text-dark':
+                                        tag.name ===
+                                        getItemByName(selectedTags, tag.name),
+                                }"
                                 class="bordered cursor-pointer px-4 py-1 text-xs font-semibold lowercase transition-colors hover:bg-white-100 hover:text-dark"
                             >
-                                schools
-                            </li>
-                        </ul>
+                                <input
+                                    v-model="selectedTags"
+                                    class="hidden"
+                                    type="checkbox"
+                                    :value="tag.name"
+                                />
+                                {{ tag.name }}
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -161,8 +183,10 @@
 
     import type { Category } from '@/ts/interfaces/category';
 
+    import searchCategories from '@/fixtures/search-categories.json';
+    import searchLangs from '@/fixtures/search-langs.json';
+    import searchTags from '@/fixtures/search-tags.json';
     import { useClickOutsideElement } from '@/hooks/useClickOutsideElement.ts';
-    import searchCategories from '@/json/search-categories.json';
 
     /**
      * Define emits
@@ -187,16 +211,18 @@
     const isFiltersOpen = ref(false);
     const searchValue = ref('');
 
-    const categories = ref<Category[]>([...searchCategories]);
-
+    const selectedTags = ref<string[]>([]);
+    const selectedLangs = ref<string[]>([]);
     const selectedCategory = ref<null | Category>(null);
+
+    const categories = ref<Category[]>([...searchCategories]);
 
     /**
      * Define styles for input component
      */
     const inputClass = computed(() =>
         isFiltersOpen.value
-            ? '!pb-1 !p-0 !border-transparent !rounded-none !border-b-white-100'
+            ? '!pb-1 !p-0 !border-transparent !placeholder-transparent !rounded-none !border-b-white-100'
             : ''
     );
     const iconClass = computed(() =>
@@ -231,16 +257,18 @@
         if (filtersScroll.value) disableBodyScroll(filtersScroll.value);
     };
 
+    const getItemByName = (searchArray: string[], name: string) => {
+        return searchArray.find((tagName) => tagName === name) ?? '';
+    };
+
     /**
      * Function for handle click and close filters when user clicks outside of component
      */
     const setClickEvent = (e: Event) => {
         if (searchElement.value)
-            useClickOutsideElement(
-                e,
-                searchElement.value,
-                () => (isFiltersOpen.value = false)
-            );
+            useClickOutsideElement(e, searchElement.value, () => {
+                isFiltersOpen.value = false;
+            });
     };
 
     onMounted(() => {
