@@ -27,7 +27,7 @@
                     class="overflow -mr-5 overflow-y-auto pr-5"
                 >
                     <!-- Recent searches list -->
-                    <div class="mb-8">
+                    <div class="mb-6">
                         <template v-if="!searchValue">
                             <h3 class="mb-2 text-[10px] font-bold opacity-70">
                                 Recent searches
@@ -161,6 +161,7 @@
 
     import type { Category } from '@/ts/interfaces/category';
 
+    import { useClickOutsideElement } from '@/hooks/useClickOutsideElement.ts';
     import searchCategories from '@/json/search-categories.json';
 
     /**
@@ -176,7 +177,7 @@
     /**
      * DOM elements
      */
-    const searchElement = ref<HTMLDivElement | null>(null);
+    const searchElement = ref<HTMLElement | null>(null);
     const filtersScroll = ref<HTMLElement | null>(null);
     const inputElement = ref<HTMLInputElement | null>(null);
 
@@ -234,13 +235,12 @@
      * Function for handle click and close filters when user clicks outside of component
      */
     const setClickEvent = (e: Event) => {
-        if (
-            e.target !== searchElement.value &&
-            searchElement.value &&
-            !searchElement.value.contains(e.target as Node)
-        ) {
-            isFiltersOpen.value = false;
-        }
+        if (searchElement.value)
+            useClickOutsideElement(
+                e,
+                searchElement.value,
+                () => (isFiltersOpen.value = false)
+            );
     };
 
     onMounted(() => {
