@@ -34,6 +34,7 @@
     interface Props {
         to?: RouteLocationRaw;
         icon?: Component;
+        reverse?: boolean;
         type?: 'button' | 'submit' | 'reset' | undefined;
         variant?: 'primary' | 'white' | 'info' | 'outline' | 'text';
         loading?: boolean;
@@ -62,7 +63,7 @@
             case 'info':
                 return 'bg-white-50 hover:bg-white-25';
             case 'text':
-                return 'bg-transparent hover:underline';
+                return 'bg-transparent hover-link';
             case 'outline':
                 return 'border border-solid border-primary-100 text-primary-100 hover:bg-primary-100 hover:text-white-100';
             default:
@@ -78,7 +79,11 @@
     );
 
     const withIconStyles = computed(() =>
-        props.icon ? 'flex gap-1 items-center' : ''
+        props.icon
+            ? props.reverse
+                ? 'flex flex-row-reverse gap-1 items-center'
+                : 'flex gap-1 items-center'
+            : ''
     );
 </script>
 

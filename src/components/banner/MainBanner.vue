@@ -1,9 +1,20 @@
 <template>
-    <section class="banner relative flex">
+    <section class="banner relative flex items-end">
         <div class="cont w-full">
             <div class="banner__img absolute left-0 top-0 h-full w-full">
                 <img src="@img/banner.jpg" alt="Banner" class="img-cover" />
             </div>
+
+            <!-- Back link -->
+            <v-button
+                v-if="showBackLink"
+                variant="text"
+                :icon="IconChevronLeft"
+                class="mb-[9.6vw] !pl-0 max-2lg:mb-10"
+                @click="router.go(-1)"
+            >
+                Back
+            </v-button>
 
             <div class="banner__heading">
                 <div class="mb-2 flex items-center gap-3">
@@ -35,15 +46,26 @@
 </template>
 
 <script setup lang="ts">
+    import { computed } from 'vue';
+    import { useRouter } from 'vue-router';
+    import IconChevronLeft from '@img/icons/chevron-left.svg?component';
     import IconInfo from '@img/icons/info.svg?component';
     import IconPlay from '@img/icons/play.svg?component';
 
     import VButton from '@/components/banner/VButton.vue';
+
+    const router = useRouter();
+
+    const showBackLink = computed(() => {
+        const name = router.currentRoute.value.name;
+
+        return name === 'catalogThemeView' || name === 'catalogVideosView';
+    });
 </script>
 
 <style scoped lang="postcss">
     .banner {
-        padding-top: 35.6vh;
+        padding-bottom: 37vh;
         max-height: 1080px;
         min-height: 900px;
         height: 100vh;
@@ -72,17 +94,17 @@
         }
 
         @media screen and (min-height: 1080px) {
-            padding-top: 385px;
+            padding-bottom: 400px;
         }
 
         @media screen and (max-height: 768px) {
-            padding-top: 280px;
+            padding-bottom: 380px;
         }
 
         @media screen and (max-width: 1201px) {
             max-height: 625px;
             min-height: 625px;
-            padding-top: 200px;
+            padding-bottom: 200px;
         }
     }
 </style>
