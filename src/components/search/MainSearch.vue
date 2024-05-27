@@ -21,7 +21,7 @@
             />
 
             <!-- Search filters -->
-            <div class="search__filters">
+            <div class="search__filters bordered">
                 <div
                     ref="filtersScroll"
                     class="overflow -mr-5 overflow-y-auto pr-5"
@@ -100,10 +100,6 @@
                             >
                             </category-filter>
                         </fancy-carousel>
-
-                        <div
-                            class="grid grid-cols-3 gap-3 max-mob:grid-cols-2"
-                        ></div>
                     </div>
 
                     <!-- Language Contents -->
@@ -121,7 +117,7 @@
                                         lang.name ===
                                         getItemByName(selectedLangs, lang.name),
                                 }"
-                                class="search__checkbox !rounded-md !px-2 !py-[3px] !uppercase"
+                                class="tag tag--lang"
                             >
                                 <input
                                     v-model="selectedLangs"
@@ -149,7 +145,7 @@
                                         tag.name ===
                                         getItemByName(selectedTags, tag.name),
                                 }"
-                                class="search__checkbox"
+                                class="tag"
                             >
                                 <input
                                     v-model="selectedTags"
@@ -328,11 +324,7 @@
         }
 
         &__filters {
-            @apply bordered invisible absolute left-0 top-full z-10 w-full transform p-6 pt-[50px] opacity-0 transition-all max-lg:rounded-none max-lg:border-none max-lg:bg-primary-100 lg:bg-primary-100;
-        }
-
-        &__checkbox {
-            @apply bordered cursor-pointer overflow-hidden px-4 py-1 text-sm font-semibold lowercase transition-colors xl:hover:bg-white-100 xl:hover:text-dark;
+            @apply invisible absolute left-0 top-full z-10 w-full transform p-6 pt-[50px] opacity-0 transition-all max-lg:rounded-none max-lg:border-none max-lg:bg-primary-100 lg:bg-primary-100;
         }
 
         &__btn {
@@ -363,9 +355,5 @@
                 @apply max-w-full lg:translate-y-3 lg:px-6;
             }
         }
-    }
-
-    .bordered {
-        @apply rounded-3xl border border-solid border-white-100;
     }
 </style>

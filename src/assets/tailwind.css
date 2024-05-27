@@ -19,3 +19,15 @@ input {
     @apply w-full h-full object-contain
 }
 
+.bordered {
+    @apply rounded-3xl border border-solid border-white-100;
+}
+
+.tag {
+    @apply rounded-3xl border border-solid border-white-100 cursor-pointer overflow-hidden px-4 py-1 text-sm font-semibold lowercase transition-colors xl:hover:bg-white-100 xl:hover:text-dark;
+
+    &.tag--lang {
+        @apply rounded-md px-2 py-[3px] uppercase
+    }
+}
+

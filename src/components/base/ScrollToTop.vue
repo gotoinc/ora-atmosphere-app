@@ -1,7 +1,7 @@
 <template>
     <button
         :class="{ active: isButtonShow }"
-        class="invisible fixed bottom-20 right-6 flex h-20 w-20 translate-x-5 items-center justify-center rounded-full bg-white-100 text-primary-100 opacity-0 transition-all hover:bg-primary-100 hover:text-white-100 max-sm:right-4"
+        class="invisible fixed bottom-20 right-6 z-50 flex h-20 w-20 translate-x-5 items-center justify-center rounded-full bg-white-100 text-primary-100 opacity-0 transition-all hover:bg-primary-100 hover:text-white-100 max-sm:right-4"
         @click="scrollTop"
     >
         <component :is="IconChevronUp" class="h-11 w-11" />

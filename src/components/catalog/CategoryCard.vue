@@ -33,13 +33,5 @@
     .card {
         max-width: 347px;
         min-height: 195px;
-
-        &__img:before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            background:;
-        }
     }
 </style>

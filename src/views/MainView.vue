@@ -47,6 +47,7 @@
             content: '';
             position: absolute;
             top: -160px;
+            pointer-events: none;
 
             width: 100%;
             height: 806px;
