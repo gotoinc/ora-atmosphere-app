@@ -27,6 +27,7 @@ export default {
                     75: 'rgba(255, 255, 255, 0.75)',
                     50: 'rgba(255, 255, 255, 0.5)',
                     25: 'rgba(255, 255, 255, 0.25)',
+                    15: 'rgba(255, 255, 255, 0.15)',
                 },
             },
 
@@ -65,9 +66,22 @@ export default {
 
             backgroundImage: {
                 gradient: 'linear-gradient(180deg, #0ACFFE 0%, #495AFF 100%)',
+                'gradient-search':
+                    'linear-gradient(180deg, #0ACFFE 0%, #495AFF 7.5%)',
             },
 
-            screens: { mob: '415px' },
+            screens: {
+                mob: '415px',
+                'mob-lg': '551px',
+                '2lg': '1200px',
+                tab: '901px',
+                lg: '1025px',
+                xs: '375px',
+            },
+
+            height: {
+                vh: 'calc(var(--vh, 1vh) * 100)',
+            },
         },
     },
     plugins: [],

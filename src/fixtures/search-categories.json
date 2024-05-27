@@ -1,0 +1,26 @@
+[
+    {
+        "name": "Brands & events",
+        "id": 1
+    },
+    {
+        "name": "Culture",
+        "id": 2
+    },
+    {
+        "name": "Entertainent",
+        "id": 3
+    },
+    {
+        "name": "Science",
+        "id": 4
+    },
+    {
+        "name": "Our World",
+        "id": 5
+    },
+    {
+        "name": "Oceans & Skies",
+        "id": 6
+    }
+]

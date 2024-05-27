@@ -70,6 +70,8 @@
 
     import { useAuthStore } from '@/stores/auth.store.ts';
 
+    import { useClickOutsideElement } from '@/hooks/useClickOutsideElement.ts';
+
     const isActionsOpen = ref(false);
 
     const router = useRouter();
@@ -81,12 +83,12 @@
     const { logout } = useAuthStore();
 
     const setClickEvent = (e: Event) => {
-        if (
-            e.target !== actionsElement.value &&
-            actionsElement.value &&
-            !actionsElement.value.contains(e.target as Node)
-        ) {
-            isActionsOpen.value = false;
+        if (actionsElement.value) {
+            useClickOutsideElement(
+                e,
+                actionsElement.value,
+                () => (isActionsOpen.value = false)
+            );
         }
     };
 

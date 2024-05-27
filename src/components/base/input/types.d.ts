@@ -8,6 +8,9 @@ export interface InputProps {
     variant?: 'dark' | 'white';
     label?: string;
     icon?: Component;
+    iconClass?: string;
+    iconClickable?: boolean;
+    inputClass?: string;
     error?: string;
     required?: boolean;
     optional?: boolean;
