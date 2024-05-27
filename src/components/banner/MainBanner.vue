@@ -1,5 +1,5 @@
 <template>
-    <section class="banner relative flex items-end">
+    <section class="banner relative flex">
         <div class="cont w-full">
             <div class="banner__img absolute left-0 top-0 h-full w-full">
                 <img src="@img/banner.jpg" alt="Banner" class="img-cover" />
@@ -18,7 +18,9 @@
                     <h3 class="font-light uppercase">Brands</h3>
                 </div>
 
-                <h1 class="mb-8 text-9xl font-extrabold">Cisco</h1>
+                <h1 class="mb-8 text-9xl font-extrabold max-2lg:text-[64px]">
+                    Cisco
+                </h1>
 
                 <div class="flex gap-4">
                     <v-button variant="white" :icon="IconPlay"> Play </v-button>
@@ -41,10 +43,10 @@
 
 <style scoped lang="postcss">
     .banner {
-        min-height: 600px;
-        height: 56.25vw;
-        max-height: 90vh;
-        padding-bottom: 13vw;
+        padding-top: 35.6vh;
+        max-height: 1080px;
+        min-height: 900px;
+        height: 100vh;
 
         &__img {
             z-index: -1;
@@ -56,11 +58,31 @@
                 height: 100%;
                 background: rgba(73, 90, 255, 0.35);
             }
+
+            @media screen and (max-width: 551px) {
+                img {
+                    object-position: 25% 50%;
+                }
+            }
         }
 
         &__label {
             width: 30px;
             height: 28px;
+        }
+
+        @media screen and (min-height: 1080px) {
+            padding-top: 385px;
+        }
+
+        @media screen and (max-height: 768px) {
+            padding-top: 280px;
+        }
+
+        @media screen and (max-width: 1201px) {
+            max-height: 625px;
+            min-height: 625px;
+            padding-top: 200px;
         }
     }
 </style>

@@ -1,8 +1,6 @@
 <template>
-    <div>
-        <div ref="carouselElement" class="carousel">
-            <slot></slot>
-        </div>
+    <div ref="carouselElement">
+        <slot></slot>
     </div>
 </template>
 
@@ -35,4 +33,12 @@
     });
 </script>
 
-<style scoped></style>
+<style>
+    .f-carousel__viewport {
+        overflow: visible;
+    }
+
+    .f-carousel__slide:last-child {
+        margin-right: 0 !important;
+    }
+</style>

@@ -57,6 +57,7 @@ export default {
                         fontWeight: '700',
                     },
                 ],
+                h5: ['1.25rem'],
                 small: '0.813rem',
             },
 
