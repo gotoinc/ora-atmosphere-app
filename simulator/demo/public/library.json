@@ -15,7 +15,7 @@
         {
             "name": "winter",
             "mediaType": "image",
-            "URL": "demo/public/images/origin_Winter.png"
+            "URL": "/demo/public/images/origin_Winter.png"
         },
         {
             "name": "tony",
@@ -33,13 +33,13 @@
     "rooms": [
         {
             "name": "sky",
-            "scene_glb": "demo/public/images/sky.glb",
-            "environment": "demo/images/environment.env",
+            "scene_glb": "/demo/public/images/sky.glb",
+            "environment": "/demo/images/environment.env",
             "content": ["orange", "winter", "star", "menu"]
         },
         {
             "name": "expo",
-            "scene_glb": "demo/public/images/expo.glb",
+            "scene_glb": "/demo/public/images/expo.glb",
             "content": [
                 "menu",
                 "star",
@@ -53,14 +53,14 @@
         },
         {
             "name": "aquarium",
-            "scene_glb": "demo/public/images/aquarium.glb",
-            "environment": "demo/public/images/environment.env",
+            "scene_glb": "/demo/public/images/aquarium.glb",
+            "environment": "/demo/public/images/environment.env",
             "content": ["orange", "winter", "star", "menu"]
         },
         {
             "name": "classroom",
-            "scene_glb": "demo/public/images/classroom.glb",
-            "environment": "demo/public/images/environment.env",
+            "scene_glb": "/demo/public/images/classroom.glb",
+            "environment": "/demo/public/images/environment.env",
             "content": ["orange", "winter", "star", "menu"]
         }
     ]

@@ -1,84 +1,84 @@
 <template>
-    <div id="simulatorRoot" ref="simulatorElement" class="h-screen"></div>
+    <div>
+        <div ref="simulatorElement" class="h-screen"></div>
 
-    <div id="content-bar"></div>
+        <div
+            class="settings absolute left-16 top-16 flex flex-col items-center gap-4"
+        >
+            <button
+                type="button"
+                :class="{ 'bg-white-100 text-dark': activeDiameter === 100 }"
+                class="size-button h-[100px] w-[100px]"
+                @click="setSimulatorDiameter(100)"
+            >
+                100
+            </button>
 
-    <div id="settings">
-        <div id="settings-title">
-            <div id="settings-title-text"></div>
+            <button
+                type="button"
+                :class="{ 'bg-white-100 text-dark': activeDiameter === 80 }"
+                class="size-button h-[80px] w-[80px]"
+                @click="setSimulatorDiameter(80)"
+            >
+                80
+            </button>
 
-            <img
-                id="settings-button"
-                src="@simulator/demo/public/images/settings.svg"
-                alt="settings"
-            />
-        </div>
-
-        <div id="settings-content" class="hidden">
-            <div id="sphere-size">
-                <div id="sphere-button-60" class="sphere-size-button">60</div>
-
-                <div id="sphere-button-80" class="sphere-size-button">80</div>
-
-                <div id="sphere-button-100" class="sphere-size-button">100</div>
-            </div>
-
-            <div id="settings-people-visible" style="display: none">
-                <img
-                    id="show-people-button"
-                    src="@simulator/demo/public/images/people.svg"
-                    alt="show-people"
-                />
-                Show People
-            </div>
+            <button
+                type="button"
+                :class="{ 'bg-white-100 text-dark': activeDiameter === 60 }"
+                class="size-button h-[60px] w-[60px]"
+                @click="setSimulatorDiameter(60)"
+            >
+                60
+            </button>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
     import { onMounted, ref } from 'vue';
-    import { init } from '@simulator/demo/src';
+    import type { Simulator } from '@simulator/demo';
+    import { initSimulator } from '@simulator/demo/src';
+    // import { resolveContentURL } from '@simulator/demo/src/library.ts';
+
+    type SphereDiameter = 100 | 80 | 60;
 
     const simulatorElement = ref<HTMLDivElement | null>(null);
+    const activeDiameter = ref<SphereDiameter>(80);
 
-    onMounted(() => {
-        if (simulatorElement.value) {
-            void init().then(() => {
-                console.log('Initialized');
+    const setSimulatorContent = () => {
+        if (simulatorInstance.value) {
+            void simulatorInstance.value.setContent({
+                URL: 'https://images.unsplash.com/reserve/bOvf94dPRxWu0u3QsPjF_tree.jpg?ixid=M3wxMjA3fDB8MXxzZWFyY2h8M3x8bmF0dXJhbHxlbnwwfHx8fDE3MTY4MDYwMjV8MA&ixlib=rb-4.0.3',
             });
         }
+    };
 
-        const settings = document.getElementById('settings');
-        const settingsContent = document.getElementById('settings-content');
-        const settingsButton = document.getElementById('settings-button');
-        const settingsTitleText = document.getElementById(
-            'settings-title-text'
-        );
-
-        if (
-            settingsButton &&
-            settings &&
-            settingsContent &&
-            settingsTitleText
-        ) {
-            settingsButton.onclick = function () {
-                settings.className =
-                    settings.className === 'settings-open'
-                        ? ''
-                        : 'settings-open';
-                settingsContent.className =
-                    settingsContent.className === 'hidden' ? '' : 'hidden';
-                settingsButton.src =
-                    settingsContent.className === 'hidden'
-                        ? 'demo/public/images/settings.svg'
-                        : 'demo/public/images/close.svg';
-                settingsTitleText.innerHTML =
-                    settingsContent.className === 'hidden' ? '' : 'Settings';
-            };
+    const setSimulatorDiameter = (diameter: SphereDiameter) => {
+        if (simulatorInstance.value) {
+            simulatorInstance.value.setDiameter(diameter);
+            activeDiameter.value = diameter;
         }
+    };
+
+    const simulatorInstance = ref<Simulator | null>(null);
+
+    onMounted(async () => {
+        if (simulatorElement.value) {
+            const { simulator } = await initSimulator(
+                simulatorElement.value,
+                ''
+            );
+
+            simulatorInstance.value = simulator;
+        }
+
+        setSimulatorContent();
     });
 </script>
 
-<style>
-    @import '@simulator/demo/public/overlay.css';
+<style scoped lang="postcss">
+    .size-button {
+        @apply cursor-pointer rounded-full border border-solid border-white-100 transition-colors hover:bg-white-100 hover:text-dark;
+    }
 </style>

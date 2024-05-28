@@ -33,7 +33,6 @@ module.exports = {
         '@typescript-eslint/no-unsafe-return': 'off',
         '@typescript-eslint/unified-signatures': 'off',
         '@typescript-eslint/prefer-promise-reject-errors': 'off',
-        '@typescript-eslint/restrict-template-expressions': 'off',
         '@typescript-eslint/no-for-in-array': 'error',
         '@typescript-eslint/no-non-null-asserted-optional-chain': 'error',
         '@typescript-eslint/array-type': [

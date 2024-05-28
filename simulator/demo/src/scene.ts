@@ -25,16 +25,14 @@ import {
     PointerInfo,
     ShadowGenerator,
 } from '@babylonjs/core';
-import { context } from 'esbuild';
 
-const s3_bucket =
-    'https://akias53xj4ry2g2mrnok-coffre-s3-test.s3.eu-west-3.amazonaws.com/';
-const default_room_glb_url = s3_bucket + 'expo.glb';
-const default_environment_url = s3_bucket + 'environment.env';
-const default_people_glb_url = s3_bucket + 'people.glb';
-const play_sphere_url = s3_bucket + 'play-sphere.png';
-const base_glb_url = s3_bucket + 'base.glb';
-const drop_icon_url = s3_bucket + 'drop-icon.png';
+import default_room_glb_url from '@simulator/demo/public/images/expo.glb';
+import default_environment_url from '@simulator/demo/public/images/environment.env';
+import default_people_glb_url from '@simulator/demo/public/images/people.glb';
+import play_sphere_url from '@simulator/demo/public/images/play-sphere.png';
+import base_glb_url from '@simulator/demo/public/images/base.glb';
+import drop_icon_url from '@simulator/demo/public/images/drop-icon.png';
+
 const default_diameter = 80;
 
 export type Content = {

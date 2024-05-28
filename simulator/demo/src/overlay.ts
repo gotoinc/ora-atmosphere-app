@@ -4,7 +4,7 @@ import {
     resolveContentThumbnail,
     resolveContentURL,
 } from './library';
-import { Simulator } from 'simulator-engine';
+import { Simulator } from '@simulator/demo';
 import { URLState } from './url_state';
 
 export function initOverlay(

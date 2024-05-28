@@ -26,7 +26,6 @@
         "noUnusedParameters": true,
         "noFallthroughCasesInSwitch": true
     },
-    "exclude": ["simulator/**/*.ts"],
     "include": [
         "src/**/*.ts",
         "src/**/*.tsx",
@@ -36,8 +35,7 @@
         "./tailwind.config.ts",
         "./postcss.config.js",
         "./vue-shim.d.ts",
-        "./vite.config.ts",
-        "./simulator/simulator.js"
+        "./vite.config.ts"
     ],
     "references": [{ "path": "./tsconfig.node.json" }]
 }
