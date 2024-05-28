@@ -72,13 +72,14 @@ export default {
             },
 
             screens: {
+                xs: '375px',
                 mob: '415px',
                 'mob-md': '480px',
                 'mob-lg': '551px',
-                '2lg': '1200px',
                 tab: '901px',
                 lg: '1025px',
-                xs: '375px',
+                '2lg': '1200px',
+                desktop: '1440px',
             },
 
             height: {

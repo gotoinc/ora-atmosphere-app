@@ -1,51 +1,61 @@
 <template>
-    <template v-if="route.name === 'catalogThemeView'">
-        <h2 class="mb-6 text-h5 font-light uppercase">
-            {{ route.params.theme }} theme
-        </h2>
+    <h2 class="mb-6 text-h5 font-light uppercase">Videos</h2>
 
-        <div
-            class="grid grid-cols-5 gap-3.5 max-2lg:grid-cols-4 max-tab:grid-cols-3 max-sm:grid-cols-2 max-mob-md:grid-cols-1"
-        >
-            <category-card
-                v-for="i in 25"
-                :key="i"
-                class="!max-w-full max-mob-md:hidden"
-                :to="{
-                    name: 'catalogVideosView',
-                }"
-                :img="ThemeImg"
-                name="Theme"
-            />
+    <div
+        class="mb-36 grid grid-cols-5 gap-3.5 max-2xl:grid-cols-4 max-tab:grid-cols-3 max-sm:grid-cols-2 max-mob-md:grid-cols-1"
+    >
+        <video-card
+            v-for="i in 25"
+            :key="i"
+            name="Title"
+            :img="ThemeImg"
+            @expand="openVideoPopup"
+        />
+    </div>
 
-            <category-card
-                v-for="i in 4"
-                :key="i"
-                class="!max-w-full mob-md:hidden"
-                :to="{
-                    name: 'catalogVideosView',
-                }"
-                :img="ThemeImg"
-                name="Theme"
-            />
-        </div>
+    <teleport to="body">
+        <v-popup v-model="isVideoOpen" is-empty>
+            <template #body>
+                <div class="relative">
+                    <video-card
+                        class="w-full max-w-[566px]"
+                        :expand-on-hover="false"
+                        name="Title"
+                        :open-description="isDescriptionOpen"
+                        :img="ThemeImg"
+                        @expand="isDescriptionOpen = !isDescriptionOpen"
+                    />
 
-        <v-button variant="text" class="mx-auto mt-6 block mob-md:hidden">
-            Show more
-        </v-button>
-    </template>
-
-    <router-view></router-view>
+                    <button
+                        class="absolute right-4 top-4 z-20 rounded transition-colors hover:bg-white-15"
+                        @click="isVideoOpen = false"
+                    >
+                        <component
+                            :is="IconCross"
+                            class="h-10 w-10 text-white-100"
+                        />
+                    </button>
+                </div>
+            </template>
+        </v-popup>
+    </teleport>
 </template>
 
 <script setup lang="ts">
-    import { useRoute } from 'vue-router';
+    import { ref } from 'vue';
     import ThemeImg from '@img/categories/theme-bg.jpg';
+    import IconCross from '@img/icons/cross.svg?component';
 
-    import VButton from '@/components/banner/VButton.vue';
-    import CategoryCard from '@/components/catalog/CategoryCard.vue';
+    import VideoCard from '@/components/catalog/VideoCard.vue';
+    import VPopup from '@/components/popup/VPopup.vue';
 
-    const route = useRoute();
+    const isVideoOpen = ref(false);
+    const isDescriptionOpen = ref(false);
+
+    const openVideoPopup = () => {
+        isVideoOpen.value = true;
+        isDescriptionOpen.value = true;
+    };
 </script>
 
 <style scoped></style>

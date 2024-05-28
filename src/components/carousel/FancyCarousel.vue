@@ -1,5 +1,5 @@
 <template>
-    <div ref="carouselElement">
+    <div ref="carouselElement" :class="{ visible: overflowVisible }">
         <slot></slot>
     </div>
 </template>
@@ -13,6 +13,7 @@
 
     interface Props {
         carouselOptions?: Partial<OptionsType>;
+        overflowVisible?: boolean;
     }
 
     type CarouselElement = HTMLElement | string | null;
@@ -34,8 +35,10 @@
 </script>
 
 <style>
-    .f-carousel__viewport {
-        overflow: visible;
+    .visible {
+        .f-carousel__viewport {
+            overflow: visible;
+        }
     }
 
     .f-carousel__slide:last-child {

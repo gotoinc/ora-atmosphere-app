@@ -6,10 +6,12 @@
             class="fixed inset-0 z-50 overflow-y-auto bg-grey-400/40 backdrop-blur-sm"
         >
             <div
-                class="flex min-h-full items-center justify-center p-4 text-center max-mob:items-end max-mob:p-0"
+                class="flex min-h-full items-center justify-center p-4 text-center"
+                :class="{ 'max-mob:items-end max-mob:p-0': !isEmpty }"
                 @click.self="close()"
             >
                 <div
+                    v-if="!isEmpty"
                     :class="{
                         'max-w-5xl': props.size === 'lg',
                         'max-w-[484px]': props.size === 'sm',
@@ -18,6 +20,8 @@
                 >
                     <slot :close="close"></slot>
                 </div>
+
+                <slot name="body"></slot>
             </div>
         </div>
     </transition>
@@ -36,6 +40,7 @@
         modelValue: boolean;
         size?: 'lg' | 'sm';
         closeButton?: boolean;
+        isEmpty?: boolean;
     }
 
     interface Emits {

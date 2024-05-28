@@ -10,13 +10,12 @@
         <router-link
             v-if="to"
             :to="to"
-            target="_blank"
-            class="absolute -right-[30px] flex items-center gap-1 py-2 pl-6 transition-all group-hover:translate-x-[86px]"
+            class="absolute -right-[30px] flex items-center gap-1 py-2 pl-6 transition-all group-hover:translate-x-[105px]"
         >
             <span
                 class="invisible whitespace-nowrap font-bold opacity-0 transition-all group-hover:visible group-hover:opacity-100"
             >
-                View All
+                Explore All
             </span>
 
             <component :is="IconChevronRight" class="h-6 w-6" />

@@ -1,7 +1,7 @@
 <template>
     <router-link
         :to="to"
-        class="card group relative flex items-center justify-center overflow-hidden rounded-2xl text-h2"
+        class="card group relative flex items-center justify-center overflow-hidden rounded-2xl text-center text-h2"
     >
         <div
             class="absolute left-0 top-0 -z-10 h-full w-full before:absolute before:left-0 before:top-0 before:z-10 before:h-full before:w-full before:content-normal before:bg-primary-100/35"

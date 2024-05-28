@@ -6,7 +6,7 @@ import authRoute from '@/router/routes/auth.route.ts';
 import baseRoute from '@/router/routes/base.route.ts';
 import profileRoute from '@/router/routes/profile.route.ts';
 
-const routes = [baseRoute, authRoute, profileRoute];
+export const routes = [baseRoute, authRoute, profileRoute];
 
 const router = createRouter({
     history: createWebHistory(),

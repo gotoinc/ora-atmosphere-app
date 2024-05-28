@@ -34,7 +34,13 @@
                 </h1>
 
                 <div class="flex gap-4">
-                    <v-button variant="white" :icon="IconPlay"> Play </v-button>
+                    <v-button
+                        variant="white"
+                        :icon="IconPlay"
+                        icon-class="!w-2.5 !h-3 mr-2"
+                    >
+                        Play
+                    </v-button>
 
                     <v-button :icon="IconInfo" variant="info">
                         More info
@@ -59,7 +65,11 @@
     const showBackLink = computed(() => {
         const name = router.currentRoute.value.name;
 
-        return name === 'catalogThemeView' || name === 'catalogVideosView';
+        return [
+            'catalogDomainView',
+            'catalogThemeView',
+            'catalogCategoryView',
+        ].some((routeName) => routeName === name);
     });
 </script>
 

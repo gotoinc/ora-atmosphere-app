@@ -16,7 +16,7 @@
         :class="[baseStyles, buttonStyles, withIconStyles]"
         @click="emits('click')"
     >
-        <component :is="icon" v-if="icon" :class="iconStyles" />
+        <component :is="icon" v-if="icon" :class="[iconStyles, iconClass]" />
 
         <span :class="{ hidden: loading }">
             <slot></slot>
@@ -34,6 +34,7 @@
     interface Props {
         to?: RouteLocationRaw;
         icon?: Component;
+        iconClass?: string;
         reverse?: boolean;
         type?: 'button' | 'submit' | 'reset' | undefined;
         variant?: 'primary' | 'white' | 'info' | 'outline' | 'text';

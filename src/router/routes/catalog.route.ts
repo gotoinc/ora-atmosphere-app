@@ -9,22 +9,24 @@ export default {
 
     children: [
         {
-            path: ':theme',
-            name: 'catalogThemeView',
-            component: () => import('@/views/catalog/CatalogThemeView.vue'),
+            path: ':category',
+            name: 'catalogCategoryView',
+            component: () => import('@/views/catalog/CatalogCategoryView.vue'),
 
             children: [
                 {
-                    path: 'videos',
-                    name: 'catalogVideosView',
+                    path: ':theme/videos',
+                    name: 'catalogThemeView',
                     component: () =>
-                        import('@/views/catalog/CatalogVideosView.vue'),
-
-                    meta: {
-                        title: 'Videos',
-                    },
+                        import('@/views/catalog/CatalogThemeView.vue'),
                 },
             ],
+        },
+
+        {
+            path: 'extended/:domain',
+            name: 'catalogDomainView',
+            component: () => import('@/views/catalog/CatalogDomainView.vue'),
         },
     ],
 };

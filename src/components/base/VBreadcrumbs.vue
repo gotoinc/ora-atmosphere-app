@@ -25,17 +25,26 @@
     import { computed } from 'vue';
     import { useRoute } from 'vue-router';
 
+    import { useTransformFromPath } from '@/hooks/useTransformPath.ts';
+
     const route = useRoute();
 
     const breadcrumbs = computed(() => {
         return route.matched.slice(1).map((item) => {
-            const breadcrumbName: string =
-                item.name === 'catalogThemeView'
-                    ? `${route.params.theme} theme`
-                    : (item.meta.title as string);
+            let breadcrumbName: string;
+
+            if (item.name === 'catalogCategoryView') {
+                breadcrumbName = `${route.params.category} category`;
+            } else if (item.name === 'catalogThemeView') {
+                breadcrumbName = `${route.params.theme} theme`;
+            } else if (item.name === 'catalogDomainView') {
+                breadcrumbName = route.params.domain as string;
+            } else {
+                breadcrumbName = item.meta.title as string;
+            }
 
             return {
-                name: breadcrumbName,
+                name: useTransformFromPath(breadcrumbName),
                 to: item.name,
             };
         });

@@ -2,30 +2,25 @@
     <!-- Catalog page  -->
     <template v-if="route.name === 'catalogView'">
         <div class="grid gap-12">
-            <div>
-                <catalog-link to="#" class="mb-4">
-                    BRANDS & EVENTS
+            <div v-for="{ items, category } in catalogJson" :key="category">
+                <catalog-link
+                    :to="isCatalogLink(category, items.length)"
+                    class="mb-4"
+                >
+                    {{ category }}
                 </catalog-link>
 
-                <fancy-carousel class="-ml-4 w-screen px-4">
+                <fancy-carousel overflow-visible class="-ml-4 w-screen px-4">
                     <category-card
+                        v-for="item in items.slice(0, 5)"
+                        :key="item.name"
                         class="f-carousel__slide !mr-3.5 max-sm:!max-w-[268px]"
                         :to="{
-                            name: 'catalogThemeView',
-                            params: { theme: 'brands' },
+                            name: 'catalogCategoryView',
+                            params: { category: useTransformPath(item.name) },
                         }"
-                        :img="CategoryImg1"
-                        name="Brands"
-                    />
-
-                    <category-card
-                        class="f-carousel__slide !mr-3.5 max-sm:!max-w-[268px]"
-                        :to="{
-                            name: 'catalogThemeView',
-                            params: { theme: 'events' },
-                        }"
-                        :img="CategoryImg2"
-                        name="Events"
+                        :img="item.bg"
+                        :name="item.name"
                     />
                 </fancy-carousel>
             </div>
@@ -43,14 +38,24 @@
 
 <script setup lang="ts">
     import { useRoute } from 'vue-router';
-    import CategoryImg1 from '@img/categories/cat-1.jpg';
-    import CategoryImg2 from '@img/categories/cat-2.jpg';
 
     import ScrollToTop from '@/components/base/ScrollToTop.vue';
     import VBreadcrumbs from '@/components/base/VBreadcrumbs.vue';
     import FancyCarousel from '@/components/carousel/FancyCarousel.vue';
     import CatalogLink from '@/components/catalog/CatalogLink.vue';
     import CategoryCard from '@/components/catalog/CategoryCard.vue';
+
+    import catalogJson from '@/fixtures/catalog.json';
+    import { useTransformPath } from '@/hooks/useTransformPath.ts';
+
+    const isCatalogLink = (category: string, length: number) => {
+        return length > 5
+            ? {
+                  name: 'catalogDomainView',
+                  params: { domain: useTransformPath(category) },
+              }
+            : undefined;
+    };
 
     const route = useRoute();
 </script>
