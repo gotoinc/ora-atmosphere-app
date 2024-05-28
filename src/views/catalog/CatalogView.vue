@@ -2,7 +2,10 @@
     <!-- Catalog page  -->
     <template v-if="route.name === 'catalogView'">
         <div class="grid gap-12">
-            <div v-for="{ items, category } in catalogJson" :key="category">
+            <div
+                v-for="{ items, category, active } in catalogJson"
+                :key="category"
+            >
                 <catalog-link
                     :to="isCatalogLink(category, items.length)"
                     class="mb-4"
@@ -14,10 +17,11 @@
                     <category-card
                         v-for="item in items.slice(0, 5)"
                         :key="item.name"
+                        :disable="!active"
                         class="f-carousel__slide !mr-3.5 max-sm:!max-w-[268px]"
                         :to="{
-                            name: 'catalogCategoryView',
-                            params: { category: useTransformPath(item.name) },
+                            name: 'catalogGroupView',
+                            params: { group: useTransformPath(item.name) },
                         }"
                         :img="item.bg"
                         :name="item.name"
@@ -51,8 +55,8 @@
     const isCatalogLink = (category: string, length: number) => {
         return length > 5
             ? {
-                  name: 'catalogDomainView',
-                  params: { domain: useTransformPath(category) },
+                  name: 'catalogCategoryView',
+                  params: { category: useTransformPath(category) },
               }
             : undefined;
     };

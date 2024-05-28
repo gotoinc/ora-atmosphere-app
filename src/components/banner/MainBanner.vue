@@ -66,9 +66,9 @@
         const name = router.currentRoute.value.name;
 
         return [
-            'catalogDomainView',
-            'catalogThemeView',
             'catalogCategoryView',
+            'catalogThemeView',
+            'catalogGroupView',
         ].some((routeName) => routeName === name);
     });
 </script>

@@ -4,14 +4,14 @@ export default {
     component: () => import('@/views/catalog/CatalogView.vue'),
 
     meta: {
-        title: 'Catalog extended',
+        title: 'Extended catalog ',
     },
 
     children: [
         {
-            path: ':category',
-            name: 'catalogCategoryView',
-            component: () => import('@/views/catalog/CatalogCategoryView.vue'),
+            path: ':group',
+            name: 'catalogGroupView',
+            component: () => import('@/views/catalog/CatalogGroupView.vue'),
 
             children: [
                 {
@@ -24,9 +24,9 @@ export default {
         },
 
         {
-            path: 'extended/:domain',
-            name: 'catalogDomainView',
-            component: () => import('@/views/catalog/CatalogDomainView.vue'),
+            path: 'extended/:category',
+            name: 'catalogCategoryView',
+            component: () => import('@/views/catalog/CatalogCategoryView.vue'),
         },
     ],
 };

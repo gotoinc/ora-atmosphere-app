@@ -33,12 +33,12 @@
         return route.matched.slice(1).map((item) => {
             let breadcrumbName: string;
 
-            if (item.name === 'catalogCategoryView') {
-                breadcrumbName = `${route.params.category} category`;
+            if (item.name === 'catalogGroupView') {
+                breadcrumbName = `${route.params.group}`;
             } else if (item.name === 'catalogThemeView') {
                 breadcrumbName = `${route.params.theme} theme`;
-            } else if (item.name === 'catalogDomainView') {
-                breadcrumbName = route.params.domain as string;
+            } else if (item.name === 'catalogCategoryView') {
+                breadcrumbName = route.params.category as string;
             } else {
                 breadcrumbName = item.meta.title as string;
             }

@@ -1,20 +1,27 @@
 <template>
     <div
-        ref="videoCard"
-        :class="{ 'expand group': expandOnHover }"
+        ref="reference"
+        :class="{
+            'expand group': expandOnHover,
+            'disable text-grey-150': isDisabled,
+        }"
         class="video-card relative z-10 flex justify-center hover:z-20"
     >
         <div
-            ref="videoCardWrap"
-            class="video-card__wrap relative top-0 rounded-2xl transition-all group-hover:rounded-b-none"
+            :class="{ 'group-hover:rounded-b-none': !isDisabled }"
+            class="video-card__wrap relative top-0 rounded-2xl transition-all"
         >
             <div
-                class="video-card__bg relative flex h-full w-full items-center justify-center overflow-hidden rounded-2xl text-h2 transition-all group-hover:rounded-b-none max-xl:h-[180px]"
+                :class="{ 'group-hover:rounded-b-none': !isDisabled }"
+                class="video-card__bg relative flex h-full w-full items-center justify-center overflow-hidden rounded-2xl text-h2 transition-all max-xl:h-[180px]"
             >
                 <div
                     class="absolute left-0 top-0 -z-10 h-full w-full before:absolute before:left-0 before:top-0 before:z-10 before:h-full before:w-full before:content-normal before:bg-primary-100/35"
                 >
                     <img
+                        :class="{
+                            'saturate-0': isDisabled,
+                        }"
                         :src="img"
                         class="img-cover transition-transform group-hover:scale-110"
                         :alt="name"
@@ -25,20 +32,31 @@
             </div>
 
             <div
+                :class="{
+                    'pointer-events-none': isDisabled,
+                }"
                 class="video-card__content rounded-2xl rounded-t-none bg-dark p-[34px] transition-all max-xl:!visible max-xl:px-4 max-xl:py-6 max-xl:!opacity-100"
             >
                 <div class="mb-6 flex items-center justify-between">
                     <div class="flex items-center gap-4">
                         <!-- Play button -->
                         <button
-                            class="flex h-11 w-11 items-center justify-center rounded-full bg-white-100 text-primary-100 transition-colors hover:bg-white-75"
+                            :class="{
+                                'bg-white-75 text-grey-100': isDisabled,
+                                'bg-white-100 text-primary-100': !isDisabled,
+                            }"
+                            class="flex h-11 w-11 items-center justify-center rounded-full transition-colors hover:bg-white-75"
                         >
                             <component :is="IconPlay" class="h-3 w-3" />
                         </button>
 
                         <h3
                             v-show="!openDescription"
-                            class="text-h3 text-primary-50 max-xl:text-h4"
+                            :class="{
+                                'text-grey-150': isDisabled,
+                                'text-primary-50': !isDisabled,
+                            }"
+                            class="text-h3 max-xl:text-h4"
                         >
                             {{ name }}
                         </h3>
@@ -150,18 +168,31 @@
                 </div>
             </div>
         </div>
+
+        <div
+            v-if="isDisabled"
+            ref="tooltip"
+            :style="floatingStyles"
+            class="tooltip group-hover:opacity-100"
+        >
+            Please Sign In or Sign Up to get unlimited access to our content
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
-    import { nextTick, onMounted, ref, watch } from 'vue';
+    import { computed, nextTick, onMounted, ref, watch } from 'vue';
     import IconChevronDown from '@img/icons/chevron-down.svg?component';
     import IconPlay from '@img/icons/play.svg?component';
     import IconVoiceOff from '@img/icons/voice-off.svg?component';
     import IconVoiceOn from '@img/icons/voice-on.svg?component';
 
+    import { storeToRefs } from 'pinia';
+    import { useAuthStore } from '@/stores/auth.store.ts';
+
     import searchLangs from '@/fixtures/search-langs.json';
     import searchTags from '@/fixtures/search-tags.json';
+    import { useFloatingTooltip } from '@/hooks/useFloatingTooltip.ts';
 
     interface Props {
         name: string;
@@ -170,6 +201,7 @@
         audio?: boolean;
         expandOnHover?: boolean;
         openDescription?: boolean;
+        disable?: boolean;
     }
 
     interface Emits {
@@ -182,8 +214,17 @@
 
     const emits = defineEmits<Emits>();
 
+    const { isAuthenticated } = storeToRefs(useAuthStore());
+
+    const isDisabled = computed(() => props.disable && !isAuthenticated.value);
+
     const descriptionElement = ref<HTMLDivElement | null>(null);
     const descriptionElementHeight = ref(0);
+
+    const reference = ref<HTMLElement | null>(null);
+    const tooltip = ref<HTMLElement | null>(null);
+
+    const { floatingStyles } = useFloatingTooltip(reference, tooltip);
 
     watch(
         () => props.openDescription,
@@ -250,7 +291,7 @@
                     min-width: 233px;
                 }
 
-                &:hover {
+                &:hover:not(.disable) {
                     .video-card__wrap {
                         max-width: 100%;
                         min-width: 23.95vw;

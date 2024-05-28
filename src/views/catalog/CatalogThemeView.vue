@@ -5,8 +5,17 @@
         class="mb-36 grid grid-cols-5 gap-3.5 max-2xl:grid-cols-4 max-tab:grid-cols-3 max-sm:grid-cols-2 max-mob-md:grid-cols-1"
     >
         <video-card
-            v-for="i in 25"
+            v-for="i in 5"
             :key="i"
+            name="Title"
+            :img="ThemeImg"
+            @expand="openVideoPopup"
+        />
+
+        <video-card
+            v-for="i in 20"
+            :key="i"
+            disable
             name="Title"
             :img="ThemeImg"
             @expand="openVideoPopup"
