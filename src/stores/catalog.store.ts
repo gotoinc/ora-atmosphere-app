@@ -2,6 +2,8 @@ import { ref } from 'vue';
 
 import { defineStore } from 'pinia';
 
+import router from '@/router';
+
 export const useCatalogStore = defineStore(
     'catalog',
     () => {
@@ -18,11 +20,16 @@ export const useCatalogStore = defineStore(
             isDescriptionOpen.value = true;
         };
 
+        const playSimulator = () => {
+            void router.push({ name: 'simulatorView' });
+        };
+
         return {
             isDescriptionOpen,
             selectedContentUrl,
             isSimulatorLoaded,
             isContentPopupOpen,
+            playSimulator,
             openVideoPopup,
         };
     },

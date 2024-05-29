@@ -10,6 +10,7 @@
             name="Title"
             :img="ThemeImg"
             @expand="openVideoPopup"
+            @play="playSimulator"
         />
 
         <video-card
@@ -19,6 +20,7 @@
             name="Title"
             :img="ThemeImg"
             @expand="openVideoPopup"
+            @play="playSimulator"
         />
     </div>
 </template>
@@ -30,7 +32,7 @@
 
     import { useCatalogStore } from '@/stores/catalog.store.ts';
 
-    const { openVideoPopup } = useCatalogStore();
+    const { openVideoPopup, playSimulator } = useCatalogStore();
 </script>
 
 <style scoped></style>

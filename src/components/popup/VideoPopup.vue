@@ -9,6 +9,7 @@
                         name="Title"
                         :open-description="isDescriptionOpen"
                         :img="ThemeImg"
+                        @play="catalogStore.playSimulator"
                         @expand="isDescriptionOpen = !isDescriptionOpen"
                     />
 
@@ -37,8 +38,9 @@
     import { storeToRefs } from 'pinia';
     import { useCatalogStore } from '@/stores/catalog.store.ts';
 
-    const { isContentPopupOpen, isDescriptionOpen } =
-        storeToRefs(useCatalogStore());
+    const catalogStore = useCatalogStore();
+
+    const { isContentPopupOpen, isDescriptionOpen } = storeToRefs(catalogStore);
 </script>
 
 <style scoped></style>
