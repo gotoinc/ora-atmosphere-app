@@ -74,14 +74,14 @@
     import VLoader from '@/components/base/VLoader.vue';
 
     import { storeToRefs } from 'pinia';
-    import { useSimulatorStore } from '@/stores/simulator.store.ts';
+    import { useCatalogStore } from '@/stores/catalog.store.ts';
 
     type SphereDiameter = 100 | 80 | 60;
 
     const router = useRouter();
 
     const { selectedContentUrl, isSimulatorLoaded } =
-        storeToRefs(useSimulatorStore());
+        storeToRefs(useCatalogStore());
 
     const simulatorElement = ref<HTMLDivElement | null>(null);
     const simulatorContainer = ref<HTMLDivElement | null>(null);
