@@ -1,4 +1,4 @@
-import { Library, Language, Room } from './library';
+import { Library, Language, Room } from './library.ts';
 
 export class URLState {
     content: string;

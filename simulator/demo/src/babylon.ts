@@ -3,10 +3,10 @@ import { Engine } from '@babylonjs/core/Engines/engine';
 import '@babylonjs/core/Loading/loadingScreen';
 import '@babylonjs/core/Engines/WebGPU/Extensions/';
 import '@babylonjs/core/Engines/webgpuEngine';
-import { Content, Room, Simulator } from './scene';
+import { Content, Room, Simulator } from './scene.ts';
 // @ts-ignore
 import { WebGPUEngine } from '@babylonjs/core';
-import { initDragnDrop } from './dragdrop';
+import { initDragnDrop } from './dragdrop.ts';
 
 function WebGPUSupportedAsync(): Promise<boolean> {
     return !navigator.gpu

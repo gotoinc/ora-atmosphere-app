@@ -26,13 +26,13 @@ import {
     ShadowGenerator,
 } from '@babylonjs/core';
 
-import default_room_glb_url from '@simulator/demo/public/images/expo.glb';
-import default_environment_url from '@simulator/demo/public/images/environment.env';
-import default_people_glb_url from '@simulator/demo/public/images/people.glb';
-import play_sphere_url from '@simulator/demo/public/images/play-sphere.png';
-import base_glb_url from '@simulator/demo/public/images/base.glb';
-import drop_icon_url from '@simulator/demo/public/images/drop-icon.png';
-
+const s3_bucket = 'simulator/demo/public/images/';
+const default_room_glb_url = s3_bucket + 'expo.glb';
+const default_environment_url = s3_bucket + 'environment.env';
+const default_people_glb_url = s3_bucket + 'people.glb';
+const play_sphere_url = s3_bucket + 'play-sphere.png';
+const base_glb_url = s3_bucket + 'base.glb';
+const drop_icon_url = s3_bucket + 'drop-icon.png';
 const default_diameter = 80;
 
 export type Content = {

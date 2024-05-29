@@ -1,4 +1,4 @@
-import { Simulator } from './scene';
+import { Simulator } from './scene.ts';
 
 export function initDragnDrop(canvas: HTMLCanvasElement, sim: Simulator) {
     canvas.ondrop = async function (event) {

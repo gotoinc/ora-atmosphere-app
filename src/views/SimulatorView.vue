@@ -39,12 +39,12 @@
     import { onMounted, ref } from 'vue';
     import type { Simulator } from '@simulator/demo';
     import { initSimulator } from '@simulator/demo/src';
-    // import { resolveContentURL } from '@simulator/demo/src/library.ts';
 
     type SphereDiameter = 100 | 80 | 60;
 
     const simulatorElement = ref<HTMLDivElement | null>(null);
     const activeDiameter = ref<SphereDiameter>(80);
+    const simulatorInstance = ref<Simulator | null>(null);
 
     const setSimulatorContent = () => {
         if (simulatorInstance.value) {
@@ -61,20 +61,18 @@
         }
     };
 
-    const simulatorInstance = ref<Simulator | null>(null);
-
     onMounted(async () => {
         if (simulatorElement.value) {
             const { simulator } = await initSimulator(
                 simulatorElement.value,
-                ''
+                'https://images.unsplash.com/reserve/bOvf94dPRxWu0u3QsPjF_tree.jpg?ixid=M3wxMjA3fDB8MXxzZWFyY2h8M3x8bmF0dXJhbHxlbnwwfHx8fDE3MTY4MDYwMjV8MA&ixlib=rb-4.0.3'
             );
 
             simulatorInstance.value = simulator;
         }
-
-        setSimulatorContent();
     });
+
+    setSimulatorContent();
 </script>
 
 <style scoped lang="postcss">

@@ -1,7 +1,7 @@
-// import { initOverlay } from './overlay';
-import { initLibrary } from './library';
-import { attachSimulator, Simulator } from '@simulator/demo';
-import { URLState } from './url_state';
+import { initLibrary } from './library.ts';
+import { attachSimulator } from './babylon.ts';
+import type { Simulator } from './scene.ts';
+import { URLState } from './url_state.ts';
 
 export async function initSimulator(root: HTMLDivElement, url: string) {
     let libraryURL = '/simulator/demo/public/library.json';
@@ -21,8 +21,6 @@ export async function initSimulator(root: HTMLDivElement, url: string) {
         },
         state.room
     );
-
-    // initOverlay(library, state, simulator);
 
     return { simulator };
 }
