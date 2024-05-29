@@ -104,7 +104,7 @@
         }
 
         @media screen and (min-height: 1080px) {
-            padding-bottom: 400px;
+            padding-bottom: 455px;
         }
 
         @media screen and (max-height: 768px) {

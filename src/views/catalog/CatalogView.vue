@@ -15,7 +15,7 @@
 
                 <fancy-carousel overflow-visible class="-ml-4 w-screen px-4">
                     <category-card
-                        v-for="item in items.slice(0, 5)"
+                        v-for="item in items.slice(0, 10)"
                         :key="item.name"
                         :disable="!active"
                         class="f-carousel__slide !mr-3.5 max-sm:!max-w-[268px]"

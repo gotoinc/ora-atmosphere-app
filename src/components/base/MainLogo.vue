@@ -16,7 +16,7 @@
                 'text-dark': variant === 'dark',
                 'max-sm:hidden': hideLabelOnMobile,
             }"
-            class="pointer-events-none text-xs uppercase"
+            class="pointer-events-none text-sm uppercase max-xl:text-xs"
         >
             Application simulator
         </span>

@@ -31,7 +31,7 @@
             margin-top: -28vh;
 
             @media screen and (min-height: 1080px) {
-                margin-top: -272px;
+                margin-top: -264px;
             }
 
             @media screen and (max-height: 768px) {

@@ -10,8 +10,8 @@
             v-for="{ name, bg } in categories.items"
             :key="name"
             :to="{
-                name: 'catalogCategoryView',
-                params: { category: useTransformPath(name) },
+                name: 'catalogGroupView',
+                params: { group: useTransformPath(name) },
             }"
             :img="bg"
             :name="name"

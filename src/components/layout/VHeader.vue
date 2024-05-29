@@ -1,7 +1,7 @@
 <template>
     <header class="relative left-0 top-0 z-50 w-full bg-gradient">
         <div class="cont flex items-center !py-4 xl:relative">
-            <main-logo class="mr-14 max-2lg:mr-6" hide-label-on-mobile />
+            <main-logo class="mr-20 max-2lg:mr-6" hide-label-on-mobile />
 
             <main-search class="mr-auto max-lg:ml-auto max-lg:mr-2.5" />
 
