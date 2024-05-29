@@ -38,6 +38,7 @@
                         variant="white"
                         :icon="IconPlay"
                         icon-class="!w-2.5 !h-3 mr-2"
+                        :to="{ name: 'simulatorView' }"
                     >
                         Play
                     </v-button>

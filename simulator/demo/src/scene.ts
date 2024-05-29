@@ -55,6 +55,7 @@ export class Simulator {
     camera: ArcRotateCamera;
     dragdropmesh: AbstractMesh;
     private _peopleVisible: boolean = true;
+    private _onFinishCallback?: () => void;
 
     constructor(
         engine: Engine,
@@ -246,6 +247,8 @@ export class Simulator {
                 }
 
                 this.setDiameter(default_diameter);
+
+                this._onFinish();
             }
         );
 
@@ -450,6 +453,16 @@ export class Simulator {
                 break;
             case PointerEventTypes.POINTERDOUBLETAP:
                 break;
+        }
+    }
+
+    onFinish(callback: () => void) {
+        this._onFinishCallback = callback;
+    }
+
+    private _onFinish() {
+        if (this._onFinishCallback) {
+            this._onFinishCallback();
         }
     }
 }

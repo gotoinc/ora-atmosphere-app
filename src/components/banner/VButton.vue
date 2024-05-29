@@ -1,28 +1,32 @@
 <template>
     <router-link
         v-if="to"
-        :class="[baseStyles, buttonStyles, withIconStyles]"
+        :class="allButtonStyles"
         class="inline-block"
         :to="to"
     >
-        <component :is="icon" v-if="icon" :class="iconStyles" />
-
-        <slot></slot>
-    </router-link>
-
-    <button
-        v-else
-        :type="type"
-        :class="[baseStyles, buttonStyles, withIconStyles]"
-        @click="emits('click')"
-    >
-        <component :is="icon" v-if="icon" :class="[iconStyles, iconClass]" />
+        <component :is="icon" v-if="icon" :class="allIconStyles" />
 
         <span :class="{ hidden: loading }">
             <slot></slot>
         </span>
 
-        <span :class="{ '!hidden': !loading }" class="loader-btn"></span>
+        <span :class="loaderStyles" class="loader-btn"></span>
+    </router-link>
+
+    <button
+        v-else
+        :type="type"
+        :class="allButtonStyles"
+        @click="emits('click')"
+    >
+        <component :is="icon" v-if="icon" :class="allIconStyles" />
+
+        <span :class="{ hidden: loading }">
+            <slot></slot>
+        </span>
+
+        <span :class="loaderStyles" class="loader-btn"></span>
     </button>
 </template>
 
@@ -86,6 +90,27 @@
                 : 'flex gap-1 items-center'
             : ''
     );
+
+    const loaderStyles = computed(() => {
+        return {
+            '!hidden': !props.loading,
+            '!border-primary-100 !border-l-transparent':
+                props.variant === 'white',
+        };
+    });
+
+    const allIconStyles = computed(() => [
+        iconStyles,
+        props.iconClass,
+        { '!hidden': props.loading },
+    ]);
+
+    const allButtonStyles = computed(() => [
+        baseStyles.value,
+        buttonStyles.value,
+        withIconStyles.value,
+        { 'pointer-events-none': props.loading },
+    ]);
 </script>
 
 <style scoped lang="postcss">
