@@ -23,11 +23,14 @@
             @play="playSimulator"
         />
     </div>
+
+    <main-pagination :current-page="3" :total="100" :view-per-page="25" />
 </template>
 
 <script setup lang="ts">
     import ThemeImg from '@img/categories/theme-bg.jpg';
 
+    import MainPagination from '@/components/base/MainPagination.vue';
     import VideoCard from '@/components/catalog/VideoCard.vue';
 
     import { useCatalogStore } from '@/stores/catalog.store.ts';
