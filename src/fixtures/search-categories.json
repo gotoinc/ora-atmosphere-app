@@ -1,26 +1,32 @@
 [
     {
         "name": "Brands & events",
-        "id": 1
+        "id": 1,
+        "image_url": "http://example.com/images/category1.png"
     },
     {
         "name": "Culture",
-        "id": 2
+        "id": 2,
+        "image_url": "http://example.com/images/categoryv2.png"
     },
     {
         "name": "Entertainent",
-        "id": 3
+        "id": 3,
+        "image_url": "http://example.com/images/categoryv3.png"
     },
     {
         "name": "Science",
-        "id": 4
+        "id": 4,
+        "image_url": "http://example.com/images/categoryv4.png"
     },
     {
         "name": "Our World",
-        "id": 5
+        "id": 5,
+        "image_url": "http://example.com/images/categoryv5.png"
     },
     {
         "name": "Oceans & Skies",
-        "id": 6
+        "id": 6,
+        "image_url": "http://example.com/images/categoryv6.png"
     }
 ]

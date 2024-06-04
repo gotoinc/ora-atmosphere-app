@@ -1,0 +1,14 @@
+{
+    "categories": [
+        {
+            "id": 1,
+            "name": "Brands & events",
+            "image_url": "http://example.com/images/category1.png"
+        },
+        {
+            "id": 2,
+            "name": "Science",
+            "image_url": "http://example.com/images/category2.png"
+        }
+    ]
+}
