@@ -2,31 +2,31 @@
     {
         "name": "Brands & events",
         "id": 1,
-        "image_url": "http://example.com/images/category1.png"
+        "image_url": "/images/categories/cat-1.jpg"
     },
     {
         "name": "Culture",
         "id": 2,
-        "image_url": "http://example.com/images/categoryv2.png"
+        "image_url": "/images/categories/cat-2.jpg"
     },
     {
         "name": "Entertainent",
         "id": 3,
-        "image_url": "http://example.com/images/categoryv3.png"
+        "image_url": "/images/categories/cat-3.jpg"
     },
     {
         "name": "Science",
         "id": 4,
-        "image_url": "http://example.com/images/categoryv4.png"
+        "image_url": "/images/categories/cat-4.jpg"
     },
     {
         "name": "Our World",
         "id": 5,
-        "image_url": "http://example.com/images/categoryv5.png"
+        "image_url": "/images/categories/cat-5.jpg"
     },
     {
         "name": "Oceans & Skies",
         "id": 6,
-        "image_url": "http://example.com/images/categoryv6.png"
+        "image_url": "/images/categories/cat-6.jpg"
     }
 ]

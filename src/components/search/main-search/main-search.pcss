@@ -1,0 +1,56 @@
+.search {
+    @apply w-full max-w-[535px] max-lg:max-w-fit;
+
+    .overflow {
+        max-height: calc(calc(var(--vh, 1vh) * 100) - 150px);
+
+        &::-webkit-scrollbar {
+            @apply h-1.5 w-1.5;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            @apply rounded-md bg-white-100;
+        }
+    }
+
+    &__input {
+        @apply h-11 max-w-[389px] transition-all max-lg:px-6;
+    }
+
+    &__wrap {
+        @apply transition-all max-lg:invisible max-lg:absolute max-lg:left-1/2 max-lg:top-full max-lg:w-full max-lg:-translate-x-1/2 max-lg:opacity-0;
+    }
+
+    &__filters {
+        @apply invisible absolute left-0 top-full z-10 w-full transform p-6 pt-[50px] opacity-0 transition-all max-lg:rounded-none max-lg:border-none max-lg:bg-primary-100 lg:bg-primary-100;
+    }
+
+    &__btn {
+        @apply flex h-8 w-8 items-center justify-center rounded-md transition-colors lg:hidden;
+    }
+
+    &__icon {
+        @apply absolute right-0 top-1/2 h-6 w-6 flex-shrink-0 -translate-y-1/2 cursor-pointer rounded transition-colors hover:bg-white-25;
+    }
+
+    &__result {
+        @apply flex cursor-pointer items-center gap-3 rounded p-1 text-xs font-bold transition-colors hover:bg-white-25;
+    }
+
+    /* When search is active  */
+    &.active {
+        @apply border-transparent;
+
+        .search__wrap {
+            @apply visible opacity-100;
+        }
+
+        .search__filters {
+            @apply visible top-0 opacity-100;
+        }
+
+        .search__input {
+            @apply max-w-full lg:translate-y-3 lg:px-6;
+        }
+    }
+}

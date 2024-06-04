@@ -48,7 +48,7 @@
     import CategoryCard from '@/components/catalog/CategoryCard.vue';
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    import { useTransformFromPath } from '@/hooks/useTransformPath.ts';
+    import { useTransformFromPath } from '@/hooks/transform-queries.ts';
 
     const route = useRoute();
 </script>

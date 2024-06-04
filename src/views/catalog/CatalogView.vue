@@ -50,7 +50,7 @@
     import CategoryCard from '@/components/catalog/CategoryCard.vue';
 
     import catalogJson from '@/fixtures/catalog.json';
-    import { useTransformPath } from '@/hooks/useTransformPath.ts';
+    import { useTransformPath } from '@/hooks/transform-queries.ts';
 
     const isCatalogLink = (category: string, length: number) => {
         return length > 5
