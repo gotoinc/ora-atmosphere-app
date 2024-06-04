@@ -6,7 +6,7 @@ export const useAuthStore = defineStore(
     'auth',
     () => {
         const isEmailConfirmed = ref(false);
-        const isAuthenticated = ref(true);
+        const isAuthenticated = ref(false);
 
         const logout = () => {
             isAuthenticated.value = false;

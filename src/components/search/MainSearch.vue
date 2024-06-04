@@ -72,33 +72,69 @@
                         <div
                             class="grid grid-cols-3 gap-3 max-sm:hidden max-mob:grid-cols-2"
                         >
-                            <category-filter
-                                v-for="category in categories"
-                                :key="category.id"
-                                :class="{
-                                    '!opacity-100':
-                                        category.id === selectedCategory?.id,
-                                }"
-                                :name="category.name"
-                                @click="selectedCategory = category"
-                            >
-                            </category-filter>
+                            <template v-if="isFiltersLoaded">
+                                <category-filter
+                                    v-for="category in categories"
+                                    :key="category.id"
+                                    :class="{
+                                        '!opacity-100':
+                                            category.id ===
+                                            selectedCategory?.id,
+                                    }"
+                                    :name="category.name"
+                                    @click="selectedCategory = category"
+                                >
+                                </category-filter>
+                            </template>
+
+                            <template v-else>
+                                <div
+                                    v-for="i in 6"
+                                    :key="i"
+                                    class="flex items-center gap-2.5"
+                                >
+                                    <v-skeleton
+                                        class="h-14 w-14 flex-shrink-0 rounded-lg"
+                                    />
+
+                                    <v-skeleton
+                                        class="h-4 w-full max-w-14 rounded"
+                                    />
+                                </div>
+                            </template>
                         </div>
 
                         <!-- Categories for mobile -->
                         <fancy-carousel class="sm:hidden">
-                            <category-filter
-                                v-for="category in categories"
-                                :key="category.id"
-                                :class="{
-                                    '!opacity-100':
-                                        category.id === selectedCategory?.id,
-                                }"
-                                :name="category.name"
-                                class="f-carousel__slide !mr-5 !w-fit"
-                                @click="selectedCategory = category"
-                            >
-                            </category-filter>
+                            <template v-if="isFiltersLoaded">
+                                <category-filter
+                                    v-for="category in categories"
+                                    :key="category.id"
+                                    :class="{
+                                        '!opacity-100':
+                                            category.id ===
+                                            selectedCategory?.id,
+                                    }"
+                                    :name="category.name"
+                                    class="f-carousel__slide !mr-5 !w-fit"
+                                    @click="selectedCategory = category"
+                                >
+                                </category-filter>
+                            </template>
+
+                            <template v-else>
+                                <div
+                                    v-for="i in 3"
+                                    :key="i"
+                                    class="f-carousel__slide !mr-5 flex !max-w-44 items-center gap-2.5"
+                                >
+                                    <v-skeleton
+                                        class="h-14 w-14 flex-shrink-0 rounded-lg"
+                                    />
+
+                                    <v-skeleton class="h-4 w-full rounded" />
+                                </div>
+                            </template>
                         </fancy-carousel>
                     </div>
 
@@ -109,24 +145,37 @@
                         </h3>
 
                         <div class="flex flex-wrap gap-2">
-                            <label
-                                v-for="lang in searchLangs"
-                                :key="lang.id"
-                                :class="{
-                                    'bg-white-100 text-dark':
-                                        lang.name ===
-                                        getItemByName(selectedLangs, lang.name),
-                                }"
-                                class="tag tag--lang"
-                            >
-                                <input
-                                    v-model="selectedLangs"
-                                    class="hidden"
-                                    type="checkbox"
-                                    :value="lang.name"
+                            <template v-if="isFiltersLoaded">
+                                <label
+                                    v-for="lang in searchLangs"
+                                    :key="lang.id"
+                                    :class="{
+                                        'bg-white-100 text-dark':
+                                            lang.name ===
+                                            getItemByName(
+                                                selectedLangs,
+                                                lang.name
+                                            ),
+                                    }"
+                                    class="tag tag--lang"
+                                >
+                                    <input
+                                        v-model="selectedLangs"
+                                        class="hidden"
+                                        type="checkbox"
+                                        :value="lang.name"
+                                    />
+                                    {{ lang.name }}
+                                </label>
+                            </template>
+
+                            <template v-else>
+                                <v-skeleton
+                                    v-for="i in 4"
+                                    :key="i"
+                                    class="h-8 w-10 rounded-lg"
                                 />
-                                {{ lang.name }}
-                            </label>
+                            </template>
                         </div>
                     </div>
 
@@ -137,24 +186,37 @@
                         </h3>
 
                         <div class="flex flex-wrap gap-2">
-                            <label
-                                v-for="tag in searchTags"
-                                :key="tag.id"
-                                :class="{
-                                    'bg-white-100 text-dark':
-                                        tag.name ===
-                                        getItemByName(selectedTags, tag.name),
-                                }"
-                                class="tag"
-                            >
-                                <input
-                                    v-model="selectedTags"
-                                    class="hidden"
-                                    type="checkbox"
-                                    :value="tag.name"
+                            <template v-if="isFiltersLoaded">
+                                <label
+                                    v-for="tag in searchTags"
+                                    :key="tag.id"
+                                    :class="{
+                                        'bg-white-100 text-dark':
+                                            tag.name ===
+                                            getItemByName(
+                                                selectedTags,
+                                                tag.name
+                                            ),
+                                    }"
+                                    class="tag"
+                                >
+                                    <input
+                                        v-model="selectedTags"
+                                        class="hidden"
+                                        type="checkbox"
+                                        :value="tag.name"
+                                    />
+                                    {{ tag.name }}
+                                </label>
+                            </template>
+
+                            <template v-else>
+                                <v-skeleton
+                                    v-for="i in 8"
+                                    :key="i"
+                                    class="h-8 w-20 rounded-lg"
                                 />
-                                {{ tag.name }}
-                            </label>
+                            </template>
                         </div>
                     </div>
                 </div>
@@ -192,6 +254,7 @@
     import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 
     import VInput from '@/components/base/input/VInput.vue';
+    import VSkeleton from '@/components/base/VSkeleton.vue';
     import FancyCarousel from '@/components/carousel/FancyCarousel.vue';
     import CategoryFilter from '@/components/search/CategoryFilter.vue';
 
@@ -217,12 +280,12 @@
      */
     const searchElement = ref<HTMLElement | null>(null);
     const filtersScroll = ref<HTMLElement | null>(null);
-    const inputElement = ref<HTMLInputElement | null>(null);
 
     /**
      * Filters data
      */
     const isFiltersOpen = ref(false);
+    const isFiltersLoaded = ref(false);
     const searchValue = ref('');
 
     const selectedTags = ref<string[]>([]);
@@ -259,10 +322,9 @@
      */
     const open = () => {
         isFiltersOpen.value = true;
-        emits('opened');
+        isFiltersLoaded.value = true;
 
-        // Focus input in filters
-        if (inputElement.value) inputElement.value.focus();
+        emits('opened');
     };
 
     const getItemByName = (searchArray: string[], name: string) => {
