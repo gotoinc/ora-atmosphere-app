@@ -32,6 +32,7 @@
                 ]"
                 class="input"
                 @input="onInput($event)"
+                @click="emits('click-input')"
                 @blur="emits('blur')"
                 @keyup.enter="onEnter($event)"
             />
@@ -46,6 +47,7 @@
                     },
                 ]"
                 class="input-icon"
+                @click="emits('click-icon')"
             />
 
             <template v-else-if="type === 'password'">

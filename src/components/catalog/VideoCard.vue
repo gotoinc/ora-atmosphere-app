@@ -127,7 +127,7 @@
                     ref="descriptionElement"
                     :style="{ height: descriptionElementHeight + 'px' }"
                     :aria-hidden="!openDescription"
-                    class="video-card__desc mt-6 overflow-hidden text-left transition-all aria-hidden:mt-0 aria-hidden:h-0"
+                    class="video-card__desc mt-6 overflow-hidden pb-1 text-left transition-all aria-hidden:mt-0 aria-hidden:h-0"
                 >
                     <h3 class="mb-6 text-h3 text-primary-50 max-xl:text-h4">
                         {{ name }}

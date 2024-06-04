@@ -25,7 +25,7 @@
     import { computed } from 'vue';
     import { useRoute } from 'vue-router';
 
-    import { useTransformFromPath } from '@/hooks/useTransformPath.ts';
+    import { useTransformFromPath } from '@/hooks/transform-queries.ts';
 
     const route = useRoute();
 

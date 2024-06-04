@@ -21,5 +21,7 @@ export interface InputProps {
 export interface InputEmits {
     (e: 'update:modelValue', value: InputProps['modelValue']): void;
     (e: 'blur'): void;
-    (e: 'enter', value: InputProps['modelValue']): void;
+    (e: 'enter', value?: string): void;
+    (e: 'click-icon'): void;
+    (e: 'click-input'): void;
 }
