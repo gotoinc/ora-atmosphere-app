@@ -7,6 +7,14 @@ body {
     font-family: 'Mulish', sans-serif;
     font-weight: 400;
     right: 0;
+
+    &::-webkit-scrollbar {
+        @apply w-1.5 rounded;
+
+        &-thumb {
+            @apply rounded bg-primary-50;
+        }
+    }
 }
 
 .cont {
@@ -69,15 +77,12 @@ h2 {
     }
 }
 
-@keyframes fade-up {
-    0% {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.line-camp-2 {
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    overflow: hidden;
+    padding: 0 !important;
 }
 
 .tooltip {
@@ -95,6 +100,15 @@ select {
     &::placeholder {
         @apply text-grey-100;
     }
+
+    /* Change Autocomplete styles in Chrome*/
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus {
+        background: transparent;
+        -webkit-text-fill-color: black;
+        transition: background-color 5000s ease-in-out 0s;
+    }
 }
 
 svg {
@@ -109,6 +123,15 @@ svg {
             @apply text-white-50;
         }
 
+        /* Change Autocomplete styles in Chrome*/
+        &:-webkit-autofill,
+        &:-webkit-autofill:hover,
+        &:-webkit-autofill:focus {
+            background: transparent;
+            -webkit-text-fill-color: white;
+            transition: background-color 5000s ease-in-out 0s;
+        }
+
         &.with-icon {
             @apply pr-11;
         }
@@ -117,6 +140,10 @@ svg {
     .icon-password {
         @apply hover:!text-white-100;
     }
+}
+
+.loader-btn {
+    @apply mx-auto block h-6 w-6 rounded-full border-4 border-solid border-white-100 border-l-transparent;
 }
 
 /* Chrome, Safari, Edge, Opera */
@@ -138,4 +165,78 @@ input {
 /* Vue toast */
 .Vue-Toastification__toast--error {
     @apply bg-error;
+}
+
+/* Animations */
+.fade-r {
+    animation: fade-r 0.3s ease;
+}
+
+.fade-l {
+    animation: fade-l 0.3s ease;
+}
+
+.fade-t {
+    animation: fade-t 0.3s ease;
+}
+
+.loader-btn {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes fade-up {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes fade-r {
+    0% {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fade-l {
+    0% {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fade-t {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }

@@ -34,9 +34,9 @@
             let breadcrumbName: string;
 
             if (item.name === 'catalogGroupView') {
-                breadcrumbName = `${route.params.group}`;
+                breadcrumbName = `${route.params.groupName}`;
             } else if (item.name === 'catalogThemeView') {
-                breadcrumbName = `${route.params.theme}`;
+                breadcrumbName = `${route.params.topicName}`;
             } else if (item.name === 'catalogCategoryView') {
                 breadcrumbName = route.params.category as string;
             } else {

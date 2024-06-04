@@ -9,13 +9,13 @@ export default {
 
     children: [
         {
-            path: ':group',
+            path: ':groupId/:groupName',
             name: 'catalogGroupView',
             component: () => import('@/views/catalog/CatalogGroupView.vue'),
 
             children: [
                 {
-                    path: ':theme/videos',
+                    path: ':topicId/:topicName/videos',
                     name: 'catalogThemeView',
                     component: () =>
                         import('@/views/catalog/CatalogThemeView.vue'),
@@ -24,7 +24,7 @@ export default {
         },
 
         {
-            path: 'extended/:category',
+            path: 'extended/:id/:category',
             name: 'catalogCategoryView',
             component: () => import('@/views/catalog/CatalogCategoryView.vue'),
         },

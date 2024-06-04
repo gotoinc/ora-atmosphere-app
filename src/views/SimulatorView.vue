@@ -59,13 +59,14 @@
                 <component :is="IconCross" class="h-full w-full text-dark" />
             </button>
 
-            <div ref="controls">
+            <div v-if="contentToPlay" ref="controls">
                 <player-controls
                     :muted="isMuted"
+                    :audio-enabled="contentToPlay.audio_enabled"
                     :container="simulatorContainer"
                     :player="player"
-                    :title="selectedContent.title"
-                    :audio="selectedContent.audio"
+                    :title="contentToPlay.title"
+                    :audios="contentToPlay.audios"
                     class="plyr--full-ui absolute bottom-0 left-0 w-full px-4 pb-10"
                 />
             </div>
@@ -85,6 +86,7 @@
 <script setup lang="ts">
     import { onMounted, onUnmounted, ref } from 'vue';
     import { useRouter } from 'vue-router';
+    import { useToast } from 'vue-toastification';
     import IconCross from '@img/icons/cross.svg?component';
     import type { Simulator } from '@simulator/demo';
     import { initSimulator } from '@simulator/demo/src';
@@ -97,18 +99,24 @@
     import { storeToRefs } from 'pinia';
     import { useCatalogStore } from '@/stores/catalog.store.ts';
 
+    import { getBlobFile } from '@/api/contents/get-file.api.ts';
+    import { useFileType } from '@/hooks/useFileType.ts';
     import { plyrOptions } from '@/libs/plyr/plyr-options.ts';
 
     type SphereDiameter = 100 | 80 | 60;
 
     const router = useRouter();
+    const toast = useToast();
 
-    const { selectedContent, isSimulatorLoading } =
+    const { contentToPlay, isSimulatorLoading } =
         storeToRefs(useCatalogStore());
 
     const simulatorElement = ref<HTMLDivElement | null>(null);
     const simulatorContainer = ref<HTMLDivElement>();
     const videoElement = ref<HTMLVideoElement>();
+    const videoSrc = ref('');
+    const mediaType = ref<'video' | 'image'>();
+
     const activeDiameter = ref<SphereDiameter>(80);
     const simulatorInstance = ref<Simulator | null>(null);
 
@@ -143,6 +151,22 @@
         }
     };
 
+    const loadVideoFile = async () => {
+        if (contentToPlay.value) {
+            try {
+                const blob = await getBlobFile(contentToPlay.value.file);
+
+                if (blob) {
+                    videoSrc.value = URL.createObjectURL(blob);
+                    mediaType.value = useFileType(blob);
+                }
+            } catch (e) {
+                toast.error('Content is not found');
+                closePage();
+            }
+        }
+    };
+
     const createPromiseFromCallback = (
         callbackFunction: (callback: () => void) => void
     ): Promise<void> => {
@@ -161,37 +185,44 @@
         }
 
         if (simulatorElement.value) {
-            const { simulator } = await initSimulator(
-                simulatorElement.value,
-                selectedContent.value.file,
-                'video',
-                videoElement.value
-            );
+            await loadVideoFile();
 
-            player.value = new Plyr(videoElement.value as HTMLVideoElement, {
-                controls: controls.value,
-                autoplay: false,
-                muted: true,
-                fullscreen: {
-                    enabled: false,
-                },
-                ...plyrOptions,
-            });
+            if (videoSrc.value && mediaType.value) {
+                const { simulator } = await initSimulator(
+                    simulatorElement.value,
+                    videoSrc.value,
+                    'video',
+                    videoElement.value
+                );
 
-            // Wait for loading scene and video resource
-            await Promise.all([
-                createPromiseFromCallback((callback) => {
-                    simulator.onFinish(callback);
-                }),
-                createPromiseFromCallback((callback) => {
-                    simulator.onLoadedMedia(callback);
-                }),
-            ]);
+                player.value = new Plyr(
+                    videoElement.value as HTMLVideoElement,
+                    {
+                        controls: controls.value,
+                        autoplay: false,
+                        muted: true,
+                        fullscreen: {
+                            enabled: false,
+                        },
+                        ...plyrOptions,
+                    }
+                );
 
-            setPlayerToStart();
+                // Wait for loading scene and video resource
+                await Promise.all([
+                    createPromiseFromCallback((callback) => {
+                        simulator.onFinish(callback);
+                    }),
+                    createPromiseFromCallback((callback) => {
+                        simulator.onLoadedMedia(callback);
+                    }),
+                ]);
 
-            simulatorInstance.value = simulator;
-            isSimulatorLoading.value = false;
+                setPlayerToStart();
+
+                simulatorInstance.value = simulator;
+                isSimulatorLoading.value = false;
+            }
         }
     });
 

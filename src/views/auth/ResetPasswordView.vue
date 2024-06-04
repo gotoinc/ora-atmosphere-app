@@ -11,7 +11,7 @@
                     label="Password"
                     required
                     placeholder="Set your password"
-                    :error="errors.password"
+                    :error="errors.new_password1"
                     hint="Use 8 or more characters with a mix of letters, numbers & symbols"
                 />
 
@@ -22,7 +22,7 @@
                     label="Confirm Password"
                     required
                     placeholder="Confirm your password"
-                    :error="errors.confirmPassword"
+                    :error="errors.new_password2"
                 />
             </div>
 
@@ -44,13 +44,13 @@
         useForm<SetNewPasswordType>({
             validationSchema: setNewPasswordSchema,
             initialValues: {
-                password: '',
-                confirmPassword: '',
+                new_password1: '',
+                new_password2: '',
             },
         });
 
-    const [password] = defineField('password');
-    const [confirmPassword] = defineField('confirmPassword');
+    const [password] = defineField('new_password1');
+    const [confirmPassword] = defineField('new_password2');
 
     const onSubmit = handleSubmit(() => {
         resetForm();

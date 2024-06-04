@@ -1,5 +1,5 @@
 <template>
-    <fieldset>
+    <div>
         <label
             v-if="label"
             class="mb-1.5 inline-block text-base font-semibold"
@@ -78,7 +78,7 @@
         >
             {{ hint }}
         </p>
-    </fieldset>
+    </div>
 </template>
 
 <script setup lang="ts">

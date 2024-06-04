@@ -19,25 +19,27 @@ export const useSignUpStore = defineStore('sign-up', () => {
         handleSubmit: submitFirstStep,
         errors: firstStepErrors,
         defineField: defineFirstSteps,
+        resetForm: resetFirstStep,
         values: firstStepValues,
+        setFieldError: setFirstStepErrors,
     } = useForm<SignUpFirstStep>({
         validationSchema: signUpFirstStepSchema,
         initialValues: {
-            firstName: '',
-            lastName: '',
+            first_name: '',
+            last_name: '',
             email: '',
-            password: '',
-            confirmPassword: '',
-            isTermsAgreed: false,
+            password1: '',
+            password2: '',
+            agree_with_terms: false,
         },
     });
 
-    const [firstName] = defineFirstSteps('firstName');
-    const [lastName] = defineFirstSteps('lastName');
+    const [firstName] = defineFirstSteps('first_name');
+    const [lastName] = defineFirstSteps('last_name');
     const [email] = defineFirstSteps('email');
-    const [password] = defineFirstSteps('password');
-    const [confirmPassword] = defineFirstSteps('confirmPassword');
-    const [isTermsAgreed] = defineFirstSteps('isTermsAgreed');
+    const [password] = defineFirstSteps('password1');
+    const [confirmPassword] = defineFirstSteps('password2');
+    const [isTermsAgreed] = defineFirstSteps('agree_with_terms');
 
     // Check if object valid
     const validateObject = (obj: { [key: string]: string | boolean }) => {
@@ -59,22 +61,20 @@ export const useSignUpStore = defineStore('sign-up', () => {
         handleSubmit: submitSecondStep,
         errors: secondStepErrors,
         defineField: defineSecondSteps,
+        resetForm: resetSecondStep,
     } = useForm<SignUpSecondStep>({
         validationSchema: signUpSecondStepSchema,
         initialValues: {
-            companyName: '',
+            company_name: '',
             activity: '',
-            jobTitle: '',
-            phone: '',
-            companyWebsite: '',
         },
     });
 
-    const [companyName] = defineSecondSteps('companyName');
+    const [companyName] = defineSecondSteps('company_name');
     const [activity] = defineSecondSteps('activity');
-    const [jobTitle] = defineSecondSteps('jobTitle');
-    const [companyWebsite] = defineSecondSteps('companyWebsite');
-    const [phone] = defineSecondSteps('phone');
+    const [jobTitle] = defineSecondSteps('job_title');
+    const [companyWebsite] = defineSecondSteps('company_website');
+    const [phone] = defineSecondSteps('phone_number');
 
     return {
         firstStepValues,
@@ -89,6 +89,9 @@ export const useSignUpStore = defineStore('sign-up', () => {
 
         submitFirstStep,
         firstStepErrors,
+        resetSecondStep,
+        resetFirstStep,
+        setFirstStepErrors,
 
         companyName,
         jobTitle,

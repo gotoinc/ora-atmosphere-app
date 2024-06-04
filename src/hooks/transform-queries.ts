@@ -5,7 +5,7 @@ export const useTransformPath = (path: string) =>
 
 export const useTransformFromPath = (path: string) => path.replace(/-/g, ' ');
 
-export const transformArraysToQueries = (array: LocationQueryValue[]) =>
+export const transformArraysToQueries = (array: unknown[]) =>
     array.map((item) => useTransformPath(item as string));
 
 export const transformArraysFromQueries = (
@@ -13,7 +13,14 @@ export const transformArraysFromQueries = (
 ) => array.map((item) => useTransformFromPath(item as string));
 
 export const queriesToArray = (
-    item: LocationQueryValue | LocationQueryValue[]
-): LocationQueryValue[] => {
-    return Array.isArray(item) ? [...item] : item ? [item] : [];
+    item: LocationQueryValue | LocationQueryValue[],
+    isNumber?: boolean
+) => {
+    if (Array.isArray(item)) {
+        return isNumber ? [...item.map((i) => Number(i))] : [...item];
+    } else if (item) {
+        return isNumber ? [Number(item)] : [item];
+    }
+
+    return [];
 };

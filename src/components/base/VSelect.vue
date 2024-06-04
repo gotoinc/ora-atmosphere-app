@@ -31,7 +31,7 @@
             >
                 <option
                     v-if="placeholder"
-                    selected
+                    :selected="!options.includes(modelValue)"
                     disabled
                     class="text-grey-100"
                 >
@@ -41,6 +41,7 @@
                 <option
                     v-for="item in options"
                     :key="item"
+                    :selected="item === modelValue"
                     class="text-grey-100"
                     :value="item"
                 >

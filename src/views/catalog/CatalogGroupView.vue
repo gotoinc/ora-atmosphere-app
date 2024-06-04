@@ -1,56 +1,97 @@
 <template>
-    <template v-if="route.name === 'catalogGroupView'">
+    <template v-if="isGroupPage">
         <h2 class="mb-6 text-h5 font-light uppercase">
-            {{ useTransformFromPath(route.params.group as string) }}
+            {{ useTransformFromPath(route.params.groupName as string) }}
         </h2>
 
-        <div
-            class="mb-10 grid grid-cols-5 gap-3.5 max-2lg:grid-cols-4 max-tab:grid-cols-3 max-sm:grid-cols-2 max-mob-md:grid-cols-1"
-        >
-            <category-card
-                v-for="i in 5"
-                :key="i"
-                class="!max-w-full"
-                :to="{
-                    name: 'catalogThemeView',
-                    params: { theme: 'test' },
-                }"
-                :img="ThemeImg"
-                name="Theme"
-            />
+        <template v-if="isLoading">
+            <div class="list">
+                <card-skeleton
+                    v-for="i in 10"
+                    :key="i"
+                    class="bg-primary-100/25"
+                />
+            </div>
+        </template>
 
-            <category-card
-                v-for="i in 20"
-                :key="i"
-                disable
-                saturate-image
-                class="!max-w-full"
-                :to="{
-                    name: 'catalogThemeView',
-                    params: { theme: 'test' },
-                }"
-                :img="ThemeImg"
-                name="Theme"
-            />
-        </div>
+        <template v-else-if="topicData.length > 0">
+            <div class="list fade-t">
+                <category-card
+                    v-for="{ id, name, image, requires_auth } in topicData"
+                    :key="id"
+                    class="!max-w-full"
+                    :to="{
+                        name: 'catalogThemeView',
+                        params: {
+                            topicName: useTransformPath(name),
+                            topicId: id,
+                        },
+                    }"
+                    :img="image"
+                    :name="name"
+                    saturate-image
+                    :disable="requires_auth"
+                />
+            </div>
+        </template>
 
-        <main-pagination :current-page="3" :total="100" :view-per-page="25" />
+        <h3 v-else class="fade-t pt-8 text-center text-h3">No themes found</h3>
     </template>
 
     <router-view></router-view>
 </template>
 
 <script setup lang="ts">
-    import { useRoute } from 'vue-router';
-    import ThemeImg from '@img/categories/theme-bg.jpg';
+    import { computed, onMounted, ref } from 'vue';
+    import { onBeforeRouteUpdate, useRoute } from 'vue-router';
+    import { useToast } from 'vue-toastification';
 
-    import MainPagination from '@/components/base/MainPagination.vue';
+    import CardSkeleton from '@/components/catalog/CardSkeleton.vue';
     import CategoryCard from '@/components/catalog/CategoryCard.vue';
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    import { useTransformFromPath } from '@/hooks/transform-queries.ts';
+    import { getGroupTopics } from '@/api/catalog/get-topics.api.ts';
+    import {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        useTransformFromPath,
+        useTransformPath,
+    } from '@/hooks/transform-queries.ts';
+    import type { Topic } from '@/ts/catalog';
 
     const route = useRoute();
+    const toast = useToast();
+
+    const isGroupPage = computed(() => route.name === 'catalogGroupView');
+
+    const isLoading = ref(true);
+    const topicData = ref<Topic[]>([]);
+
+    const loadTopics = async () => {
+        try {
+            const res = await getGroupTopics(route.params.groupId as string);
+
+            topicData.value = res ?? [];
+        } catch (err) {
+            toast.error('Themes were not found');
+        } finally {
+            isLoading.value = false;
+        }
+    };
+
+    onBeforeRouteUpdate((to) => {
+        if (to.name === 'catalogGroupView') {
+            void loadTopics();
+        }
+    });
+
+    onMounted(() => {
+        if (isGroupPage.value) {
+            void loadTopics();
+        }
+    });
 </script>
 
-<style scoped></style>
+<style scoped lang="postcss">
+    .list {
+        @apply mb-10 grid grid-cols-5 gap-3.5 max-2lg:grid-cols-4 max-tab:grid-cols-3 max-sm:grid-cols-2 max-mob-md:grid-cols-1;
+    }
+</style>

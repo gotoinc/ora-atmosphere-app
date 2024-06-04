@@ -366,6 +366,7 @@ export class Simulator {
                         undefined,
                         {
                             muted: true,
+                            loop: false,
                         }
                     );
 

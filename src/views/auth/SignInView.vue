@@ -1,5 +1,5 @@
 <template>
-    <div class="mx-auto">
+    <div class="fade-t mx-auto">
         <h1 class="mb-6 text-h2">Sign In</h1>
 
         <form class="mb-6" @submit.prevent="onSubmit">
@@ -36,7 +36,9 @@
                 </router-link>
             </div>
 
-            <v-button class="w-full" type="submit"> Sign In </v-button>
+            <v-button class="w-full" type="submit" :loading="isLoading">
+                Sign In
+            </v-button>
         </form>
 
         <p>
@@ -60,38 +62,44 @@
     import VButton from '@/components/base/VButton.vue';
     import VCheckbox from '@/components/base/VCheckbox.vue';
 
-    import { storeToRefs } from 'pinia';
     import { useAuthStore } from '@/stores/auth.store.ts';
 
     import { signInSchema } from '@/validations/schemas/auth.schema.ts';
-    import type { SignInType } from '@/validations/types/auth';
-
-    const router = useRouter();
+    import type { SignInInput } from '@/validations/types/auth';
 
     const isRememberChecked = ref(false);
+    const isLoading = ref(false);
+    const router = useRouter();
 
-    const { isAuthenticated } = storeToRefs(useAuthStore());
+    const authStore = useAuthStore();
 
-    const { defineField, handleSubmit, errors, resetForm } =
-        useForm<SignInType>({
-            validationSchema: signInSchema,
-            initialValues: {
-                email: '',
-                password: '',
-            },
-        });
+    const { defineField, handleSubmit, errors } = useForm<SignInInput>({
+        validationSchema: signInSchema,
+        initialValues: {
+            email: '',
+            password: '',
+        },
+    });
 
     const [email] = defineField('email');
     const [password] = defineField('password');
 
-    const onSubmit = handleSubmit(() => {
-        void router.push({ name: 'main' });
+    const onSubmit = handleSubmit(async () => {
+        isLoading.value = true;
 
+        try {
+            const body = {
+                email: email.value,
+                password: password.value,
+            };
+
+            await authStore.login(body, isRememberChecked.value);
+
+            void router.push({ name: 'main' });
+        } finally {
+            isLoading.value = false;
+        }
         // setFieldError('email', 'Email already exists');
-
-        isAuthenticated.value = true;
-
-        resetForm();
     });
 </script>
 

@@ -7,7 +7,7 @@
                 placeholder="Enter your first name"
                 name="firstName"
                 required
-                :error="firstStepErrors.firstName"
+                :error="firstStepErrors.first_name"
             />
 
             <v-input
@@ -16,7 +16,7 @@
                 name="lastName"
                 placeholder="Enter your last name"
                 required
-                :error="firstStepErrors.lastName"
+                :error="firstStepErrors.last_name"
             />
 
             <v-input
@@ -36,7 +36,7 @@
                 label="Password"
                 required
                 placeholder="Set your password"
-                :error="firstStepErrors.password"
+                :error="firstStepErrors.password1"
                 hint="Use 8 or more characters with a mix of letters, numbers & symbols"
             />
 
@@ -47,13 +47,13 @@
                 label="Confirm Password"
                 required
                 placeholder="Confirm your password"
-                :error="firstStepErrors.confirmPassword"
+                :error="firstStepErrors.password2"
             />
         </div>
 
         <v-checkbox
             v-model="isTermsAgreed"
-            :error="firstStepErrors.isTermsAgreed"
+            :error="firstStepErrors.agree_with_terms"
             class="mb-6"
         >
             <span>

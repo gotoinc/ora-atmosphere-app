@@ -1,8 +1,11 @@
-import type { LocationQueryValue } from 'vue-router';
+// import type { LocationQueryValue } from 'vue-router';
+type SearchItem = {
+    id: string | number;
+};
 
-export const useGetItemByName = (
-    searchArray: string[] | LocationQueryValue[],
-    name: string
+export const useGetId = <T extends SearchItem>(
+    searchArray: T[],
+    id: string | number
 ) => {
-    return searchArray.find((tagName) => tagName === name) ?? '';
+    return searchArray.find((item) => item.id === id)?.id;
 };

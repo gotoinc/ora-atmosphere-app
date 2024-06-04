@@ -1,13 +1,10 @@
 <template>
     <label
-        v-for="{ id, name, background } in categories"
+        v-for="{ id, name, image } in categories"
         :key="id"
         :class="[
             {
-                '!opacity-100': useGetItemByName(
-                    selectedCategories,
-                    name.toLowerCase()
-                ),
+                '!opacity-100': selectedCategories.includes(id),
             },
             categoryClass,
         ]"
@@ -15,9 +12,9 @@
     >
         <span class="block h-14 w-14 flex-shrink-0 rounded-lg bg-white-75">
             <img
-                v-if="background"
+                v-if="image"
                 class="img-cover rounded-lg"
-                :src="background"
+                :src="image"
                 :alt="name"
             />
         </span>
@@ -30,7 +27,7 @@
             v-model="selectedCategories"
             class="hidden"
             type="checkbox"
-            :value="name.toLowerCase()"
+            :value="id"
             @change="onChange"
         />
     </label>
@@ -38,14 +35,11 @@
 
 <script setup lang="ts">
     import { computed } from 'vue';
-    import type { LocationQueryValue } from 'vue-router';
 
-    import type { Category } from '@/ts/interfaces/category';
-
-    import { useGetItemByName } from '@/hooks/useGetItemByName.ts';
+    import type { Category } from '@/ts/catalog';
 
     interface Props {
-        modelValue: Array<LocationQueryValue | string>;
+        modelValue: number[];
         categories: Category[];
         categoryClass?: string;
     }

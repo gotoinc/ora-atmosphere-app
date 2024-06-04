@@ -6,13 +6,14 @@
             'cursor-pointer': !isDisabled,
             'saturate-0': isDisabled && !saturateImage,
         }"
-        class="card group relative flex items-center justify-center rounded-2xl text-center text-h2"
+        class="card group relative flex items-center justify-center rounded-2xl bg-primary-dark !p-2 text-center text-h2"
         @click="redirect"
     >
         <div
-            class="absolute left-0 top-0 -z-10 h-full w-full overflow-hidden rounded-2xl before:absolute before:left-0 before:top-0 before:z-10 before:h-full before:w-full before:content-normal before:bg-primary-100/35"
+            class="absolute left-0 top-0 z-10 h-full w-full overflow-hidden rounded-2xl before:absolute before:left-0 before:top-0 before:z-10 before:h-full before:w-full before:content-normal before:bg-primary-100/35"
         >
             <img
+                v-if="img"
                 :class="{
                     'group-hover:scale-110': !isDisabled,
                     'saturate-0': isDisabled && saturateImage,
@@ -29,10 +30,12 @@
             :style="floatingStyles"
             class="tooltip group-hover:opacity-100"
         >
-            Please Sign In or Sign Up to get unlimited access to our content
+            Sign in or Sign up to access our entire catalog
         </div>
 
-        {{ name }}
+        <span class="relative z-10">
+            {{ name }}
+        </span>
     </div>
 </template>
 
@@ -48,7 +51,7 @@
 
     interface Props {
         name: string;
-        img: string;
+        img?: string | null;
         to: RouteLocationRaw;
         disable?: boolean;
         saturateImage?: boolean;
