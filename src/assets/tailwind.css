@@ -29,5 +29,9 @@ input {
     &.tag--lang {
         @apply rounded-md px-2 py-[3px] uppercase
     }
+
+    &.tag--fill {
+        @apply bg-white-100 text-dark
+    }
 }
 

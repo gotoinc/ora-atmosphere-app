@@ -6,10 +6,10 @@
         }"
         class="search relative transition-all max-lg:static max-lg:w-fit max-lg:!border-none"
     >
-        <form class="search__wrap">
+        <form class="search__wrap" @submit.prevent>
             <!-- Search input -->
             <v-input
-                v-model="searchValue"
+                v-model.trim="searchValue"
                 placeholder="Search"
                 :icon="IconSearch"
                 variant="white"
@@ -18,6 +18,8 @@
                 :icon-class="iconClass"
                 icon-clickable
                 @click="open"
+                @click-icon="onSearch"
+                @enter="onSearch"
             />
 
             <!-- Search filters -->
@@ -28,38 +30,33 @@
                 >
                     <!-- Recent searches list -->
                     <div class="mb-6">
-                        <template v-if="!searchValue">
+                        <template v-if="resentSearches.length > 0">
                             <h3 class="mb-2 text-[10px] font-bold opacity-70">
                                 Recent searches
                             </h3>
 
                             <ul>
                                 <li
-                                    v-for="i in 3"
-                                    :key="i"
+                                    v-for="result in resentSearches.slice(0, 5)"
+                                    :key="result"
                                     class="search__result"
+                                    @click="onSearch(result)"
                                 >
                                     <component
                                         :is="IconRecent"
                                         class="h-4 w-4 flex-shrink-0 opacity-70"
                                     />
 
-                                    Schools
+                                    {{ result }}
                                 </li>
                             </ul>
                         </template>
 
-                        <!-- Matched results -->
-                        <ul v-else>
-                            <li v-for="i in 3" :key="i" class="search__result">
-                                <component
-                                    :is="IconSearch"
-                                    class="h-4 w-4 flex-shrink-0 opacity-70"
-                                />
+                        <h3 v-else class="text-sm font-bold opacity-70">
+                            No recent searches
+                        </h3>
 
-                                Result
-                            </li>
-                        </ul>
+                        <!-- Matched results -->
                     </div>
 
                     <!-- Categories options -->
@@ -73,18 +70,10 @@
                             class="grid grid-cols-3 gap-3 max-sm:hidden max-mob:grid-cols-2"
                         >
                             <template v-if="isFiltersLoaded">
-                                <category-filter
-                                    v-for="category in categories"
-                                    :key="category.id"
-                                    :class="{
-                                        '!opacity-100':
-                                            category.id ===
-                                            selectedCategory?.id,
-                                    }"
-                                    :name="category.name"
-                                    @click="selectedCategory = category"
-                                >
-                                </category-filter>
+                                <category-filters
+                                    v-model="selectedCategories"
+                                    :categories="categories"
+                                />
                             </template>
 
                             <template v-else>
@@ -105,28 +94,39 @@
                         </div>
 
                         <!-- Categories for mobile -->
-                        <fancy-carousel class="sm:hidden">
-                            <template v-if="isFiltersLoaded">
-                                <category-filter
-                                    v-for="category in categories"
-                                    :key="category.id"
-                                    :class="{
-                                        '!opacity-100':
-                                            category.id ===
-                                            selectedCategory?.id,
-                                    }"
-                                    :name="category.name"
-                                    class="f-carousel__slide !mr-5 !w-fit"
-                                    @click="selectedCategory = category"
-                                >
-                                </category-filter>
-                            </template>
+                        <template v-if="isFiltersLoaded">
+                            <fancy-carousel class="sm:hidden">
+                                <template v-if="isFiltersLoaded">
+                                    <category-filters
+                                        v-model="selectedCategories"
+                                        :categories="categories"
+                                    />
+                                </template>
 
-                            <template v-else>
+                                <template v-else>
+                                    <div
+                                        v-for="i in 3"
+                                        :key="i"
+                                        class="f-carousel__slide !mr-5 flex !max-w-44 items-center gap-2.5"
+                                    >
+                                        <v-skeleton
+                                            class="h-14 w-14 flex-shrink-0 rounded-lg"
+                                        />
+
+                                        <v-skeleton
+                                            class="h-4 w-full rounded"
+                                        />
+                                    </div>
+                                </template>
+                            </fancy-carousel>
+                        </template>
+
+                        <template v-else>
+                            <div class="grid grid-cols-2 gap-2">
                                 <div
-                                    v-for="i in 3"
+                                    v-for="i in 2"
                                     :key="i"
-                                    class="f-carousel__slide !mr-5 flex !max-w-44 items-center gap-2.5"
+                                    class="flex max-w-44 items-center gap-2.5"
                                 >
                                     <v-skeleton
                                         class="h-14 w-14 flex-shrink-0 rounded-lg"
@@ -134,8 +134,8 @@
 
                                     <v-skeleton class="h-4 w-full rounded" />
                                 </div>
-                            </template>
-                        </fancy-carousel>
+                            </div>
+                        </template>
                     </div>
 
                     <!-- Language Contents -->
@@ -150,11 +150,11 @@
                                     v-for="lang in searchLangs"
                                     :key="lang.id"
                                     :class="{
-                                        'bg-white-100 text-dark':
+                                        'tag--fill':
                                             lang.name ===
-                                            getItemByName(
+                                            useGetItemByName(
                                                 selectedLangs,
-                                                lang.name
+                                                lang.name.toLowerCase()
                                             ),
                                     }"
                                     class="tag tag--lang"
@@ -165,6 +165,7 @@
                                         type="checkbox"
                                         :value="lang.name"
                                     />
+
                                     {{ lang.name }}
                                 </label>
                             </template>
@@ -191,9 +192,9 @@
                                     v-for="tag in searchTags"
                                     :key="tag.id"
                                     :class="{
-                                        'bg-white-100 text-dark':
+                                        'tag--fill':
                                             tag.name ===
-                                            getItemByName(
+                                            useGetItemByName(
                                                 selectedTags,
                                                 tag.name
                                             ),
@@ -248,6 +249,8 @@
 
 <script setup lang="ts">
     import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
+    import type { LocationQueryValue } from 'vue-router';
+    import { useRoute, useRouter } from 'vue-router';
     import IconClose from '@img/icons/close.svg?component';
     import IconRecent from '@img/icons/recent.svg?component';
     import IconSearch from '@img/icons/search.svg?component';
@@ -256,14 +259,23 @@
     import VInput from '@/components/base/input/VInput.vue';
     import VSkeleton from '@/components/base/VSkeleton.vue';
     import FancyCarousel from '@/components/carousel/FancyCarousel.vue';
-    import CategoryFilter from '@/components/search/CategoryFilter.vue';
+    import CategoryFilters from '@/components/search/CategoryFilters.vue';
 
     import type { Category } from '@/ts/interfaces/category';
+
+    import { storeToRefs } from 'pinia';
+    import { useSearchStore } from '@/stores/search.store.ts';
 
     import searchCategories from '@/fixtures/search-categories.json';
     import searchLangs from '@/fixtures/search-langs.json';
     import searchTags from '@/fixtures/search-tags.json';
     import { useClickOutsideElement } from '@/hooks/useClickOutsideElement.ts';
+    import { useGetItemByName } from '@/hooks/useGetItemByName.ts';
+    import {
+        transformArraysToQueries,
+        useTransformFromPath,
+        useTransformPath,
+    } from '@/hooks/useTransformPath.ts';
 
     /**
      * Define emits
@@ -275,6 +287,9 @@
 
     const emits = defineEmits<Emits>();
 
+    const router = useRouter();
+    const route = useRoute();
+
     /**
      * DOM elements
      */
@@ -285,14 +300,24 @@
      * Filters data
      */
     const isFiltersOpen = ref(false);
-    const isFiltersLoaded = ref(false);
+    const isFiltersLoaded = ref(true);
     const searchValue = ref('');
 
-    const selectedTags = ref<string[]>([]);
-    const selectedLangs = ref<string[]>([]);
-    const selectedCategory = ref<null | Category>(null);
+    console.log(route.query);
+
+    const routerTags = computed(() => route.query.tags ?? []);
+    const routerLangs = computed(() => route.query.langs ?? []);
+    const routerCategories = computed(() => route.query.categories ?? []);
+
+    const selectedTags = ref<LocationQueryValue[]>([...routerTags.value]);
+    const selectedLangs = ref<LocationQueryValue[]>([...routerLangs.value]);
+    const selectedCategories = ref<LocationQueryValue[]>([
+        ...routerCategories.value,
+    ]);
 
     const categories = ref<Category[]>([...searchCategories]);
+
+    const { resentSearches } = storeToRefs(useSearchStore());
 
     /**
      * Define styles for input component
@@ -327,10 +352,6 @@
         emits('opened');
     };
 
-    const getItemByName = (searchArray: string[], name: string) => {
-        return searchArray.find((tagName) => tagName === name) ?? '';
-    };
-
     /**
      * Function for handle click and close filters when user clicks outside of component
      */
@@ -351,6 +372,36 @@
                 : enableBodyScroll(filtersScroll.value);
         }
     });
+
+    /**
+     * Function for searching
+     */
+    const onSearch = (value?: string) => {
+        if (value) searchValue.value = value;
+
+        if (searchValue.value) {
+            void router.push({
+                name: 'searchView',
+                params: {
+                    value: useTransformPath(searchValue.value.toLowerCase()),
+                },
+                query: {
+                    tags: transformArraysToQueries(selectedTags.value),
+                    langs: transformArraysToQueries(selectedLangs.value),
+                    categories: transformArraysToQueries(
+                        selectedCategories.value
+                    ),
+                },
+            });
+
+            if (!resentSearches.value.includes(searchValue.value)) {
+                resentSearches.value.unshift(searchValue.value);
+            }
+
+            close();
+            searchValue.value = '';
+        }
+    };
 
     onMounted(() => {
         document.addEventListener('click', setClickEvent);

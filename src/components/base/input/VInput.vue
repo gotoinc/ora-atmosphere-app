@@ -46,6 +46,7 @@
                     },
                 ]"
                 class="input-icon"
+                @click="emits('click-icon')"
             />
 
             <template v-else-if="type === 'password'">

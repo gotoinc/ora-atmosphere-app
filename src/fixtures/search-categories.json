@@ -1,26 +1,32 @@
 [
     {
         "name": "Brands & events",
-        "id": 1
+        "id": 1,
+        "background": "/images/categories/cat-1.jpg"
     },
     {
         "name": "Culture",
-        "id": 2
+        "id": 2,
+        "background": "/images/categories/cat-2.jpg"
     },
     {
         "name": "Entertainent",
-        "id": 3
+        "id": 3,
+        "background": "/images/categories/cat-3.jpg"
     },
     {
         "name": "Science",
-        "id": 4
+        "id": 4,
+        "background": "/images/categories/cat-4.jpg"
     },
     {
         "name": "Our World",
-        "id": 5
+        "id": 5,
+        "background": "/images/categories/cat-5.jpg"
     },
     {
         "name": "Oceans & Skies",
-        "id": 6
+        "id": 6,
+        "background": "/images/categories/cat-6.jpg"
     }
 ]
