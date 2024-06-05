@@ -1,69 +1,137 @@
 <template>
-    <h2 class="mb-6 text-h5 font-light uppercase">Videos</h2>
+    <div>
+        <h2 class="text-h5 font-light uppercase">
+            {{
+                isSearchPage
+                    ? `Results for "${useTransformFromPath(route.params.value as string)}":`
+                    : 'Videos'
+            }}
+        </h2>
 
-    <div
-        class="mb-36 grid grid-cols-5 gap-3.5 max-2xl:grid-cols-4 max-tab:grid-cols-3 max-sm:grid-cols-2 max-mob-md:grid-cols-1"
-    >
-        <video-card
-            v-for="i in 5"
-            :key="i"
-            name="Title"
-            :img="ThemeImg"
-            @expand="openVideoPopup"
-        />
+        <!-- Selected filters list -->
+        <div v-if="isSearchPage" class="mt-3 grid gap-3">
+            <div
+                v-if="routerCategories.length > 0"
+                class="flex flex-wrap gap-3"
+            >
+                <h4>Selected categories:</h4>
 
-        <video-card
-            v-for="i in 20"
-            :key="i"
-            disable
-            name="Title"
-            :img="ThemeImg"
-            @expand="openVideoPopup"
-        />
-    </div>
+                <div class="flex flex-wrap gap-1">
+                    <span
+                        v-for="(cat, i) in routerCategories"
+                        :key="i"
+                        class="uppercase"
+                    >
+                        {{ useTransformFromPath(cat as string) }}
+                        <span v-if="i !== routerCategories.length - 1">
+                            ,
+                        </span>
+                    </span>
+                </div>
+            </div>
 
-    <teleport to="body">
-        <v-popup v-model="isVideoOpen" is-empty>
-            <template #body>
-                <div class="relative">
+            <div v-if="routerTags.length > 0" class="flex flex-wrap gap-3">
+                <h4>Selected tags:</h4>
+
+                <div class="flex flex-wrap gap-1">
+                    <span
+                        v-for="(tag, i) in routerTags"
+                        :key="i"
+                        class="tag tag--fill pointer-events-none"
+                    >
+                        {{ tag }}
+                    </span>
+                </div>
+            </div>
+
+            <div v-if="routerLangs.length > 0" class="flex flex-wrap gap-3">
+                <h4>Selected languages:</h4>
+
+                <div class="flex flex-wrap gap-1">
+                    <span
+                        v-for="(lang, i) in routerLangs"
+                        :key="i"
+                        class="tag tag--lang tag--fill pointer-events-none"
+                    >
+                        {{ lang }}
+                    </span>
+                </div>
+            </div>
+
+            <v-button class="w-fit" @click="resetFilters">
+                Reset search
+            </v-button>
+        </div>
+
+        <div>
+            <template v-if="true">
+                <div
+                    class="mb-36 mt-6 grid grid-cols-5 gap-3.5 max-2xl:grid-cols-4 max-tab:grid-cols-3 max-sm:grid-cols-2 max-mob-md:grid-cols-1"
+                >
                     <video-card
-                        class="w-full max-w-[566px]"
-                        :expand-on-hover="false"
+                        v-for="i in 5"
+                        :key="i"
                         name="Title"
-                        :open-description="isDescriptionOpen"
                         :img="ThemeImg"
-                        @expand="isDescriptionOpen = !isDescriptionOpen"
+                        @expand="openVideoPopup"
+                        @play="playSimulator"
                     />
 
-                    <button
-                        class="absolute right-4 top-4 z-20 rounded transition-colors hover:bg-white-15"
-                        @click="isVideoOpen = false"
-                    >
-                        <component
-                            :is="IconCross"
-                            class="h-10 w-10 text-white-100"
-                        />
-                    </button>
+                    <video-card
+                        v-for="i in 20"
+                        :key="i"
+                        disable
+                        name="Title"
+                        :img="ThemeImg"
+                        @expand="openVideoPopup"
+                        @play="playSimulator"
+                    />
                 </div>
+
+                <main-pagination
+                    :current-page="3"
+                    :total="100"
+                    :view-per-page="25"
+                />
             </template>
-        </v-popup>
-    </teleport>
+
+            <h3 v-else class="py-5 text-center text-h3">No contents found</h3>
+        </div>
+    </div>
 </template>
 
 <script setup lang="ts">
-    import { ref } from 'vue';
+    import { computed } from 'vue';
+    import { useRoute, useRouter } from 'vue-router';
     import ThemeImg from '@img/categories/theme-bg.jpg';
-    import IconCross from '@img/icons/cross.svg?component';
 
+    import VButton from '@/components/banner/VButton.vue';
+    import MainPagination from '@/components/base/MainPagination.vue';
     import VideoCard from '@/components/catalog/VideoCard.vue';
-    import VPopup from '@/components/popup/VPopup.vue';
 
-    const isVideoOpen = ref(false);
-    const isDescriptionOpen = ref(false);
+    import { useCatalogStore } from '@/stores/catalog.store.ts';
+    import { useSearchStore } from '@/stores/search.store.ts';
 
-    const openVideoPopup = () => {
-        isVideoOpen.value = true;
-        isDescriptionOpen.value = true;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    import { useTransformFromPath } from '@/hooks/transform-queries.ts';
+    import {
+        routerCategories,
+        routerLangs,
+        routerTags,
+    } from '@/router/router-items.ts';
+
+    const route = useRoute();
+    const router = useRouter();
+
+    const { openVideoPopup, playSimulator } = useCatalogStore();
+    const { resetSearch } = useSearchStore();
+
+    const isSearchPage = computed(() => route.name === 'searchView');
+
+    const resetFilters = () => {
+        resetSearch();
+
+        void router.push({ name: 'catalogView' });
     };
 </script>
 

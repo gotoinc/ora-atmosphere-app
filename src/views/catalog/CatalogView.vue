@@ -18,7 +18,7 @@
                         v-for="item in items.slice(0, 10)"
                         :key="item.name"
                         :disable="!active"
-                        class="f-carousel__slide !mr-3.5 max-sm:!max-w-[268px]"
+                        class="f-carousel__slide !mr-3.5 !max-w-[347px] max-sm:!max-w-[268px]"
                         :to="{
                             name: 'catalogGroupView',
                             params: { group: useTransformPath(item.name) },
@@ -50,7 +50,7 @@
     import CategoryCard from '@/components/catalog/CategoryCard.vue';
 
     import catalogJson from '@/fixtures/catalog.json';
-    import { useTransformPath } from '@/hooks/useTransformPath.ts';
+    import { useTransformPath } from '@/hooks/transform-queries.ts';
 
     const isCatalogLink = (category: string, length: number) => {
         return length > 5

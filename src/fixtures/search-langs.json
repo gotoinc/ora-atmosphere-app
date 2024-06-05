@@ -1,18 +1,18 @@
 [
     {
-        "name": "EN",
+        "name": "en",
         "id": 1
     },
     {
-        "name": "FR",
+        "name": "fr",
         "id": 2
     },
     {
-        "name": "ES",
+        "name": "es",
         "id": 3
     },
     {
-        "name": "DE",
+        "name": "de",
         "id": 4
     }
 ]

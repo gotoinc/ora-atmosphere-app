@@ -38,11 +38,16 @@
                         variant="white"
                         :icon="IconPlay"
                         icon-class="!w-2.5 !h-3 mr-2"
+                        :to="{ name: 'simulatorView' }"
                     >
                         Play
                     </v-button>
 
-                    <v-button :icon="IconInfo" variant="info">
+                    <v-button
+                        :icon="IconInfo"
+                        variant="info"
+                        @click="openVideoPopup"
+                    >
                         More info
                     </v-button>
                 </div>
@@ -60,7 +65,11 @@
 
     import VButton from '@/components/banner/VButton.vue';
 
+    import { useCatalogStore } from '@/stores/catalog.store.ts';
+
     const router = useRouter();
+
+    const { openVideoPopup } = useCatalogStore();
 
     const showBackLink = computed(() => {
         const name = router.currentRoute.value.name;

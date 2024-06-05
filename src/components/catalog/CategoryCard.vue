@@ -82,7 +82,6 @@
 
 <style scoped lang="postcss">
     .card {
-        max-width: 347px;
         min-height: 195px;
     }
 </style>

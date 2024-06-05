@@ -28,7 +28,7 @@
     import {
         useTransformFromPath,
         useTransformPath,
-    } from '@/hooks/useTransformPath.ts';
+    } from '@/hooks/transform-queries.ts';
 
     const route = useRoute();
 

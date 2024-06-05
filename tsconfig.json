@@ -16,7 +16,8 @@
 
         "paths": {
             "@/*": ["./src/*"],
-            "@public/*": ["./public/*"]
+            "@public/*": ["./public/*"],
+            "@simulator/*": ["./simulator/*"]
         },
 
         /* Linting */
@@ -25,6 +26,7 @@
         "noUnusedParameters": true,
         "noFallthroughCasesInSwitch": true
     },
+
     "include": [
         "src/**/*.ts",
         "src/**/*.tsx",
@@ -34,8 +36,7 @@
         "./tailwind.config.ts",
         "./postcss.config.js",
         "./vue-shim.d.ts",
-        "./vite.config.ts",
-        "./simulator/simulator.js"
+        "./vite.config.ts"
     ],
     "references": [{ "path": "./tsconfig.node.json" }]
 }

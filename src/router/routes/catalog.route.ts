@@ -4,7 +4,7 @@ export default {
     component: () => import('@/views/catalog/CatalogView.vue'),
 
     meta: {
-        title: 'Extended catalog ',
+        title: 'Extended catalog',
     },
 
     children: [
