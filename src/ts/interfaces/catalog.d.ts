@@ -2,6 +2,7 @@ export interface Category {
     id: number;
     name: string;
     image_url: string;
+    requires_auth: boolean;
 }
 
 export interface Group {
@@ -9,6 +10,7 @@ export interface Group {
     name: string;
     image_url: string;
     category_id: number;
+    requires_auth: boolean;
 }
 
 export interface Topic {
@@ -16,6 +18,7 @@ export interface Topic {
     name: string;
     image_url: string;
     group_id: number;
+    requires_auth: boolean;
 }
 
 export interface Catalog {

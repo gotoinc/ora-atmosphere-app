@@ -48,6 +48,7 @@
                             }"
                             :img="item.image_url"
                             :name="item.name"
+                            :disable="item.requires_auth"
                         />
                     </fancy-carousel>
                 </div>

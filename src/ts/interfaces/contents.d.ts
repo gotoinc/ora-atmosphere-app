@@ -7,4 +7,5 @@ export interface VideoContent {
     languages: string[];
     tags: string[];
     topic_id: number;
+    requires_auth: boolean;
 }

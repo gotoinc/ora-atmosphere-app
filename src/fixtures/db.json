@@ -3,31 +3,37 @@
         {
             "id": 1,
             "name": "Brands & events",
+            "requires_auth": false,
             "image_url": "http://example.com/images/category1.png"
         },
         {
             "id": 2,
             "name": "Science",
+            "requires_auth": false,
             "image_url": "http://example.com/images/category2.png"
         },
         {
             "id": 3,
             "name": "Culture",
+            "requires_auth": true,
             "image_url": "http://example.com/images/category2.png"
         },
         {
             "id": 4,
             "name": "Our World",
+            "requires_auth": true,
             "image_url": "http://example.com/images/category2.png"
         },
         {
             "id": 5,
             "name": "Entertainment",
+            "requires_auth": true,
             "image_url": "http://example.com/images/category2.png"
         },
         {
             "id": 6,
             "name": "Oceans & Skies",
+            "requires_auth": true,
             "image_url": "http://example.com/images/category2.png"
         }
     ],
@@ -44,13 +50,15 @@
                     "id": 1,
                     "name": "Brands",
                     "image_url": "/images/categories/cat-1.jpg",
-                    "category_id": 1
+                    "category_id": 1,
+                    "requires_auth": false
                 },
                 {
                     "id": 2,
                     "name": "Events",
                     "image_url": "/images/categories/cat-2.jpg",
-                    "category_id": 1
+                    "category_id": 1,
+                    "requires_auth": false
                 }
             ]
         },
@@ -65,37 +73,43 @@
                     "id": 3,
                     "name": "Climate",
                     "image_url": "/images/categories/cat-3.jpg",
-                    "category_id": 2
+                    "category_id": 2,
+                    "requires_auth": false
                 },
                 {
                     "id": 4,
                     "name": "Biodiversity",
                     "image_url": "/images/categories/cat-4.jpg",
-                    "category_id": 2
+                    "category_id": 2,
+                    "requires_auth": false
                 },
                 {
                     "id": 5,
                     "name": "Space",
                     "image_url": "/images/categories/cat-5.jpg",
-                    "category_id": 2
+                    "category_id": 2,
+                    "requires_auth": false
                 },
                 {
                     "id": 6,
                     "name": "Geology",
                     "image_url": "/images/categories/cat-6.jpg",
-                    "category_id": 2
+                    "category_id": 2,
+                    "requires_auth": false
                 },
                 {
                     "id": 7,
                     "name": "The Future",
                     "image_url": "/images/categories/cat-7.jpg",
-                    "category_id": 2
+                    "category_id": 2,
+                    "requires_auth": false
                 },
                 {
                     "id": 8,
                     "name": "The Future",
                     "image_url": "/images/categories/cat-7.jpg",
-                    "category_id": 2
+                    "category_id": 2,
+                    "requires_auth": false
                 }
             ]
         },
@@ -110,37 +124,43 @@
                     "id": 8,
                     "name": "Art",
                     "image_url": "/images/categories/cat-8.jpg",
-                    "category_id": 3
+                    "category_id": 3,
+                    "requires_auth": true
                 },
                 {
                     "id": 9,
                     "name": "History",
                     "image_url": "/images/categories/cat-9.jpg",
-                    "category_id": 3
+                    "category_id": 3,
+                    "requires_auth": true
                 },
                 {
                     "id": 10,
                     "name": "Geography",
                     "image_url": "/images/categories/cat-10.jpg",
-                    "category_id": 3
+                    "category_id": 3,
+                    "requires_auth": true
                 },
                 {
                     "id": 11,
                     "name": "Religions",
                     "image_url": "/images/categories/cat-11.jpg",
-                    "category_id": 3
+                    "category_id": 3,
+                    "requires_auth": true
                 },
                 {
                     "id": 12,
                     "name": "Education",
                     "image_url": "/images/categories/cat-12.jpg",
-                    "category_id": 3
+                    "category_id": 3,
+                    "requires_auth": true
                 },
                 {
                     "id": 13,
                     "name": "Education",
                     "image_url": "/images/categories/cat-12.jpg",
-                    "category_id": 3
+                    "category_id": 3,
+                    "requires_auth": true
                 }
             ]
         },
@@ -155,37 +175,43 @@
                     "id": 13,
                     "name": "Demography",
                     "image_url": "/images/categories/cat-13.jpg",
-                    "category_id": 4
+                    "category_id": 4,
+                    "requires_auth": true
                 },
                 {
                     "id": 14,
                     "name": "Resources",
                     "image_url": "/images/categories/cat-14.jpg",
-                    "category_id": 4
+                    "category_id": 4,
+                    "requires_auth": true
                 },
                 {
                     "id": 15,
                     "name": "Health",
                     "image_url": "/images/categories/cat-15.jpg",
-                    "category_id": 4
+                    "category_id": 4,
+                    "requires_auth": true
                 },
                 {
                     "id": 16,
                     "name": "Economy",
                     "image_url": "/images/categories/cat-16.jpg",
-                    "category_id": 4
+                    "category_id": 4,
+                    "requires_auth": true
                 },
                 {
                     "id": 17,
                     "name": "Society",
                     "image_url": "/images/categories/cat-17.jpg",
-                    "category_id": 4
+                    "category_id": 4,
+                    "requires_auth": true
                 },
                 {
                     "id": 18,
                     "name": "Society",
                     "image_url": "/images/categories/cat-17.jpg",
-                    "category_id": 4
+                    "category_id": 4,
+                    "requires_auth": true
                 }
             ]
         },
@@ -200,37 +226,43 @@
                     "id": 18,
                     "name": "Orientation Sphere",
                     "image_url": "/images/categories/cat-18.jpg",
-                    "category_id": 5
+                    "category_id": 5,
+                    "requires_auth": true
                 },
                 {
                     "id": 19,
                     "name": "Sport",
                     "image_url": "/images/categories/cat-19.jpg",
-                    "category_id": 5
+                    "category_id": 5,
+                    "requires_auth": true
                 },
                 {
                     "id": 20,
                     "name": "Aquarium",
                     "image_url": "/images/categories/cat-20.jpg",
-                    "category_id": 5
+                    "category_id": 5,
+                    "requires_auth": true
                 },
                 {
                     "id": 21,
                     "name": "Tourism",
                     "image_url": "/images/categories/cat-21.jpg",
-                    "category_id": 5
+                    "category_id": 5,
+                    "requires_auth": true
                 },
                 {
                     "id": 22,
                     "name": "Animations",
                     "image_url": "/images/categories/cat-22.jpg",
-                    "category_id": 5
+                    "category_id": 5,
+                    "requires_auth": true
                 },
                 {
                     "id": 23,
                     "name": "Animations",
                     "image_url": "/images/categories/cat-22.jpg",
-                    "category_id": 5
+                    "category_id": 5,
+                    "requires_auth": true
                 }
             ]
         },
@@ -245,13 +277,15 @@
                     "id": 23,
                     "name": "Flight Radar",
                     "image_url": "/images/categories/cat-23.jpg",
-                    "category_id": 6
+                    "category_id": 6,
+                    "requires_auth": true
                 },
                 {
                     "id": 24,
                     "name": "Marine",
                     "image_url": "/images/categories/cat-24.jpg",
-                    "category_id": 6
+                    "category_id": 6,
+                    "requires_auth": true
                 }
             ]
         }
@@ -262,37 +296,43 @@
             "id": 8,
             "name": "Art",
             "image_url": "/images/categories/cat-8.jpg",
-            "category_id": 3
+            "category_id": 3,
+            "requires_auth": false
         },
         {
             "id": 9,
             "name": "History",
             "image_url": "/images/categories/cat-9.jpg",
-            "category_id": 3
+            "category_id": 3,
+            "requires_auth": false
         },
         {
             "id": 10,
             "name": "Geography",
             "image_url": "/images/categories/cat-10.jpg",
-            "category_id": 3
+            "category_id": 3,
+            "requires_auth": false
         },
         {
             "id": 11,
             "name": "Religions",
             "image_url": "/images/categories/cat-11.jpg",
-            "category_id": 3
+            "category_id": 3,
+            "requires_auth": false
         },
         {
             "id": 12,
             "name": "Education",
             "image_url": "/images/categories/cat-12.jpg",
-            "category_id": 3
+            "category_id": 3,
+            "requires_auth": true
         },
         {
             "id": 13,
             "name": "Education",
             "image_url": "/images/categories/cat-12.jpg",
-            "category_id": 3
+            "category_id": 3,
+            "requires_auth": true
         }
     ],
 
@@ -301,61 +341,71 @@
             "id": 100,
             "name": "Theme 1",
             "image_url": "/images/categories/theme-bg.jpg",
-            "group_id": 10
+            "group_id": 10,
+            "requires_auth": false
         },
         {
             "id": 101,
             "name": "Theme 2",
             "image_url": "/images/categories/theme-bg.jpg",
-            "group_id": 10
+            "group_id": 10,
+            "requires_auth": false
         },
         {
             "id": 102,
             "name": "Theme 3",
             "image_url": "/images/categories/theme-bg.jpg",
-            "group_id": 10
+            "group_id": 10,
+            "requires_auth": false
         },
         {
             "id": 103,
             "name": "Theme 4",
             "image_url": "/images/categories/theme-bg.jpg",
-            "group_id": 10
+            "group_id": 10,
+            "requires_auth": false
         },
         {
             "id": 104,
             "name": "Theme 5",
             "image_url": "/images/categories/theme-bg.jpg",
-            "group_id": 10
+            "group_id": 10,
+            "requires_auth": false
         },
         {
             "id": 105,
             "name": "Theme 6",
             "image_url": "/images/categories/theme-bg.jpg",
-            "group_id": 10
+            "group_id": 10,
+            "requires_auth": true
         },
         {
             "id": 106,
             "name": "Theme 7",
             "image_url": "/images/categories/theme-bg.jpg",
-            "group_id": 10
+            "group_id": 10,
+            "requires_auth": true
         },
         {
             "id": 107,
             "name": "Theme 8",
             "image_url": "/images/categories/theme-bg.jpg",
-            "group_id": 10
+            "group_id": 10,
+            "requires_auth": true
         },
         {
             "id": 108,
             "name": "Theme 9",
             "image_url": "/images/categories/theme-bg.jpg",
-            "group_id": 10
+            "group_id": 10,
+            "requires_auth": true
         },
         {
             "id": 109,
             "name": "Theme 10",
             "image_url": "/images/categories/theme-bg.jpg",
-            "group_id": 10
+            "group_id": 10,
+            "requires_auth": true
         }
     ],
 
@@ -368,7 +418,8 @@
             "description": "Description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Learn more",
             "languages": ["en", "fr", "de", "es"],
             "tags": ["environment", "museum", "luxury", "art"],
-            "topic_id": 100
+            "topic_id": 100,
+            "requires_auth": false
         },
         {
             "id": 1001,
@@ -378,7 +429,97 @@
             "description": "Description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Learn more",
             "languages": ["en"],
             "tags": ["school", "future", "video games"],
-            "topic_id": 101
+            "topic_id": 101,
+            "requires_auth": false
+        },
+        {
+            "id": 1002,
+            "file_url": "http://example.com/videos/video2.mp4",
+            "image_url": "/images/categories/theme-bg.jpg",
+            "title": "Title 3",
+            "description": "Description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Learn more",
+            "languages": ["en"],
+            "tags": ["school", "future", "video games"],
+            "topic_id": 101,
+            "requires_auth": false
+        },
+        {
+            "id": 1003,
+            "file_url": "http://example.com/videos/video2.mp4",
+            "image_url": "/images/categories/theme-bg.jpg",
+            "title": "Title 4",
+            "description": "Description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Learn more",
+            "languages": ["en"],
+            "tags": ["school", "future", "video games"],
+            "topic_id": 101,
+            "requires_auth": false
+        },
+        {
+            "id": 1004,
+            "file_url": "http://example.com/videos/video2.mp4",
+            "image_url": "/images/categories/theme-bg.jpg",
+            "title": "Title 5",
+            "description": "Description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Learn more",
+            "languages": ["en"],
+            "tags": ["school", "future", "video games"],
+            "topic_id": 101,
+            "requires_auth": false
+        },
+
+        {
+            "id": 1000,
+            "file_url": "http://example.com/videos/video1.mp4",
+            "image_url": "/images/categories/theme-bg.jpg",
+            "title": "Title 1",
+            "description": "Description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Learn more",
+            "languages": ["en", "fr", "de", "es"],
+            "tags": ["environment", "museum", "luxury", "art"],
+            "topic_id": 100,
+            "requires_auth": true
+        },
+        {
+            "id": 1001,
+            "file_url": "http://example.com/videos/video2.mp4",
+            "image_url": "/images/categories/theme-bg.jpg",
+            "title": "Title 2",
+            "description": "Description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Learn more",
+            "languages": ["en"],
+            "tags": ["school", "future", "video games"],
+            "topic_id": 101,
+            "requires_auth": true
+        },
+        {
+            "id": 1002,
+            "file_url": "http://example.com/videos/video2.mp4",
+            "image_url": "/images/categories/theme-bg.jpg",
+            "title": "Title 3",
+            "description": "Description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Learn more",
+            "languages": ["en"],
+            "tags": ["school", "future", "video games"],
+            "topic_id": 101,
+            "requires_auth": true
+        },
+        {
+            "id": 1003,
+            "file_url": "http://example.com/videos/video2.mp4",
+            "image_url": "/images/categories/theme-bg.jpg",
+            "title": "Title 4",
+            "description": "Description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Learn more",
+            "languages": ["en"],
+            "tags": ["school", "future", "video games"],
+            "topic_id": 101,
+            "requires_auth": true
+        },
+        {
+            "id": 1004,
+            "file_url": "http://example.com/videos/video2.mp4",
+            "image_url": "/images/categories/theme-bg.jpg",
+            "title": "Title 5",
+            "description": "Description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Learn more",
+            "languages": ["en"],
+            "tags": ["school", "future", "video games"],
+            "topic_id": 101,
+            "requires_auth": true
         }
     ]
 }

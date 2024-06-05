@@ -81,6 +81,7 @@
                     :key="video.id"
                     :name="video.title"
                     :img="video.image_url"
+                    :disable="video.requires_auth"
                     @expand="openVideoPopup"
                     @play="playSimulator"
                 />

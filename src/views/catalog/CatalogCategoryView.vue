@@ -12,7 +12,7 @@
     <template v-else-if="groupsData.length > 0">
         <div class="list">
             <category-card
-                v-for="{ id, name, image_url } in groupsData"
+                v-for="{ id, name, image_url, requires_auth } in groupsData"
                 :key="id"
                 :to="{
                     name: 'catalogGroupView',
@@ -20,6 +20,7 @@
                 }"
                 :img="image_url"
                 :name="name"
+                :disable="requires_auth"
             />
         </div>
     </template>

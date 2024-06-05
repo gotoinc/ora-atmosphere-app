@@ -17,7 +17,7 @@
         <template v-else-if="topicData.length > 0">
             <div class="list">
                 <category-card
-                    v-for="{ id, name, image_url } in topicData"
+                    v-for="{ id, name, image_url, requires_auth } in topicData"
                     :key="id"
                     class="!max-w-full"
                     :to="{
@@ -29,6 +29,8 @@
                     }"
                     :img="image_url"
                     :name="name"
+                    saturate-image
+                    :disable="requires_auth"
                 />
             </div>
         </template>
