@@ -63,57 +63,53 @@
             </v-button>
         </div>
 
-        <div>
-            <template v-if="true">
-                <div
-                    class="mb-36 mt-6 grid grid-cols-5 gap-3.5 max-2xl:grid-cols-4 max-tab:grid-cols-3 max-sm:grid-cols-2 max-mob-md:grid-cols-1"
-                >
-                    <video-card
-                        v-for="i in 5"
-                        :key="i"
-                        name="Title"
-                        :img="ThemeImg"
-                        @expand="openVideoPopup"
-                        @play="playSimulator"
-                    />
-
-                    <video-card
-                        v-for="i in 20"
-                        :key="i"
-                        disable
-                        name="Title"
-                        :img="ThemeImg"
-                        @expand="openVideoPopup"
-                        @play="playSimulator"
-                    />
-                </div>
-
-                <main-pagination
-                    :current-page="3"
-                    :total="100"
-                    :view-per-page="25"
+        <!-- Contents list -->
+        <template v-if="isLoading">
+            <div class="list">
+                <card-skeleton
+                    v-for="i in 10"
+                    :key="i"
+                    class="bg-primary-100/25"
                 />
-            </template>
+            </div>
+        </template>
 
-            <h3 v-else class="py-5 text-center text-h3">No contents found</h3>
-        </div>
+        <template v-else-if="videosData.length > 0">
+            <div class="list">
+                <video-card
+                    v-for="video in videosData"
+                    :key="video.id"
+                    :name="video.title"
+                    :img="video.image_url"
+                    @expand="openVideoPopup"
+                    @play="playSimulator"
+                />
+            </div>
+        </template>
+
+        <h3 v-else class="pt-5 text-center text-h3">No contents found</h3>
     </div>
 </template>
 
 <script setup lang="ts">
-    import { computed } from 'vue';
+    import { computed, onMounted, ref } from 'vue';
     import { useRoute, useRouter } from 'vue-router';
-    import ThemeImg from '@img/categories/theme-bg.jpg';
+    import { useToast } from 'vue-toastification';
 
     import VButton from '@/components/banner/VButton.vue';
-    import MainPagination from '@/components/base/MainPagination.vue';
+    import CardSkeleton from '@/components/catalog/CardSkeleton.vue';
     import VideoCard from '@/components/catalog/VideoCard.vue';
+
+    import type { VideoContent } from '@/ts/interfaces/contents';
 
     import { useCatalogStore } from '@/stores/catalog.store.ts';
     import { useSearchStore } from '@/stores/search.store.ts';
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    import { useTransformFromPath } from '@/hooks/transform-queries.ts';
+    import { getVideos } from '@/api/catalog/get-videos.api.ts';
+    import {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        useTransformFromPath,
+    } from '@/hooks/transform-queries.ts';
     import {
         routerCategories,
         routerLangs,
@@ -121,6 +117,7 @@
     } from '@/router/router-items.ts';
 
     const route = useRoute();
+    const toast = useToast();
     const router = useRouter();
 
     const { openVideoPopup, playSimulator } = useCatalogStore();
@@ -133,6 +130,23 @@
 
         void router.push({ name: 'catalogView' });
     };
+
+    const isLoading = ref(true);
+    const videosData = ref<VideoContent[]>([]);
+
+    onMounted(async () => {
+        try {
+            videosData.value = (await getVideos()) ?? [];
+        } catch (err) {
+            toast.error('Contents were not found');
+        } finally {
+            isLoading.value = false;
+        }
+    });
 </script>
 
-<style scoped></style>
+<style scoped lang="postcss">
+    .list {
+        @apply mb-36 mt-6 grid grid-cols-5 gap-3.5 max-2xl:grid-cols-4 max-tab:grid-cols-3 max-sm:grid-cols-2 max-mob-md:grid-cols-1;
+    }
+</style>

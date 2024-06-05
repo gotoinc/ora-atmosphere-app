@@ -1,6 +1,6 @@
 <template>
     <!-- Catalog page  -->
-    <template v-if="route.name === 'catalogView'">
+    <template v-if="isCatalogPage">
         <template v-if="isLoading">
             <div class="grid gap-12">
                 <fancy-carousel
@@ -67,8 +67,8 @@
 </template>
 
 <script setup lang="ts">
-    import { onMounted, ref } from 'vue';
-    import { useRoute } from 'vue-router';
+    import { computed, onMounted, ref } from 'vue';
+    import { onBeforeRouteUpdate, useRoute } from 'vue-router';
     import { useToast } from 'vue-toastification';
 
     import ScrollToTop from '@/components/base/ScrollToTop.vue';
@@ -98,16 +98,30 @@
             : undefined;
     };
 
+    const isCatalogPage = computed(() => route.name === 'catalogView');
+
     const isLoading = ref(true);
     const catalogData = ref<Catalog[]>([]);
 
-    onMounted(async () => {
+    const loadCatalog = async () => {
         try {
             catalogData.value = (await getCatalog()) ?? [];
         } catch (err) {
             toast.error('Catalog was not found');
         } finally {
             isLoading.value = false;
+        }
+    };
+
+    onBeforeRouteUpdate((to) => {
+        if (to.name === 'catalogView') {
+            void loadCatalog();
+        }
+    });
+
+    onMounted(() => {
+        if (isCatalogPage.value) {
+            void loadCatalog();
         }
     });
 </script>

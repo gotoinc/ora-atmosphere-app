@@ -1,5 +1,5 @@
 <template>
-    <template v-if="route.name === 'catalogGroupView'">
+    <template v-if="isGroupPage">
         <h2 class="mb-6 text-h5 font-light uppercase">
             {{ useTransformFromPath(route.params.groupName as string) }}
         </h2>
@@ -37,8 +37,8 @@
 </template>
 
 <script setup lang="ts">
-    import { onMounted, ref } from 'vue';
-    import { useRoute } from 'vue-router';
+    import { computed, onMounted, ref } from 'vue';
+    import { onBeforeRouteUpdate, useRoute } from 'vue-router';
     import { useToast } from 'vue-toastification';
 
     import CardSkeleton from '@/components/catalog/CardSkeleton.vue';
@@ -56,16 +56,30 @@
     const route = useRoute();
     const toast = useToast();
 
+    const isGroupPage = computed(() => route.name === 'catalogGroupView');
+
     const isLoading = ref(true);
     const topicData = ref<Topic[]>([]);
 
-    onMounted(async () => {
+    const loadTopics = async () => {
         try {
             topicData.value = (await getTopics()) ?? [];
         } catch (err) {
             toast.error('Themes were not found');
         } finally {
             isLoading.value = false;
+        }
+    };
+
+    onBeforeRouteUpdate((to) => {
+        if (to.name === 'catalogGroupView') {
+            void loadTopics();
+        }
+    });
+
+    onMounted(() => {
+        if (isGroupPage.value) {
+            void loadTopics();
         }
     });
 </script>
