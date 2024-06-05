@@ -41,7 +41,10 @@
                             class="f-carousel__slide !mr-3.5 !max-w-[347px] max-sm:!max-w-[268px]"
                             :to="{
                                 name: 'catalogGroupView',
-                                params: { groupId: item.id },
+                                params: {
+                                    groupName: useTransformPath(item.name),
+                                    groupId: item.id,
+                                },
                             }"
                             :img="item.image_url"
                             :name="item.name"

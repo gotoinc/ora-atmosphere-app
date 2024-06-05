@@ -16,7 +16,7 @@
                 :key="id"
                 :to="{
                     name: 'catalogGroupView',
-                    params: { groupId: id },
+                    params: { groupName: useTransformPath(name), groupId: id },
                 }"
                 :img="image_url"
                 :name="name"
@@ -41,6 +41,7 @@
     import {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         useTransformFromPath,
+        useTransformPath,
     } from '@/hooks/transform-queries.ts';
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
