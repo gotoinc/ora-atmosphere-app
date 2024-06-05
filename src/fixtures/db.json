@@ -37,7 +37,6 @@
             "image_url": "http://example.com/images/category2.png"
         }
     ],
-
     "catalog": [
         {
             "category": {
@@ -290,7 +289,6 @@
             ]
         }
     ],
-
     "groups": [
         {
             "id": 8,
@@ -335,7 +333,6 @@
             "requires_auth": true
         }
     ],
-
     "topics": [
         {
             "id": 100,
@@ -408,7 +405,6 @@
             "requires_auth": true
         }
     ],
-
     "videos": [
         {
             "id": 1000,
@@ -465,7 +461,6 @@
             "topic_id": 101,
             "requires_auth": false
         },
-
         {
             "id": 1000,
             "file_url": "http://example.com/videos/video1.mp4",
@@ -521,5 +516,10 @@
             "topic_id": 101,
             "requires_auth": true
         }
-    ]
+    ],
+    "login": {
+        "email": "ulanov.work@gmail.com",
+        "password": "123455@12e23e",
+        "remember_me": true
+    }
 }

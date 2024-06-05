@@ -36,7 +36,9 @@
                 </router-link>
             </div>
 
-            <v-button class="w-full" type="submit"> Sign In </v-button>
+            <v-button class="w-full" type="submit" :loading="isLoading">
+                Sign In
+            </v-button>
         </form>
 
         <p>
@@ -53,7 +55,7 @@
 
 <script setup lang="ts">
     import { ref } from 'vue';
-    import { useRouter } from 'vue-router';
+    import { useToast } from 'vue-toastification';
     import { useForm } from 'vee-validate';
 
     import VButton from '@/components/banner/VButton.vue';
@@ -63,35 +65,49 @@
     import { storeToRefs } from 'pinia';
     import { useAuthStore } from '@/stores/auth.store.ts';
 
+    import { signIn } from '@/api/auth/login.api.ts';
     import { signInSchema } from '@/validations/schemas/auth.schema.ts';
-    import type { SignInType } from '@/validations/types/auth';
+    import type { SignInInput } from '@/validations/types/auth';
 
-    const router = useRouter();
+    const toast = useToast();
 
     const isRememberChecked = ref(false);
+    const isLoading = ref(false);
 
     const { isAuthenticated } = storeToRefs(useAuthStore());
 
-    const { defineField, handleSubmit, errors, resetForm } =
-        useForm<SignInType>({
-            validationSchema: signInSchema,
-            initialValues: {
-                email: '',
-                password: '',
-            },
-        });
+    const { defineField, handleSubmit, errors } = useForm<SignInInput>({
+        validationSchema: signInSchema,
+        initialValues: {
+            email: '',
+            password: '',
+        },
+    });
 
     const [email] = defineField('email');
     const [password] = defineField('password');
 
-    const onSubmit = handleSubmit(() => {
-        void router.push({ name: 'main' });
+    const onSubmit = handleSubmit(async () => {
+        isLoading.value = true;
+
+        try {
+            const res = await signIn({
+                email: email.value,
+                password: password.value,
+                remember_me: isRememberChecked.value,
+            });
+
+            if (res?.success) {
+                toast.success('Success');
+                isAuthenticated.value = true;
+            }
+        } catch (e) {
+            toast.error('Sign in error');
+        } finally {
+            isLoading.value = false;
+        }
 
         // setFieldError('email', 'Email already exists');
-
-        isAuthenticated.value = true;
-
-        resetForm();
     });
 </script>
 

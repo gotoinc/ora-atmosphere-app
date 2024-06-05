@@ -9,7 +9,7 @@ import {
 import type {
     EmailType,
     SetNewPasswordType,
-    SignInType,
+    SignInInput,
     SignUpFirstStep,
     SignUpSecondStep,
 } from '@/validations/types/auth';
@@ -41,7 +41,7 @@ export const signUpSecondStepSchema: ObjectSchema<SignUpSecondStep> = object({
 /**
  * Define schema for Sign in form
  */
-export const signInSchema: ObjectSchema<SignInType> = object({
+export const signInSchema: ObjectSchema<SignInInput> = object({
     email: emailValidation,
     password: passwordValidation,
 });

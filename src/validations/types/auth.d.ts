@@ -15,10 +15,10 @@ export interface SignUpSecondStep {
     phone?: string;
 }
 
-export interface SignInType
+export interface SignInInput
     extends Pick<SignUpFirstStep, 'email' | 'password'> {}
 
 export interface SetNewPasswordType
     extends Pick<SignUpFirstStep, 'confirmPassword' | 'password'> {}
 
-export interface EmailType extends Pick<SignInType, 'email'> {}
+export interface EmailType extends Pick<SignInInput, 'email'> {}
