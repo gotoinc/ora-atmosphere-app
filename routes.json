@@ -1,3 +1,4 @@
 {
-    "/api/*": "/$1"
+    "/api/*": "/$1",
+    "/api/categories/:category_id/groups": "/groups?category_id=:category_id"
 }

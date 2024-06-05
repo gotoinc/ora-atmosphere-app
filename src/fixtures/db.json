@@ -34,8 +34,11 @@
 
     "catalog": [
         {
-            "category": "Brands & Events",
-            "active": true,
+            "category": {
+                "id": 1,
+                "name": "Brands & events",
+                "image_url": "http://example.com/images/category1.png"
+            },
             "groups": [
                 {
                     "id": 1,
@@ -52,7 +55,11 @@
             ]
         },
         {
-            "category": "Science",
+            "category": {
+                "id": 2,
+                "name": "Science",
+                "image_url": "http://example.com/images/category2.png"
+            },
             "groups": [
                 {
                     "id": 3,
@@ -93,7 +100,11 @@
             ]
         },
         {
-            "category": "Culture",
+            "category": {
+                "id": 3,
+                "name": "Culture",
+                "image_url": "http://example.com/images/category2.png"
+            },
             "groups": [
                 {
                     "id": 8,
@@ -134,7 +145,11 @@
             ]
         },
         {
-            "category": "Our World",
+            "category": {
+                "id": 4,
+                "name": "Our World",
+                "image_url": "http://example.com/images/category2.png"
+            },
             "groups": [
                 {
                     "id": 13,
@@ -175,7 +190,11 @@
             ]
         },
         {
-            "category": "Entertainment",
+            "category": {
+                "id": 5,
+                "name": "Entertainment",
+                "image_url": "http://example.com/images/category2.png"
+            },
             "groups": [
                 {
                     "id": 18,
@@ -216,7 +235,11 @@
             ]
         },
         {
-            "category": "Oceans & Skies",
+            "category": {
+                "id": 6,
+                "name": "Oceans & Skies",
+                "image_url": "http://example.com/images/category2.png"
+            },
             "groups": [
                 {
                     "id": 23,
@@ -231,6 +254,45 @@
                     "category_id": 6
                 }
             ]
+        }
+    ],
+
+    "groups": [
+        {
+            "id": 8,
+            "name": "Art",
+            "image_url": "/images/categories/cat-8.jpg",
+            "category_id": 3
+        },
+        {
+            "id": 9,
+            "name": "History",
+            "image_url": "/images/categories/cat-9.jpg",
+            "category_id": 3
+        },
+        {
+            "id": 10,
+            "name": "Geography",
+            "image_url": "/images/categories/cat-10.jpg",
+            "category_id": 3
+        },
+        {
+            "id": 11,
+            "name": "Religions",
+            "image_url": "/images/categories/cat-11.jpg",
+            "category_id": 3
+        },
+        {
+            "id": 12,
+            "name": "Education",
+            "image_url": "/images/categories/cat-12.jpg",
+            "category_id": 3
+        },
+        {
+            "id": 13,
+            "name": "Education",
+            "image_url": "/images/categories/cat-12.jpg",
+            "category_id": 3
         }
     ]
 }

@@ -19,6 +19,6 @@ export interface Topic {
 }
 
 export interface Catalog {
-    category: string;
+    category: Category;
     groups: Group[];
 }

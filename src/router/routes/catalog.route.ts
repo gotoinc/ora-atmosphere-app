@@ -9,7 +9,7 @@ export default {
 
     children: [
         {
-            path: ':group',
+            path: ':groupId',
             name: 'catalogGroupView',
             component: () => import('@/views/catalog/CatalogGroupView.vue'),
 
@@ -24,7 +24,7 @@ export default {
         },
 
         {
-            path: 'extended/:category',
+            path: 'extended/:id/:category',
             name: 'catalogCategoryView',
             component: () => import('@/views/catalog/CatalogCategoryView.vue'),
         },
