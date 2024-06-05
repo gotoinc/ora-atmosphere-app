@@ -40,7 +40,7 @@
     import { computed } from 'vue';
     import type { LocationQueryValue } from 'vue-router';
 
-    import type { Category } from '@/ts/interfaces/category';
+    import type { Category } from '@/ts/interfaces/catalog';
 
     import { useGetItemByName } from '@/hooks/useGetItemByName.ts';
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="skeleton animate-pulse bg-white-25"></div>
+    <div class="skeleton animate-pulse"></div>
 </template>
 
 <script setup lang="ts"></script>

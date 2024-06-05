@@ -7,6 +7,6 @@ axios.interceptors.response.use(
     }
 );
 
-axios.defaults.baseURL = 'http://localhost:3000';
+axios.defaults.baseURL = 'http://localhost:3000/api';
 
 export default axios;

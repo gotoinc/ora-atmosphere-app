@@ -1,11 +1,11 @@
-import type { Category } from '@/ts/interfaces/catalog';
+import type { Catalog } from '@/ts/interfaces/catalog';
 
 import axios from '@/api/axios.api.ts';
 import { useThrowError } from '@/hooks/useThrowError.ts';
 
-export const getCategories = async () => {
+export const getCatalog = async () => {
     try {
-        const res = await axios.get<Category[]>(`/categories`);
+        const res = await axios.get<Catalog[]>(`/catalog`);
 
         return res.data;
     } catch (err) {

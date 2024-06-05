@@ -24,19 +24,14 @@
 
     import CategoryCard from '@/components/catalog/CategoryCard.vue';
 
-    import catalogJson from '@/fixtures/catalog.json';
     import {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         useTransformFromPath,
         useTransformPath,
     } from '@/hooks/transform-queries.ts';
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const route = useRoute();
-
-    const categories = catalogJson.filter(
-        (category) =>
-            category.category.toLowerCase() ===
-            useTransformFromPath(route.params.category as string).toLowerCase()
-    )[0];
 </script>
 
 <style scoped></style>

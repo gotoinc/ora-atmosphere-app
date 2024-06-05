@@ -260,7 +260,7 @@
     import FancyCarousel from '@/components/carousel/FancyCarousel.vue';
     import CategoryFilters from '@/components/search/CategoryFilters.vue';
 
-    import type { Category } from '@/ts/interfaces/category';
+    import type { Category } from '@/ts/interfaces/catalog';
 
     import { storeToRefs } from 'pinia';
     import { useSearchStore } from '@/stores/search.store.ts';

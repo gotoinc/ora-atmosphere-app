@@ -9,6 +9,228 @@
             "id": 2,
             "name": "Science",
             "image_url": "http://example.com/images/category2.png"
+        },
+        {
+            "id": 3,
+            "name": "Culture",
+            "image_url": "http://example.com/images/category2.png"
+        },
+        {
+            "id": 4,
+            "name": "Our World",
+            "image_url": "http://example.com/images/category2.png"
+        },
+        {
+            "id": 5,
+            "name": "Entertainment",
+            "image_url": "http://example.com/images/category2.png"
+        },
+        {
+            "id": 6,
+            "name": "Oceans & Skies",
+            "image_url": "http://example.com/images/category2.png"
+        }
+    ],
+
+    "catalog": [
+        {
+            "category": "Brands & Events",
+            "active": true,
+            "groups": [
+                {
+                    "id": 1,
+                    "name": "Brands",
+                    "image_url": "/images/categories/cat-1.jpg",
+                    "category_id": 1
+                },
+                {
+                    "id": 2,
+                    "name": "Events",
+                    "image_url": "/images/categories/cat-2.jpg",
+                    "category_id": 1
+                }
+            ]
+        },
+        {
+            "category": "Science",
+            "groups": [
+                {
+                    "id": 3,
+                    "name": "Climate",
+                    "image_url": "/images/categories/cat-3.jpg",
+                    "category_id": 2
+                },
+                {
+                    "id": 4,
+                    "name": "Biodiversity",
+                    "image_url": "/images/categories/cat-4.jpg",
+                    "category_id": 2
+                },
+                {
+                    "id": 5,
+                    "name": "Space",
+                    "image_url": "/images/categories/cat-5.jpg",
+                    "category_id": 2
+                },
+                {
+                    "id": 6,
+                    "name": "Geology",
+                    "image_url": "/images/categories/cat-6.jpg",
+                    "category_id": 2
+                },
+                {
+                    "id": 7,
+                    "name": "The Future",
+                    "image_url": "/images/categories/cat-7.jpg",
+                    "category_id": 2
+                },
+                {
+                    "id": 8,
+                    "name": "The Future",
+                    "image_url": "/images/categories/cat-7.jpg",
+                    "category_id": 2
+                }
+            ]
+        },
+        {
+            "category": "Culture",
+            "groups": [
+                {
+                    "id": 8,
+                    "name": "Art",
+                    "image_url": "/images/categories/cat-8.jpg",
+                    "category_id": 3
+                },
+                {
+                    "id": 9,
+                    "name": "History",
+                    "image_url": "/images/categories/cat-9.jpg",
+                    "category_id": 3
+                },
+                {
+                    "id": 10,
+                    "name": "Geography",
+                    "image_url": "/images/categories/cat-10.jpg",
+                    "category_id": 3
+                },
+                {
+                    "id": 11,
+                    "name": "Religions",
+                    "image_url": "/images/categories/cat-11.jpg",
+                    "category_id": 3
+                },
+                {
+                    "id": 12,
+                    "name": "Education",
+                    "image_url": "/images/categories/cat-12.jpg",
+                    "category_id": 3
+                },
+                {
+                    "id": 13,
+                    "name": "Education",
+                    "image_url": "/images/categories/cat-12.jpg",
+                    "category_id": 3
+                }
+            ]
+        },
+        {
+            "category": "Our World",
+            "groups": [
+                {
+                    "id": 13,
+                    "name": "Demography",
+                    "image_url": "/images/categories/cat-13.jpg",
+                    "category_id": 4
+                },
+                {
+                    "id": 14,
+                    "name": "Resources",
+                    "image_url": "/images/categories/cat-14.jpg",
+                    "category_id": 4
+                },
+                {
+                    "id": 15,
+                    "name": "Health",
+                    "image_url": "/images/categories/cat-15.jpg",
+                    "category_id": 4
+                },
+                {
+                    "id": 16,
+                    "name": "Economy",
+                    "image_url": "/images/categories/cat-16.jpg",
+                    "category_id": 4
+                },
+                {
+                    "id": 17,
+                    "name": "Society",
+                    "image_url": "/images/categories/cat-17.jpg",
+                    "category_id": 4
+                },
+                {
+                    "id": 18,
+                    "name": "Society",
+                    "image_url": "/images/categories/cat-17.jpg",
+                    "category_id": 4
+                }
+            ]
+        },
+        {
+            "category": "Entertainment",
+            "groups": [
+                {
+                    "id": 18,
+                    "name": "Orientation Sphere",
+                    "image_url": "/images/categories/cat-18.jpg",
+                    "category_id": 5
+                },
+                {
+                    "id": 19,
+                    "name": "Sport",
+                    "image_url": "/images/categories/cat-19.jpg",
+                    "category_id": 5
+                },
+                {
+                    "id": 20,
+                    "name": "Aquarium",
+                    "image_url": "/images/categories/cat-20.jpg",
+                    "category_id": 5
+                },
+                {
+                    "id": 21,
+                    "name": "Tourism",
+                    "image_url": "/images/categories/cat-21.jpg",
+                    "category_id": 5
+                },
+                {
+                    "id": 22,
+                    "name": "Animations",
+                    "image_url": "/images/categories/cat-22.jpg",
+                    "category_id": 5
+                },
+                {
+                    "id": 23,
+                    "name": "Animations",
+                    "image_url": "/images/categories/cat-22.jpg",
+                    "category_id": 5
+                }
+            ]
+        },
+        {
+            "category": "Oceans & Skies",
+            "groups": [
+                {
+                    "id": 23,
+                    "name": "Flight Radar",
+                    "image_url": "/images/categories/cat-23.jpg",
+                    "category_id": 6
+                },
+                {
+                    "id": 24,
+                    "name": "Marine",
+                    "image_url": "/images/categories/cat-24.jpg",
+                    "category_id": 6
+                }
+            ]
         }
     ]
 }
