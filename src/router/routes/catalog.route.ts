@@ -15,7 +15,7 @@ export default {
 
             children: [
                 {
-                    path: ':id/:topic/videos',
+                    path: ':topicId/:topicName/videos',
                     name: 'catalogThemeView',
                     component: () =>
                         import('@/views/catalog/CatalogThemeView.vue'),

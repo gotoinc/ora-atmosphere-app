@@ -22,7 +22,10 @@
                     class="!max-w-full"
                     :to="{
                         name: 'catalogThemeView',
-                        params: { topic: useTransformPath(name), id },
+                        params: {
+                            topicName: useTransformPath(name),
+                            topicId: id,
+                        },
                     }"
                     :img="image_url"
                     :name="name"
@@ -63,7 +66,9 @@
 
     const loadTopics = async () => {
         try {
-            topicData.value = (await getTopics()) ?? [];
+            const res = await getTopics(route.params.groupId as string);
+
+            topicData.value = res ?? [];
         } catch (err) {
             toast.error('Themes were not found');
         } finally {

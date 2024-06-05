@@ -136,7 +136,9 @@
 
     onMounted(async () => {
         try {
-            videosData.value = (await getVideos()) ?? [];
+            const res = await getVideos(route.params.topicId as string);
+
+            videosData.value = res ?? [];
         } catch (err) {
             toast.error('Contents were not found');
         } finally {

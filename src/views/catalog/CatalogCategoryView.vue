@@ -37,7 +37,7 @@
 
     import type { Group } from '@/ts/interfaces/catalog';
 
-    import { getCategoriesGroups } from '@/api/catalog/get-category-groups.api.ts';
+    import { getGroups } from '@/api/catalog/get-groups.api.ts';
     import {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         useTransformFromPath,
@@ -53,7 +53,7 @@
 
     onMounted(async () => {
         try {
-            const res = await getCategoriesGroups(route.params.id as string);
+            const res = await getGroups(route.params.id as string);
 
             groupsData.value = res ?? [];
         } catch (err) {
