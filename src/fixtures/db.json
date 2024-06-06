@@ -4,37 +4,37 @@
             "id": 1,
             "name": "Brands & events",
             "requires_auth": false,
-            "image_url": "http://example.com/images/category1.png"
+            "image_url": "/images/categories/cat-1.jpg"
         },
         {
             "id": 2,
             "name": "Science",
             "requires_auth": false,
-            "image_url": "http://example.com/images/category2.png"
+            "image_url": "/images/categories/cat-2.jpg"
         },
         {
             "id": 3,
             "name": "Culture",
             "requires_auth": true,
-            "image_url": "http://example.com/images/category2.png"
+            "image_url": "/images/categories/cat-3.jpg"
         },
         {
             "id": 4,
             "name": "Our World",
             "requires_auth": true,
-            "image_url": "http://example.com/images/category2.png"
+            "image_url": "/images/categories/cat-4.jpg"
         },
         {
             "id": 5,
             "name": "Entertainment",
             "requires_auth": true,
-            "image_url": "http://example.com/images/category2.png"
+            "image_url": "/images/categories/cat-5.jpg"
         },
         {
             "id": 6,
             "name": "Oceans & Skies",
             "requires_auth": true,
-            "image_url": "http://example.com/images/category2.png"
+            "image_url": "/images/categories/cat-6.jpg"
         }
     ],
     "catalog": [
@@ -517,6 +517,63 @@
             "requires_auth": true
         }
     ],
+
+    "search-filters": {
+        "categories": [
+            {
+                "id": 1,
+                "name": "Brands & events",
+                "requires_auth": false,
+                "image_url": "/images/categories/cat-1.jpg"
+            },
+            {
+                "id": 3,
+                "name": "Culture",
+                "requires_auth": true,
+                "image_url": "/images/categories/cat-3.jpg"
+            },
+            {
+                "id": 5,
+                "name": "Entertainment",
+                "requires_auth": true,
+                "image_url": "/images/categories/cat-5.jpg"
+            },
+            {
+                "id": 2,
+                "name": "Science",
+                "requires_auth": false,
+                "image_url": "/images/categories/cat-2.jpg"
+            },
+
+            {
+                "id": 4,
+                "name": "Our World",
+                "requires_auth": true,
+                "image_url": "/images/categories/cat-4.jpg"
+            },
+
+            {
+                "id": 6,
+                "name": "Oceans & Skies",
+                "requires_auth": true,
+                "image_url": "/images/categories/cat-6.jpg"
+            }
+        ],
+
+        "langs": ["en", "fr", "es", "de"],
+
+        "tags": [
+            "school",
+            "future",
+            "environment",
+            "museum",
+            "luxury",
+            "art",
+            "earthquake",
+            "video-games"
+        ]
+    },
+
     "login": {
         "email": "ulanov.work@gmail.com",
         "password": "123455@12e23e",

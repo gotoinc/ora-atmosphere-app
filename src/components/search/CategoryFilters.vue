@@ -1,6 +1,6 @@
 <template>
     <label
-        v-for="{ id, name, background } in categories"
+        v-for="{ id, name, image_url } in categories"
         :key="id"
         :class="[
             {
@@ -15,9 +15,9 @@
     >
         <span class="block h-14 w-14 flex-shrink-0 rounded-lg bg-white-75">
             <img
-                v-if="background"
+                v-if="image_url"
                 class="img-cover rounded-lg"
-                :src="background"
+                :src="image_url"
                 :alt="name"
             />
         </span>

@@ -55,8 +55,6 @@
                         <h3 v-else class="text-sm font-bold opacity-70">
                             No recent searches
                         </h3>
-
-                        <!-- Matched results -->
                     </div>
 
                     <!-- Categories options -->
@@ -69,74 +67,64 @@
                         <div
                             class="grid grid-cols-3 gap-3 max-sm:hidden max-mob:grid-cols-2"
                         >
-                            <template v-if="isFiltersLoaded">
-                                <category-filters
-                                    v-model="selectedCategories"
-                                    :categories="categories"
-                                />
-                            </template>
-
-                            <template v-else>
+                            <template v-if="isFiltersLoading">
                                 <div
                                     v-for="i in 6"
                                     :key="i"
                                     class="flex items-center gap-2.5"
                                 >
                                     <v-skeleton
-                                        class="h-14 w-14 flex-shrink-0 rounded-lg"
+                                        class="h-14 w-14 flex-shrink-0 rounded-lg bg-white-15"
                                     />
 
                                     <v-skeleton
-                                        class="h-4 w-full max-w-14 rounded"
+                                        class="h-4 w-full max-w-14 rounded bg-white-15"
                                     />
                                 </div>
                             </template>
+
+                            <template v-else-if="searchFilters">
+                                <category-filters
+                                    v-model="selectedCategories"
+                                    :categories="searchFilters.categories"
+                                />
+                            </template>
+
+                            <p v-else>No categories found.</p>
                         </div>
 
                         <!-- Categories for mobile -->
-                        <template v-if="isFiltersLoaded">
-                            <fancy-carousel class="sm:hidden">
-                                <template v-if="isFiltersLoaded">
-                                    <category-filters
-                                        v-model="selectedCategories"
-                                        category-class="f-carousel__slide !w-fit !mr-5"
-                                        :categories="categories"
-                                    />
-                                </template>
-
-                                <template v-else>
+                        <div class="sm:hidden">
+                            <template v-if="isFiltersLoading">
+                                <fancy-carousel>
                                     <div
                                         v-for="i in 3"
                                         :key="i"
                                         class="f-carousel__slide !mr-5 flex !max-w-44 items-center gap-2.5"
                                     >
                                         <v-skeleton
-                                            class="h-14 w-14 flex-shrink-0 rounded-lg"
+                                            class="h-14 w-14 flex-shrink-0 rounded-lg bg-white-15"
                                         />
 
                                         <v-skeleton
-                                            class="h-4 w-full rounded"
+                                            class="h-4 w-full rounded bg-white-15"
                                         />
                                     </div>
-                                </template>
-                            </fancy-carousel>
-                        </template>
+                                </fancy-carousel>
+                            </template>
 
-                        <template v-else>
-                            <div class="grid grid-cols-2 gap-2 sm:hidden">
-                                <div
-                                    v-for="i in 2"
-                                    :key="i"
-                                    class="flex max-w-44 items-center gap-2.5"
-                                >
-                                    <v-skeleton
-                                        class="h-14 w-14 flex-shrink-0 rounded-lg"
+                            <template v-else-if="searchFilters">
+                                <fancy-carousel>
+                                    <category-filters
+                                        v-model="selectedCategories"
+                                        category-class="f-carousel__slide !w-fit !mr-5"
+                                        :categories="searchFilters.categories"
                                     />
+                                </fancy-carousel>
+                            </template>
 
-                                    <v-skeleton class="h-4 w-full rounded" />
-                                </div>
-                            </div>
-                        </template>
+                            <p v-else>No categories found.</p>
+                        </div>
                     </div>
 
                     <!-- Language Contents -->
@@ -146,16 +134,24 @@
                         </h3>
 
                         <div class="flex flex-wrap gap-2">
-                            <template v-if="isFiltersLoaded">
+                            <template v-if="isFiltersLoading">
+                                <v-skeleton
+                                    v-for="i in 4"
+                                    :key="i"
+                                    class="h-8 w-10 rounded-lg bg-white-15"
+                                />
+                            </template>
+
+                            <template v-else-if="searchFilters">
                                 <label
-                                    v-for="lang in searchLangs"
-                                    :key="lang.id"
+                                    v-for="lang in searchFilters.langs"
+                                    :key="lang"
                                     :class="{
                                         'tag--fill':
-                                            lang.name ===
+                                            lang ===
                                             useGetItemByName(
                                                 selectedLangs,
-                                                lang.name
+                                                lang
                                             ),
                                     }"
                                     class="tag tag--lang"
@@ -164,20 +160,16 @@
                                         v-model="selectedLangs"
                                         class="hidden"
                                         type="checkbox"
-                                        :value="lang.name"
+                                        :value="lang"
                                     />
 
-                                    {{ lang.name }}
+                                    {{ lang }}
                                 </label>
                             </template>
 
-                            <template v-else>
-                                <v-skeleton
-                                    v-for="i in 4"
-                                    :key="i"
-                                    class="h-8 w-10 rounded-lg"
-                                />
-                            </template>
+                            <p v-else class="f-carousel__slide">
+                                No languages found.
+                            </p>
                         </div>
                     </div>
 
@@ -188,17 +180,22 @@
                         </h3>
 
                         <div class="flex flex-wrap gap-2">
-                            <template v-if="isFiltersLoaded">
+                            <template v-if="isFiltersLoading">
+                                <v-skeleton
+                                    v-for="i in 8"
+                                    :key="i"
+                                    class="h-8 w-20 rounded-lg bg-white-15"
+                                />
+                            </template>
+
+                            <template v-else-if="searchFilters">
                                 <label
-                                    v-for="tag in searchTags"
-                                    :key="tag.id"
+                                    v-for="tag in searchFilters.tags"
+                                    :key="tag"
                                     :class="{
                                         'tag--fill':
-                                            tag.name ===
-                                            useGetItemByName(
-                                                selectedTags,
-                                                tag.name
-                                            ),
+                                            tag ===
+                                            useGetItemByName(selectedTags, tag),
                                     }"
                                     class="tag"
                                 >
@@ -206,19 +203,15 @@
                                         v-model="selectedTags"
                                         class="hidden"
                                         type="checkbox"
-                                        :value="tag.name"
+                                        :value="tag"
                                     />
-                                    {{ tag.name }}
+                                    {{ tag }}
                                 </label>
                             </template>
 
-                            <template v-else>
-                                <v-skeleton
-                                    v-for="i in 8"
-                                    :key="i"
-                                    class="h-8 w-20 rounded-lg"
-                                />
-                            </template>
+                            <p v-else class="f-carousel__slide">
+                                No tags found.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -250,6 +243,7 @@
 
 <script setup lang="ts">
     import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
+    import { useToast } from 'vue-toastification';
     import IconClose from '@img/icons/close.svg?component';
     import IconRecent from '@img/icons/recent.svg?component';
     import IconSearch from '@img/icons/search.svg?component';
@@ -260,14 +254,12 @@
     import FancyCarousel from '@/components/carousel/FancyCarousel.vue';
     import CategoryFilters from '@/components/search/CategoryFilters.vue';
 
-    import type { Category } from '@/ts/interfaces/catalog';
+    import type { SearchFilters } from '@/ts/interfaces/search';
 
     import { storeToRefs } from 'pinia';
     import { useSearchStore } from '@/stores/search.store.ts';
 
-    import searchCategories from '@/fixtures/search-categories.json';
-    import searchLangs from '@/fixtures/search-langs.json';
-    import searchTags from '@/fixtures/search-tags.json';
+    import { getSearchFilters } from '@/api/search/get-search-filters.api.ts';
     import { useClickOutsideElement } from '@/hooks/useClickOutsideElement.ts';
     import { useGetItemByName } from '@/hooks/useGetItemByName.ts';
 
@@ -281,6 +273,8 @@
 
     const emits = defineEmits<Emits>();
 
+    const toast = useToast();
+
     /**
      * DOM elements
      */
@@ -291,9 +285,9 @@
      * Filters data
      */
     const isFiltersOpen = ref(false);
-    const isFiltersLoaded = ref(false);
+    const isFiltersLoading = ref(true);
 
-    const categories = ref<Category[]>([...searchCategories]);
+    const searchFilters = ref<SearchFilters | undefined>();
 
     const searchStore = useSearchStore();
     const {
@@ -324,15 +318,23 @@
      */
     const close = () => {
         isFiltersOpen.value = false;
+        isFiltersLoading.value = true;
         emits('closed');
     };
 
     /**
      * Function for opening filters
      */
-    const open = () => {
+    const open = async () => {
         isFiltersOpen.value = true;
-        isFiltersLoaded.value = true;
+
+        try {
+            searchFilters.value = await getSearchFilters();
+        } catch (e) {
+            toast.error('Filters were not found');
+        } finally {
+            isFiltersLoading.value = false;
+        }
 
         emits('opened');
     };
@@ -343,7 +345,7 @@
     const setClickEvent = (e: Event) => {
         if (searchElement.value)
             useClickOutsideElement(e, searchElement.value, () => {
-                isFiltersOpen.value = false;
+                close();
             });
     };
 
