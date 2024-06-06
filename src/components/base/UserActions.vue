@@ -62,6 +62,7 @@
 <script setup lang="ts">
     import { onMounted, onUnmounted, ref } from 'vue';
     import { useRouter } from 'vue-router';
+    import { useToast } from 'vue-toastification';
     import IconChevronDown from '@img/icons/chevron-down.svg?component';
     import IconUser from '@img/icons/user.svg?component';
 
@@ -75,6 +76,7 @@
     const isActionsOpen = ref(false);
 
     const router = useRouter();
+    const toast = useToast();
 
     const actionsElement = ref<HTMLDivElement | null>(null);
 
@@ -98,6 +100,8 @@
         void router.replace({ name: 'main' });
 
         isLogOutOpen.value = false;
+
+        toast.success('Logout success');
     };
 
     onMounted(() => {

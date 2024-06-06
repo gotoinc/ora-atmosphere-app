@@ -7,6 +7,14 @@ body {
     font-family: 'Mulish', sans-serif;
     font-weight: 400;
     right: 0;
+
+    &::-webkit-scrollbar {
+        @apply w-1.5 rounded;
+
+        &-thumb {
+            @apply rounded bg-primary-50;
+        }
+    }
 }
 
 .cont {

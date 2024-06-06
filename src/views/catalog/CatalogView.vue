@@ -21,7 +21,7 @@
         <template v-else-if="catalogData.length > 0">
             <div class="grid gap-12">
                 <div
-                    v-for="{ category, groups } in catalogData"
+                    v-for="{ category, groups } in catalogData.slice(0, 10)"
                     :key="category.id"
                 >
                     <catalog-link
@@ -88,7 +88,7 @@
     const toast = useToast();
 
     const isCatalogLink = (category: Category, length: number) => {
-        return length > 5
+        return length > 10
             ? {
                   name: 'catalogCategoryView',
                   params: {

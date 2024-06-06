@@ -109,6 +109,48 @@
                     "image_url": "/images/categories/cat-7.jpg",
                     "category_id": 2,
                     "requires_auth": false
+                },
+                {
+                    "id": 3,
+                    "name": "Climate",
+                    "image_url": "/images/categories/cat-3.jpg",
+                    "category_id": 2,
+                    "requires_auth": false
+                },
+                {
+                    "id": 4,
+                    "name": "Biodiversity",
+                    "image_url": "/images/categories/cat-4.jpg",
+                    "category_id": 2,
+                    "requires_auth": false
+                },
+                {
+                    "id": 5,
+                    "name": "Space",
+                    "image_url": "/images/categories/cat-5.jpg",
+                    "category_id": 2,
+                    "requires_auth": false
+                },
+                {
+                    "id": 6,
+                    "name": "Geology",
+                    "image_url": "/images/categories/cat-6.jpg",
+                    "category_id": 2,
+                    "requires_auth": false
+                },
+                {
+                    "id": 7,
+                    "name": "The Future",
+                    "image_url": "/images/categories/cat-7.jpg",
+                    "category_id": 2,
+                    "requires_auth": false
+                },
+                {
+                    "id": 8,
+                    "name": "The Future",
+                    "image_url": "/images/categories/cat-7.jpg",
+                    "category_id": 2,
+                    "requires_auth": false
                 }
             ]
         },
@@ -323,10 +365,24 @@
             "name": "Education",
             "image_url": "/images/categories/cat-12.jpg",
             "category_id": 3,
+            "requires_auth": false
+        },
+        {
+            "id": 10,
+            "name": "Geography",
+            "image_url": "/images/categories/cat-10.jpg",
+            "category_id": 3,
             "requires_auth": true
         },
         {
-            "id": 13,
+            "id": 11,
+            "name": "Religions",
+            "image_url": "/images/categories/cat-11.jpg",
+            "category_id": 3,
+            "requires_auth": true
+        },
+        {
+            "id": 12,
             "name": "Education",
             "image_url": "/images/categories/cat-12.jpg",
             "category_id": 3,
@@ -575,8 +631,8 @@
     },
 
     "login": {
-        "email": "ulanov.work@gmail.com",
-        "password": "123455@12e23e",
-        "remember_me": true
+        "success": true,
+        "message": "Вхід успішний.",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
     }
 }

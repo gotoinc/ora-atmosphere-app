@@ -55,6 +55,7 @@
 
 <script setup lang="ts">
     import { ref } from 'vue';
+    import { useRouter } from 'vue-router';
     import { useToast } from 'vue-toastification';
     import { useForm } from 'vee-validate';
 
@@ -73,8 +74,11 @@
 
     const isRememberChecked = ref(false);
     const isLoading = ref(false);
+    const router = useRouter();
 
-    const { isAuthenticated } = storeToRefs(useAuthStore());
+    const authStore = useAuthStore();
+
+    const { isAuthenticated } = storeToRefs(authStore);
 
     const { defineField, handleSubmit, errors } = useForm<SignInInput>({
         validationSchema: signInSchema,
@@ -91,18 +95,19 @@
         isLoading.value = true;
 
         try {
-            const res = await signIn({
-                email: email.value,
-                password: password.value,
-                remember_me: isRememberChecked.value,
-            });
+            const res = await signIn();
 
             if (res?.success) {
-                toast.success('Success');
+                toast.success('Login success');
+
+                authStore.login(res.token);
+
+                void router.push({ name: 'main' });
+
                 isAuthenticated.value = true;
             }
         } catch (e) {
-            toast.error('Sign in error');
+            toast.error('Login error');
         } finally {
             isLoading.value = false;
         }

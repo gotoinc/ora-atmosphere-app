@@ -14,14 +14,12 @@ interface LoginInput extends SignInInput {
     remember_me: boolean;
 }
 
-export const signIn = async (body: LoginInput) => {
+export const signIn = async () => {
     try {
-        const res = await axios.post<
+        const res = await axios.get<
             LoginInput,
             AxiosResponse<LoginSuccessResponse>
-        >(`/login`, {
-            ...body,
-        });
+        >(`/login`);
 
         return res.data;
     } catch (err) {
