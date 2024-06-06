@@ -2,7 +2,7 @@
     <!-- Catalog page  -->
     <template v-if="isCatalogPage">
         <template v-if="isLoading">
-            <div class="grid gap-12">
+            <div class="fade-t grid gap-12">
                 <fancy-carousel
                     v-for="i in 3"
                     :key="i"
@@ -23,6 +23,7 @@
                 <div
                     v-for="{ category, groups } in catalogData.slice(0, 10)"
                     :key="category.id"
+                    class="fade-t"
                 >
                     <catalog-link
                         :to="isCatalogLink(category, groups.length)"

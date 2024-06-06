@@ -15,7 +15,7 @@
         </template>
 
         <template v-else-if="topicData.length > 0">
-            <div class="list">
+            <div class="list fade-t">
                 <category-card
                     v-for="{ id, name, image_url, requires_auth } in topicData"
                     :key="id"

@@ -75,7 +75,7 @@
         </template>
 
         <template v-else-if="videosData.length > 0">
-            <div class="list">
+            <div class="list fade-t">
                 <video-card
                     v-for="video in videosData"
                     :key="video.id"

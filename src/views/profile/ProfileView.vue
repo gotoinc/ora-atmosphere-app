@@ -6,7 +6,7 @@
             <h2 class="mb-12 text-h2 max-sm:mb-8">My Profile</h2>
 
             <div class="flex gap-10 max-sm:flex-col max-sm:gap-6">
-                <aside class="w-full max-sm:!max-w-full">
+                <aside class="fade-r w-full max-sm:!max-w-full">
                     <div class="max-sm:hidden">
                         <nav class="mb-2">
                             <ul class="flex flex-col gap-2">
@@ -52,7 +52,7 @@
                     />
                 </aside>
 
-                <section class="flex-grow">
+                <section class="fade-l flex-grow">
                     <router-view></router-view>
                 </section>
             </div>

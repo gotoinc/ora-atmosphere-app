@@ -10,7 +10,7 @@
     </template>
 
     <template v-else-if="groupsData.length > 0">
-        <div class="list">
+        <div class="list fade-t">
             <category-card
                 v-for="{ id, name, image_url, requires_auth } in groupsData"
                 :key="id"

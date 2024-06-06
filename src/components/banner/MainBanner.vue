@@ -16,7 +16,7 @@
                 Back
             </v-button>
 
-            <div class="banner__heading">
+            <div class="fade-r banner__heading">
                 <div class="mb-2 flex items-center gap-3">
                     <div class="banner__label pointer-events-none select-none">
                         <img

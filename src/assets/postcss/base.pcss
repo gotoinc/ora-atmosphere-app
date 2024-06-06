@@ -122,3 +122,52 @@ input {
 .Vue-Toastification__toast--error {
     @apply bg-error;
 }
+
+/* Animations */
+.fade-r {
+    animation: fade-r 0.3s ease;
+}
+
+.fade-l {
+    animation: fade-l 0.3s ease;
+}
+
+.fade-t {
+    animation: fade-t 0.3s ease;
+}
+
+@keyframes fade-r {
+    0% {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fade-l {
+    0% {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fade-t {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}

@@ -1,5 +1,5 @@
 <template>
-    <div class="mx-auto">
+    <div class="fade-t mx-auto">
         <h1 class="mb-6 text-h2">Sign In</h1>
 
         <form class="mb-6" @submit.prevent="onSubmit">
