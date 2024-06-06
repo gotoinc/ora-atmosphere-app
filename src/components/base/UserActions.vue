@@ -4,14 +4,17 @@
         class="relative flex cursor-pointer items-center"
         @click="isActionsOpen = !isActionsOpen"
     >
+        <v-skeleton
+            v-if="isProfileLoading"
+            class="mr-4 h-7 w-32 rounded-lg bg-white-50"
+        />
+
         <p
-            v-if="profileData && Object.keys(profileData).length > 0"
+            v-else-if="profileData && Object.keys(profileData).length > 0"
             class="mr-4 text-base font-bold max-mob:hidden"
         >
             {{ `${profileData.first_name} ${profileData.last_name}` }}
         </p>
-
-        <v-skeleton v-else class="mr-4 h-7 w-32 rounded-lg bg-white-50" />
 
         <div
             class="border-white mr-1 flex h-11 w-11 items-center justify-center rounded-full border-4 border-solid bg-primary-50"
@@ -93,7 +96,7 @@
     const isLogOutOpen = ref(false);
 
     const authStore = useAuthStore();
-    const { profileData } = storeToRefs(authStore);
+    const { profileData, isProfileLoading } = storeToRefs(authStore);
     const { logout, getProfileData } = authStore;
 
     const setClickEvent = (e: Event) => {

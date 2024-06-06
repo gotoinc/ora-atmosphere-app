@@ -29,7 +29,12 @@
                 @blur="isOpen = false"
                 @change="selectOption($event)"
             >
-                <option v-if="placeholder" disabled class="text-grey-100">
+                <option
+                    v-if="placeholder"
+                    :selected="!options.includes(modelValue)"
+                    disabled
+                    class="text-grey-100"
+                >
                     {{ placeholder }}
                 </option>
 

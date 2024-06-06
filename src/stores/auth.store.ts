@@ -1,4 +1,5 @@
 import { ref } from 'vue';
+import { useToast } from 'vue-toastification';
 import Cookies from 'js-cookie';
 
 import type { UserProfile } from '@/ts/interfaces/profile';
@@ -7,8 +8,11 @@ import { defineStore } from 'pinia';
 
 import { getProfile } from '@/api/auth/get-profile.ts';
 
+const toast = useToast();
+
 export const useAuthStore = defineStore('auth', () => {
     const isEmailConfirmed = ref(true);
+    const isProfileLoading = ref(false);
     const isAuthenticated = ref(!!Cookies.get('ora'));
     const profileData = ref<UserProfile | undefined>();
 
@@ -28,13 +32,22 @@ export const useAuthStore = defineStore('auth', () => {
     };
 
     const getProfileData = async () => {
-        profileData.value = await getProfile();
+        isProfileLoading.value = true;
+
+        try {
+            profileData.value = await getProfile();
+        } catch (e) {
+            toast.error('Profile is not found');
+        } finally {
+            isProfileLoading.value = false;
+        }
     };
 
     return {
         isEmailConfirmed,
         isAuthenticated,
         profileData,
+        isProfileLoading,
         getProfileData,
         logout,
         login,

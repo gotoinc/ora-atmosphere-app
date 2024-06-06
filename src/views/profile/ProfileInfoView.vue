@@ -1,7 +1,7 @@
 <template>
     <form @submit.prevent="onSubmit">
         <div class="mb-8 grid gap-4">
-            <template v-if="isFielsLoading">
+            <template v-if="isFieldsLoading">
                 <v-skeleton
                     v-for="i in 8"
                     :key="i"
@@ -89,7 +89,7 @@
         </div>
 
         <v-button
-            v-if="!isFielsLoading"
+            v-if="!isFieldsLoading"
             :loading="isLoading"
             class="w-full"
             type="submit"
@@ -129,7 +129,7 @@
     const { profileData } = storeToRefs(authStore);
 
     const isLoading = ref(false);
-    const isFielsLoading = ref(true);
+    const isFieldsLoading = ref(true);
 
     const profileInfoSchema = signUpFirstStepSchema
         .omit(['password', 'confirmPassword', 'isTermsAgreed'])
@@ -215,13 +215,13 @@
     onMounted(async () => {
         if (!profileData.value) {
             await authStore.getProfileData();
+        }
 
-            setInitialValues();
-        } else {
+        if (profileData.value) {
             setInitialValues();
         }
 
-        isFielsLoading.value = false;
+        isFieldsLoading.value = false;
     });
 </script>
 

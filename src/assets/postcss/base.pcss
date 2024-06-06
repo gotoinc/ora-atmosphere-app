@@ -78,6 +78,15 @@ select {
     &::placeholder {
         @apply text-grey-100;
     }
+
+    /* Change Autocomplete styles in Chrome*/
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus {
+        background: transparent;
+        -webkit-text-fill-color: black;
+        transition: background-color 5000s ease-in-out 0s;
+    }
 }
 
 svg {
@@ -90,6 +99,15 @@ svg {
 
         &::placeholder {
             @apply text-white-50;
+        }
+
+        /* Change Autocomplete styles in Chrome*/
+        &:-webkit-autofill,
+        &:-webkit-autofill:hover,
+        &:-webkit-autofill:focus {
+            background: transparent;
+            -webkit-text-fill-color: white;
+            transition: background-color 5000s ease-in-out 0s;
         }
 
         &.with-icon {
