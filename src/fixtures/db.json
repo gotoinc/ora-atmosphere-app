@@ -573,7 +573,6 @@
             "requires_auth": true
         }
     ],
-
     "search-filters": {
         "categories": [
             {
@@ -600,14 +599,12 @@
                 "requires_auth": false,
                 "image_url": "/images/categories/cat-2.jpg"
             },
-
             {
                 "id": 4,
                 "name": "Our World",
                 "requires_auth": true,
                 "image_url": "/images/categories/cat-4.jpg"
             },
-
             {
                 "id": 6,
                 "name": "Oceans & Skies",
@@ -615,9 +612,7 @@
                 "image_url": "/images/categories/cat-6.jpg"
             }
         ],
-
         "langs": ["en", "fr", "es", "de"],
-
         "tags": [
             "school",
             "future",
@@ -629,10 +624,22 @@
             "video-games"
         ]
     },
-
     "login": {
         "success": true,
         "message": "Вхід успішний.",
         "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+    },
+    "register": {
+        "first_name": "Max",
+        "last_name": "ulanov",
+        "email": "front@boldidentities.com",
+        "password": "53534t3@",
+        "confirm_password": "53534t3@",
+        "activity": "Event-related activities",
+        "company_name": "Ora",
+        "agree_with_terms": true,
+        "company_website": "",
+        "job_title": "443t35t",
+        "phone_number": ""
     }
 }

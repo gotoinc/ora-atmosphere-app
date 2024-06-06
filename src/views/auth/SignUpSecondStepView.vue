@@ -54,13 +54,17 @@
                 Back
             </v-button>
 
-            <v-button type="submit" class="w-full"> Sign Up </v-button>
+            <v-button :loading="isLoading" type="submit" class="w-full">
+                Sign Up
+            </v-button>
         </div>
     </form>
 </template>
 
 <script setup lang="ts">
+    import { ref } from 'vue';
     import { useRouter } from 'vue-router';
+    import { useToast } from 'vue-toastification';
 
     import VButton from '@/components/banner/VButton.vue';
     import VInput from '@/components/base/input/VInput.vue';
@@ -69,11 +73,15 @@
     import { storeToRefs } from 'pinia';
     import { useSignUpStore } from '@/stores/sign-up.store.ts';
 
+    import { signUp } from '@/api/auth/register.api.ts';
     import activitiesList from '@/constants/activities-list.ts';
 
     const signUpStore = useSignUpStore();
 
     const router = useRouter();
+    const toast = useToast();
+
+    const isLoading = ref(false);
 
     const {
         companyName,
@@ -82,10 +90,43 @@
         companyWebsite,
         phone,
         secondStepErrors,
+        firstName,
+        lastName,
+        email,
+        password,
+        confirmPassword,
+        isTermsAgreed,
     } = storeToRefs(signUpStore);
 
-    const onSubmit = signUpStore.submitSecondStep(() => {
-        void router.push({ name: 'main' });
+    const onSubmit = signUpStore.submitSecondStep(async () => {
+        isLoading.value = true;
+
+        try {
+            await signUp({
+                first_name: firstName.value,
+                last_name: lastName.value,
+                email: email.value,
+                password: password.value,
+                confirm_password: confirmPassword.value,
+                activity: activity.value,
+                company_name: companyName.value,
+                agree_with_terms: isTermsAgreed.value,
+                company_website: companyWebsite.value,
+                job_title: jobTitle.value,
+                phone_number: phone.value,
+            });
+
+            toast.success('Your account has been created');
+
+            void router.push({ name: 'signInView' });
+
+            signUpStore.resetFirstStep();
+            signUpStore.resetSecondStep();
+        } catch (e) {
+            toast.error('Register error');
+        } finally {
+            isLoading.value = false;
+        }
     });
 </script>
 

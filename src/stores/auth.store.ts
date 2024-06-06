@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import { defineStore } from 'pinia';
 
 export const useAuthStore = defineStore('auth', () => {
-    const isEmailConfirmed = ref(false);
+    const isEmailConfirmed = ref(true);
     const isAuthenticated = ref(!!Cookies.get('ora'));
 
     const logout = () => {

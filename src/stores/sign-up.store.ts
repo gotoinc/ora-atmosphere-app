@@ -19,6 +19,7 @@ export const useSignUpStore = defineStore('sign-up', () => {
         handleSubmit: submitFirstStep,
         errors: firstStepErrors,
         defineField: defineFirstSteps,
+        resetForm: resetFirstStep,
         values: firstStepValues,
     } = useForm<SignUpFirstStep>({
         validationSchema: signUpFirstStepSchema,
@@ -59,6 +60,7 @@ export const useSignUpStore = defineStore('sign-up', () => {
         handleSubmit: submitSecondStep,
         errors: secondStepErrors,
         defineField: defineSecondSteps,
+        resetForm: resetSecondStep,
     } = useForm<SignUpSecondStep>({
         validationSchema: signUpSecondStepSchema,
         initialValues: {
@@ -89,6 +91,8 @@ export const useSignUpStore = defineStore('sign-up', () => {
 
         submitFirstStep,
         firstStepErrors,
+        resetSecondStep,
+        resetFirstStep,
 
         companyName,
         jobTitle,

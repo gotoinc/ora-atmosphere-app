@@ -37,7 +37,9 @@
                     :error="errors.email"
                 />
 
-                <v-button class="w-full" type="submit"> Continue </v-button>
+                <v-button :loading="isLoading" class="w-full" type="submit">
+                    Continue
+                </v-button>
             </form>
 
             <p>
@@ -75,6 +77,7 @@
     const [email] = defineField('email');
 
     const isRequestSent = ref(false);
+    const isLoading = ref(false);
 
     const onSubmit = handleSubmit(() => {
         isRequestSent.value = true;
