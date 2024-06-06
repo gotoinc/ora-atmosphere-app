@@ -24,17 +24,21 @@
             />
         </div>
 
-        <v-button class="w-full" type="submit"> Save changes </v-button>
+        <v-button :loading="isLoading" class="w-full" type="submit">
+            Save changes
+        </v-button>
     </form>
 </template>
 
 <script setup lang="ts">
+    import { ref } from 'vue';
     import { useToast } from 'vue-toastification';
     import { useForm } from 'vee-validate';
 
     import VButton from '@/components/banner/VButton.vue';
     import VInput from '@/components/base/input/VInput.vue';
 
+    import { resetPassword } from '@/api/auth/reset-password.api.ts';
     import { setNewPasswordSchema } from '@/validations/schemas/auth.schema.ts';
     import type { SetNewPasswordType } from '@/validations/types/auth';
 
@@ -52,10 +56,24 @@
     const [password] = defineField('password');
     const [confirmPassword] = defineField('confirmPassword');
 
-    const onSubmit = handleSubmit(() => {
-        toast.success('Saved successfully');
+    const isLoading = ref(false);
 
-        resetForm();
+    const onSubmit = handleSubmit(async () => {
+        isLoading.value = true;
+
+        try {
+            await resetPassword({
+                password: password.value,
+                confirmPassword: confirmPassword.value,
+            });
+
+            toast.success('Saved successfully');
+        } catch (e) {
+            toast.error('Password was not changed');
+        } finally {
+            isLoading.value = false;
+            resetForm();
+        }
     });
 </script>
 

@@ -1,10 +1,11 @@
+import type { UserProfile } from '@/ts/interfaces/profile';
+
 import axios from '@/api/axios.api.ts';
 import { useThrowError } from '@/hooks/useThrowError.ts';
-import type { RegisterInput } from '@/validations/types/auth';
 
-export const signUp = async (body: RegisterInput) => {
+export const updateProfile = async (body: UserProfile) => {
     try {
-        const res = await axios.post<RegisterInput>(`/profile`, {
+        const res = await axios.put<UserProfile>(`/profile`, {
             ...body,
         });
 

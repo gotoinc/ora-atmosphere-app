@@ -77,7 +77,11 @@
                         Cancel
                     </v-button>
 
-                    <v-button class="flex-grow" @click="deleteProfile">
+                    <v-button
+                        :loading="isLoading"
+                        class="flex-grow"
+                        @click="deleteProfile"
+                    >
                         Yes, delete
                     </v-button>
                 </div>
@@ -96,13 +100,12 @@
     import VHeader from '@/components/layout/VHeader.vue';
     import VPopup from '@/components/popup/VPopup.vue';
 
-    import { storeToRefs } from 'pinia';
     import { useAuthStore } from '@/stores/auth.store.ts';
 
     const router = useRouter();
     const toast = useToast();
 
-    const { isAuthenticated } = storeToRefs(useAuthStore());
+    const { logout } = useAuthStore();
 
     enum ProfileLinks {
         Info = 'Personal information',
@@ -113,6 +116,7 @@
     const isDeleteOpen = ref(false);
     const isResetSelect = ref(false);
     const navigationLink = ref('');
+    const isLoading = ref(false);
 
     const changeLink = (link: ProfileLinks) => {
         if (link === ProfileLinks.Info) {
@@ -133,12 +137,20 @@
     };
 
     const deleteProfile = () => {
-        isDeleteOpen.value = false;
-        isAuthenticated.value = false;
+        isLoading.value = true;
 
-        void router.replace({ name: 'main' });
+        try {
+            toast.success('Profile has been deleted');
 
-        toast.success('Deleted successfully');
+            logout();
+
+            void router.replace({ name: 'main' });
+        } catch (e) {
+            toast.error('Profile was not deleted');
+        } finally {
+            isLoading.value = false;
+            isDeleteOpen.value = false;
+        }
     };
 </script>
 

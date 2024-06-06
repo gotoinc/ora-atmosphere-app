@@ -1,10 +1,10 @@
 import axios from '@/api/axios.api.ts';
 import { useThrowError } from '@/hooks/useThrowError.ts';
-import type { RegisterInput } from '@/validations/types/auth';
+import type { SetNewPasswordType } from '@/validations/types/auth';
 
-export const signUp = async (body: RegisterInput) => {
+export const resetPassword = async (body: SetNewPasswordType) => {
     try {
-        const res = await axios.post<RegisterInput>(`/profile`, {
+        const res = await axios.put<SetNewPasswordType>(`/reset-password`, {
             ...body,
         });
 

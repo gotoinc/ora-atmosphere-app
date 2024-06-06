@@ -1,125 +1,145 @@
 <template>
     <form @submit.prevent="onSubmit">
         <div class="mb-8 grid gap-4">
-            <v-input
-                v-model="firstName"
-                name="firstName"
-                placeholder="Enter your first name"
-                variant="white"
-                label="First Name"
-                :error="errors.firstName"
-            />
+            <template v-if="isFielsLoading">
+                <v-skeleton
+                    v-for="i in 8"
+                    :key="i"
+                    class="h-11 w-full rounded-[32px] bg-white-15"
+                />
+            </template>
 
-            <v-input
-                v-model="lastName"
-                variant="white"
-                label="Last Name"
-                name="lastName"
-                placeholder="Enter your last name"
-                :error="errors.lastName"
-            />
+            <template v-else>
+                <v-input
+                    v-model="firstName"
+                    name="firstName"
+                    placeholder="Enter your first name"
+                    variant="white"
+                    label="First Name"
+                    :error="errors.firstName"
+                />
 
-            <v-input
-                v-model="companyName"
-                label="Company Name"
-                placeholder="Enter your company name"
-                name="companyName"
-                variant="white"
-                :error="errors.companyName"
-            />
+                <v-input
+                    v-model="lastName"
+                    variant="white"
+                    label="Last Name"
+                    name="lastName"
+                    placeholder="Enter your last name"
+                    :error="errors.lastName"
+                />
 
-            <v-select
-                v-model="activity"
-                variant="white"
-                name="activity"
-                label="Activity"
-                :options="activitiesList"
-                placeholder="Choose your activity"
-                :error="errors.activity"
-            />
+                <v-input
+                    v-model="companyName"
+                    label="Company Name"
+                    placeholder="Enter your company name"
+                    name="companyName"
+                    variant="white"
+                    :error="errors.companyName"
+                />
 
-            <v-input
-                v-model="jobTitle"
-                variant="white"
-                label="Job Title"
-                optional
-                name="jobTitle"
-                placeholder="Enter your job title"
-                :error="errors.jobTitle"
-            />
+                <v-select
+                    v-model="activity"
+                    variant="white"
+                    name="activity"
+                    label="Activity"
+                    :options="activitiesList"
+                    placeholder="Choose your activity"
+                    :error="errors.activity"
+                />
 
-            <v-input
-                v-model="companyWebsite"
-                variant="white"
-                optional
-                name="companyWebsite"
-                label="Company Website"
-                placeholder="Enter your company website"
-                :error="errors.companyWebsite"
-            />
+                <v-input
+                    v-model="jobTitle"
+                    variant="white"
+                    label="Job Title"
+                    optional
+                    name="jobTitle"
+                    placeholder="Enter your job title"
+                    :error="errors.jobTitle"
+                />
 
-            <v-input
-                v-model="phone"
-                variant="white"
-                name="phone"
-                label="Phone Number"
-                placeholder="Enter your phone number"
-                :error="errors.phone"
-            />
+                <v-input
+                    v-model="companyWebsite"
+                    variant="white"
+                    optional
+                    name="companyWebsite"
+                    label="Company Website"
+                    placeholder="Enter your company website"
+                    :error="errors.companyWebsite"
+                />
 
-            <v-input
-                v-model="email"
-                variant="white"
-                name="email"
-                label="Email"
-                type="email"
-                placeholder="Enter your email"
-                :error="errors.email"
-            />
+                <v-input
+                    v-model="phone"
+                    variant="white"
+                    name="phone"
+                    label="Phone Number"
+                    placeholder="Enter your phone number"
+                    :error="errors.phone"
+                />
+
+                <v-input
+                    v-model="email"
+                    variant="white"
+                    name="email"
+                    label="Email"
+                    type="email"
+                    placeholder="Enter your email"
+                    :error="errors.email"
+                />
+            </template>
         </div>
 
-        <v-button class="w-full" type="submit"> Save changes </v-button>
+        <v-button
+            v-if="!isFielsLoading"
+            :loading="isLoading"
+            class="w-full"
+            type="submit"
+        >
+            Save changes
+        </v-button>
     </form>
 </template>
 
 <script setup lang="ts">
+    import { onMounted, ref } from 'vue';
     import { useToast } from 'vue-toastification';
     import { useForm } from 'vee-validate';
 
     import VButton from '@/components/banner/VButton.vue';
     import VInput from '@/components/base/input/VInput.vue';
     import VSelect from '@/components/base/VSelect.vue';
+    import VSkeleton from '@/components/base/VSkeleton.vue';
 
+    import { storeToRefs } from 'pinia';
+    import { useAuthStore } from '@/stores/auth.store.ts';
+
+    import { updateProfile } from '@/api/auth/update-profile.ap.ts';
     import activitiesList from '@/constants/activities-list.ts';
-    import profileJSON from '@/fixtures/profile.json';
-    import { useCompareObjects } from '@/hooks/useCompareObjects.ts';
+    import { useCompareArrays } from '@/hooks/useCompareObjects.ts';
     import {
         signUpFirstStepSchema,
         signUpSecondStepSchema,
     } from '@/validations/schemas/auth.schema.ts';
-    import type {
-        SignUpFirstStep,
-        SignUpSecondStep,
-    } from '@/validations/types/auth';
+    import type { ProfileInfo } from '@/validations/types/auth';
 
     const toast = useToast();
+
+    const authStore = useAuthStore();
+    const { profileData } = storeToRefs(authStore);
+
+    const isLoading = ref(false);
+    const isFielsLoading = ref(true);
 
     const profileInfoSchema = signUpFirstStepSchema
         .omit(['password', 'confirmPassword', 'isTermsAgreed'])
         .concat(signUpSecondStepSchema);
 
-    interface ProfileInfo
-        extends Omit<
-                SignUpFirstStep,
-                'password' | 'confirmPassword' | 'isTermsAgreed'
-            >,
-            SignUpSecondStep {}
-
-    const { defineField, errors, handleSubmit } = useForm<ProfileInfo>({
-        validationSchema: profileInfoSchema,
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        initialValues: profileJSON,
-    });
+    const { defineField, errors, handleSubmit, setValues } =
+        useForm<ProfileInfo>({
+            validationSchema: profileInfoSchema,
+            initialValues: {
+                activity: '',
+            },
+        });
 
     const [firstName] = defineField('firstName');
     const [lastName] = defineField('lastName');
@@ -130,12 +150,58 @@
     const [phone] = defineField('phone');
     const [email] = defineField('email');
 
-    const onSubmit = handleSubmit((values) => {
-        if (useCompareObjects(profileJSON, values)) {
+    const onSubmit = handleSubmit(async (values) => {
+        if (
+            profileData.value &&
+            useCompareArrays(
+                Object.values(profileData.value),
+                Object.values(values) as string[]
+            )
+        ) {
             toast.error('No changes were captured');
-        } else {
-            toast.success('Saved successfully');
+
+            return;
         }
+
+        isLoading.value = true;
+
+        try {
+            profileData.value = await updateProfile({
+                company_name: companyName.value,
+                email: email.value,
+                activity: activity.value,
+                first_name: firstName.value,
+                last_name: lastName.value,
+                phone_number: phone.value,
+                job_title: jobTitle.value,
+                company_website: companyWebsite.value,
+            });
+
+            toast.success('Changes were saved');
+        } catch (e) {
+            toast.error('No changes were saved');
+        } finally {
+            isLoading.value = false;
+        }
+    });
+
+    onMounted(async () => {
+        if (!profileData.value) {
+            await authStore.getProfileData();
+        }
+
+        setValues({
+            firstName: profileData.value?.first_name,
+            lastName: profileData.value?.last_name,
+            companyName: profileData.value?.company_name,
+            activity: profileData.value?.activity,
+            jobTitle: profileData.value?.job_title,
+            companyWebsite: profileData.value?.company_website,
+            phone: profileData.value?.phone_number,
+            email: profileData.value?.email,
+        });
+
+        isFielsLoading.value = false;
     });
 </script>
 

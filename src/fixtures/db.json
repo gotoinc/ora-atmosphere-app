@@ -629,17 +629,9 @@
         "message": "Вхід успішний.",
         "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
     },
-    "register": {
-        "first_name": "Max",
-        "last_name": "ulanov",
-        "email": "front@boldidentities.com",
-        "password": "53534t3@",
-        "confirm_password": "53534t3@",
-        "activity": "Event-related activities",
-        "company_name": "Ora",
-        "agree_with_terms": true,
-        "company_website": "",
-        "job_title": "443t35t",
-        "phone_number": ""
+    "profile": {},
+    "reset-password": {
+        "password": "1234556rregfre@",
+        "confirmPassword": "1234556rregfre@"
     }
 }

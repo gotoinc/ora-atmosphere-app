@@ -4,7 +4,11 @@
         class="relative flex cursor-pointer items-center"
         @click="isActionsOpen = !isActionsOpen"
     >
-        <p class="mr-4 text-base font-bold max-mob:hidden">John Doe</p>
+        <p v-if="profileData" class="mr-4 text-base font-bold max-mob:hidden">
+            {{ `${profileData.first_name} ${profileData.last_name}` }}
+        </p>
+
+        <v-skeleton v-else class="mr-4 h-7 w-32 rounded-lg bg-white-50" />
 
         <div
             class="border-white mr-1 flex h-11 w-11 items-center justify-center rounded-full border-4 border-solid bg-primary-50"
@@ -61,14 +65,16 @@
 
 <script setup lang="ts">
     import { onMounted, onUnmounted, ref } from 'vue';
-    import { useRouter } from 'vue-router';
+    import { useRoute, useRouter } from 'vue-router';
     import { useToast } from 'vue-toastification';
     import IconChevronDown from '@img/icons/chevron-down.svg?component';
     import IconUser from '@img/icons/user.svg?component';
 
     import VButton from '@/components/banner/VButton.vue';
+    import VSkeleton from '@/components/base/VSkeleton.vue';
     import VPopup from '@/components/popup/VPopup.vue';
 
+    import { storeToRefs } from 'pinia';
     import { useAuthStore } from '@/stores/auth.store.ts';
 
     import { useClickOutsideElement } from '@/hooks/useClickOutsideElement.ts';
@@ -76,13 +82,16 @@
     const isActionsOpen = ref(false);
 
     const router = useRouter();
+    const route = useRoute();
     const toast = useToast();
 
     const actionsElement = ref<HTMLDivElement | null>(null);
 
     const isLogOutOpen = ref(false);
 
-    const { logout } = useAuthStore();
+    const authStore = useAuthStore();
+    const { profileData } = storeToRefs(authStore);
+    const { logout, getProfileData } = authStore;
 
     const setClickEvent = (e: Event) => {
         if (actionsElement.value) {
@@ -104,8 +113,12 @@
         toast.success('Logout success');
     };
 
-    onMounted(() => {
+    onMounted(async () => {
         document.addEventListener('click', setClickEvent);
+
+        if (!profileData.value && route.name !== 'profileInfoView') {
+            await getProfileData();
+        }
     });
 
     onUnmounted(() => {
