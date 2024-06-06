@@ -97,6 +97,8 @@
         try {
             const res = await signIn();
 
+            await authStore.getProfileData();
+
             if (res?.success) {
                 toast.success('Login success');
 

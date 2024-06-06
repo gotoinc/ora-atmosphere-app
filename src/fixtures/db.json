@@ -629,7 +629,19 @@
         "message": "Вхід успішний.",
         "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
     },
-    "profile": {},
+    "profile": {
+        "first_name": "Max",
+        "last_name": "Ulanov",
+        "email": "ulanov.work@gmail.com",
+        "password": "wrwgeag123zez#",
+        "confirm_password": "wrwgeag123zez#",
+        "activity": "Activities related to Air Travel",
+        "company_name": "Ora",
+        "agree_with_terms": true,
+        "company_website": "",
+        "job_title": "",
+        "phone_number": "12344443432"
+    },
     "reset-password": {
         "password": "1234556rregfre@",
         "confirmPassword": "1234556rregfre@"

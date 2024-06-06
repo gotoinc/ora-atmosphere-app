@@ -4,7 +4,10 @@
         class="relative flex cursor-pointer items-center"
         @click="isActionsOpen = !isActionsOpen"
     >
-        <p v-if="profileData" class="mr-4 text-base font-bold max-mob:hidden">
+        <p
+            v-if="profileData && Object.keys(profileData).length > 0"
+            class="mr-4 text-base font-bold max-mob:hidden"
+        >
             {{ `${profileData.first_name} ${profileData.last_name}` }}
         </p>
 

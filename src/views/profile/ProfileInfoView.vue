@@ -109,6 +109,8 @@
     import VSelect from '@/components/base/VSelect.vue';
     import VSkeleton from '@/components/base/VSkeleton.vue';
 
+    import type { UserProfile } from '@/ts/interfaces/profile';
+
     import { storeToRefs } from 'pinia';
     import { useAuthStore } from '@/stores/auth.store.ts';
 
@@ -150,17 +152,42 @@
     const [phone] = defineField('phone');
     const [email] = defineField('email');
 
-    const onSubmit = handleSubmit(async (values) => {
-        if (
-            profileData.value &&
-            useCompareArrays(
-                Object.values(profileData.value),
-                Object.values(values) as string[]
-            )
-        ) {
-            toast.error('No changes were captured');
+    const setInitialValues = () => {
+        setValues({
+            firstName: profileData.value?.first_name,
+            lastName: profileData.value?.last_name,
+            companyName: profileData.value?.company_name,
+            activity: profileData.value?.activity,
+            jobTitle: profileData.value?.job_title,
+            companyWebsite: profileData.value?.company_website,
+            phone: profileData.value?.phone_number,
+            email: profileData.value?.email,
+        });
+    };
 
-            return;
+    const onSubmit = handleSubmit(async (values) => {
+        if (profileData.value) {
+            const profileValues: UserProfile = {
+                company_name: profileData.value.company_name,
+                email: profileData.value.email,
+                activity: profileData.value.activity,
+                first_name: profileData.value.first_name,
+                last_name: profileData.value.last_name,
+                phone_number: profileData.value.phone_number,
+                job_title: profileData.value.job_title,
+                company_website: profileData.value.company_website,
+            };
+
+            if (
+                useCompareArrays(
+                    Object.values(profileValues),
+                    Object.values(values) as string[]
+                )
+            ) {
+                toast.error('No changes were captured');
+
+                return;
+            }
         }
 
         isLoading.value = true;
@@ -188,18 +215,11 @@
     onMounted(async () => {
         if (!profileData.value) {
             await authStore.getProfileData();
-        }
 
-        setValues({
-            firstName: profileData.value?.first_name,
-            lastName: profileData.value?.last_name,
-            companyName: profileData.value?.company_name,
-            activity: profileData.value?.activity,
-            jobTitle: profileData.value?.job_title,
-            companyWebsite: profileData.value?.company_website,
-            phone: profileData.value?.phone_number,
-            email: profileData.value?.email,
-        });
+            setInitialValues();
+        } else {
+            setInitialValues();
+        }
 
         isFielsLoading.value = false;
     });
