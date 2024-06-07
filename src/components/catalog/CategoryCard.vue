@@ -29,7 +29,7 @@
             :style="floatingStyles"
             class="tooltip group-hover:opacity-100"
         >
-            Please Sign In or Sign Up to get unlimited access to our content
+            Sign in or Sign up to access our entire catalog
         </div>
 
         {{ name }}
