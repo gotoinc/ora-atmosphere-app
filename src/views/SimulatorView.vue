@@ -80,7 +80,7 @@
 
     const router = useRouter();
 
-    const { selectedContentUrl, isSimulatorLoaded } =
+    const { selectedContent, isSimulatorLoaded } =
         storeToRefs(useCatalogStore());
 
     const simulatorElement = ref<HTMLDivElement | null>(null);
@@ -109,7 +109,7 @@
         if (simulatorElement.value) {
             const { simulator } = await initSimulator(
                 simulatorElement.value,
-                selectedContentUrl.value
+                selectedContent.value.file_url
             );
 
             simulator.onFinish(() => {

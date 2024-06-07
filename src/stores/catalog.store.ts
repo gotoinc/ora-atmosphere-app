@@ -1,5 +1,7 @@
 import { ref } from 'vue';
 
+import type { VideoContent } from '@/ts/interfaces/contents';
+
 import { defineStore } from 'pinia';
 
 import router from '@/router';
@@ -7,9 +9,7 @@ import router from '@/router';
 export const useCatalogStore = defineStore(
     'catalog',
     () => {
-        const selectedContentUrl = ref(
-            'https://images.unsplash.com/reserve/bOvf94dPRxWu0u3QsPjF_tree.jpg?ixid=M3wxMjA3fDB8MXxzZWFyY2h8M3x8bmF0dXJhbHxlbnwwfHx8fDE3MTY4MDYwMjV8MA&ixlib=rb-4.0.3'
-        );
+        const selectedContent = ref<VideoContent>();
 
         const isContentPopupOpen = ref(false);
         const isSimulatorLoaded = ref(false);
@@ -26,7 +26,7 @@ export const useCatalogStore = defineStore(
 
         return {
             isDescriptionOpen,
-            selectedContentUrl,
+            selectedContent,
             isSimulatorLoaded,
             isContentPopupOpen,
             playSimulator,

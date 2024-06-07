@@ -466,7 +466,7 @@
             "id": 1000,
             "file_url": "http://example.com/videos/video1.mp4",
             "image_url": "/images/categories/theme-bg.jpg",
-            "title": "Title 1",
+            "title": "Сisco",
             "description": "Description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Learn more",
             "languages": ["en", "fr", "de", "es"],
             "tags": ["environment", "museum", "luxury", "art"],
@@ -631,9 +631,9 @@
     },
     "profile": {
         "company_name": "Ora",
-        "email": "front@boldidentities.com",
+        "email": "ulanov.work@gmail.com",
         "activity": "Amusement Parks and Laser Games",
-        "first_name": "Maxim",
+        "first_name": "Max",
         "last_name": "Ulanov",
         "phone_number": "",
         "job_title": "",
@@ -642,5 +642,22 @@
     "reset-password": {
         "password": "1234556rregfre@",
         "confirmPassword": "1234556rregfre@"
+    },
+    "selected-content": {
+        "id": 1000,
+        "file_url": "https://images.unsplash.com/reserve/bOvf94dPRxWu0u3QsPjF_tree.jpg?ixid=M3wxMjA3fDB8MXxzZWFyY2h8M3x8bmF0dXJhbHxlbnwwfHx8fDE3MTY4MDYwMjV8MA&ixlib=rb-4.0.3",
+        "image_url": "/images/banner.jpg",
+        "title": "Сisco",
+        "topic": {
+            "id": 100,
+            "name": "Brands",
+            "image_url": "/images/categories/theme-bg.jpg",
+            "group_id": 10,
+            "requires_auth": false
+        },
+        "description": "Description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Learn more",
+        "languages": ["en", "fr", "de", "es"],
+        "tags": ["environment", "museum", "luxury", "art"],
+        "requires_auth": false
     }
 }
