@@ -463,114 +463,157 @@
     ],
     "videos": [
         {
-            "id": 1000,
-            "file_url": "http://example.com/videos/video1.mp4",
-            "image_url": "/images/categories/theme-bg.jpg",
-            "title": "Сisco",
-            "description": "Description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Learn more",
-            "languages": ["en", "fr", "de", "es"],
-            "tags": ["environment", "museum", "luxury", "art"],
-            "topic_id": 100,
-            "requires_auth": false
-        },
-        {
             "id": 1001,
-            "file_url": "http://example.com/videos/video2.mp4",
+            "file_url": "https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?ixid=M3wxMjA3fDB8MXxzZWFyY2h8N3x8bmF0dXJlfGVufDB8fHx8MTY4MDYwMjV8MA&ixlib=rb-4.0.3",
             "image_url": "/images/categories/theme-bg.jpg",
-            "title": "Title 2",
-            "description": "Description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Learn more",
-            "languages": ["en"],
-            "tags": ["school", "future", "video games"],
-            "topic_id": 101,
+            "title": "Mountain View",
+            "topic": {
+                "id": 101,
+                "name": "Nature",
+                "image_url": "/images/categories/nature.jpg",
+                "group_id": 11,
+                "requires_auth": false
+            },
+            "description": "Description: Enjoy the serenity of the mountain view, where the sky meets the earth in a harmonious display of natural beauty.",
+            "languages": ["en", "fr"],
+            "tags": ["mountain", "view", "nature", "serenity"],
             "requires_auth": false
         },
         {
             "id": 1002,
-            "file_url": "http://example.com/videos/video2.mp4",
+            "file_url": "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?ixid=M3wxMjA3fDB8MXxzZWFyY2h8OXx8dGVjaG58ZW58MHx8fHwxNjgwNjAyNTUw&ixlib=rb-4.0.3",
             "image_url": "/images/categories/theme-bg.jpg",
-            "title": "Title 3",
-            "description": "Description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Learn more",
-            "languages": ["en"],
-            "tags": ["school", "future", "video games"],
-            "topic_id": 101,
-            "requires_auth": false
-        },
-        {
-            "id": 1003,
-            "file_url": "http://example.com/videos/video2.mp4",
-            "image_url": "/images/categories/theme-bg.jpg",
-            "title": "Title 4",
-            "description": "Description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Learn more",
-            "languages": ["en"],
-            "tags": ["school", "future", "video games"],
-            "topic_id": 101,
-            "requires_auth": false
-        },
-        {
-            "id": 1004,
-            "file_url": "http://example.com/videos/video2.mp4",
-            "image_url": "/images/categories/theme-bg.jpg",
-            "title": "Title 5",
-            "description": "Description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Learn more",
-            "languages": ["en"],
-            "tags": ["school", "future", "video games"],
-            "topic_id": 101,
-            "requires_auth": false
-        },
-        {
-            "id": 1000,
-            "file_url": "http://example.com/videos/video1.mp4",
-            "image_url": "/images/categories/theme-bg.jpg",
-            "title": "Title 1",
-            "description": "Description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Learn more",
-            "languages": ["en", "fr", "de", "es"],
-            "tags": ["environment", "museum", "luxury", "art"],
-            "topic_id": 100,
-            "requires_auth": true
-        },
-        {
-            "id": 1001,
-            "file_url": "http://example.com/videos/video2.mp4",
-            "image_url": "/images/categories/theme-bg.jpg",
-            "title": "Title 2",
-            "description": "Description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Learn more",
-            "languages": ["en"],
-            "tags": ["school", "future", "video games"],
-            "topic_id": 101,
-            "requires_auth": true
-        },
-        {
-            "id": 1002,
-            "file_url": "http://example.com/videos/video2.mp4",
-            "image_url": "/images/categories/theme-bg.jpg",
-            "title": "Title 3",
-            "description": "Description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Learn more",
-            "languages": ["en"],
-            "tags": ["school", "future", "video games"],
-            "topic_id": 101,
+            "title": "Tech Innovation",
+            "topic": {
+                "id": 102,
+                "name": "Technology",
+                "image_url": "/images/categories/tech.jpg",
+                "group_id": 12,
+                "requires_auth": true
+            },
+            "description": "Description: Explore the latest advancements in technology that are shaping the future.",
+            "languages": ["en", "es", "de"],
+            "tags": ["innovation", "technology", "future"],
             "requires_auth": true
         },
         {
             "id": 1003,
-            "file_url": "http://example.com/videos/video2.mp4",
+            "file_url": "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?ixid=M3wxMjA3fDB8MXxzZWFyY2h8MTF8fGFydHxlbnwwfHx8fDE2ODA2MDI1NzA&ixlib=rb-4.0.3",
             "image_url": "/images/categories/theme-bg.jpg",
-            "title": "Title 4",
-            "description": "Description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Learn more",
-            "languages": ["en"],
-            "tags": ["school", "future", "video games"],
-            "topic_id": 101,
-            "requires_auth": true
+            "title": "Modern Art",
+            "topic": {
+                "id": 103,
+                "name": "Art",
+                "image_url": "/images/categories/art.jpg",
+                "group_id": 13,
+                "requires_auth": false
+            },
+            "description": "Description: Dive into the world of modern art, where creativity knows no bounds.",
+            "languages": ["en", "fr", "it"],
+            "tags": ["art", "modern", "creativity"],
+            "requires_auth": false
         },
         {
             "id": 1004,
-            "file_url": "http://example.com/videos/video2.mp4",
+            "file_url": "https://images.unsplash.com/photo-1498654896293-37aacf113fd9?ixid=M3wxMjA3fDB8MXxzZWFyY2h8MTN8fGNpdHl8ZW58MHx8fHwxNjgwNjAyNTkw&ixlib=rb-4.0.3",
             "image_url": "/images/categories/theme-bg.jpg",
-            "title": "Title 5",
-            "description": "Description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Learn more",
-            "languages": ["en"],
-            "tags": ["school", "future", "video games"],
-            "topic_id": 101,
+            "title": "Cityscape",
+            "topic": {
+                "id": 104,
+                "name": "Urban",
+                "image_url": "/images/categories/urban.jpg",
+                "group_id": 14,
+                "requires_auth": false
+            },
+            "description": "Description: Experience the dynamic life of the city through stunning cityscapes.",
+            "languages": ["en", "es"],
+            "tags": ["city", "urban", "dynamic"],
+            "requires_auth": false
+        },
+        {
+            "id": 1005,
+            "file_url": "https://images.unsplash.com/photo-1484971867412-cfdc35332756?ixid=M3wxMjA3fDB8MXxzZWFyY2h8MTV8fGRlc2VydCUyMGR1bnxlbnwwfHx8fDE2ODA2MDI2MTA&ixlib=rb-4.0.3",
+            "image_url": "/images/categories/theme-bg.jpg",
+            "title": "Desert Dunes",
+            "topic": {
+                "id": 105,
+                "name": "Nature",
+                "image_url": "/images/categories/desert.jpg",
+                "group_id": 11,
+                "requires_auth": false
+            },
+            "description": "Description: Discover the mesmerizing patterns of the desert dunes.",
+            "languages": ["en", "ar"],
+            "tags": ["desert", "dunes", "nature"],
+            "requires_auth": false
+        },
+        {
+            "id": 1006,
+            "file_url": "https://images.unsplash.com/photo-1508830524289-0adcbe822b40?ixid=M3wxMjA3fDB8MXxzZWFyY2h8MTd8fGN1aXNpbmUlMjBhcnR8ZW58MHx8fHwxNjgwNjAyNjMw&ixlib=rb-4.0.3",
+            "image_url": "/images/categories/theme-bg.jpg",
+            "title": "Gourmet Cuisine",
+            "topic": {
+                "id": 106,
+                "name": "Food",
+                "image_url": "/images/categories/food.jpg",
+                "group_id": 15,
+                "requires_auth": false
+            },
+            "description": "Description: Taste the finest gourmet cuisine from around the world.",
+            "languages": ["en", "fr", "it", "jp"],
+            "tags": ["food", "gourmet", "cuisine"],
+            "requires_auth": false
+        },
+        {
+            "id": 1007,
+            "file_url": "https://images.unsplash.com/photo-1476231790875-016a80c274f7?ixid=M3wxMjA3fDB8MXxzZWFyY2h8MTl8fG11c2V1bXxlbnwwfHx8fDE2ODA2MDI2NTA&ixlib=rb-4.0.3",
+            "image_url": "/images/categories/theme-bg.jpg",
+            "title": "Historical Museum",
+            "topic": {
+                "id": 107,
+                "name": "Culture",
+                "image_url": "/images/categories/culture.jpg",
+                "group_id": 16,
+                "requires_auth": true
+            },
+            "description": "Description: Walk through history in the grand halls of our historical museum.",
+            "languages": ["en", "de", "es"],
+            "tags": ["museum", "history", "culture"],
             "requires_auth": true
+        },
+        {
+            "id": 1008,
+            "file_url": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixid=M3wxMjA3fDB8MXxzZWFyY2h8MjF8fHBvcnR8ZW58MHx8fHwxNjgwNjAyNjcw&ixlib=rb-4.0.3",
+            "image_url": "/images/categories/theme-bg.jpg",
+            "title": "Seaside Port",
+            "topic": {
+                "id": 108,
+                "name": "Travel",
+                "image_url": "/images/categories/travel.jpg",
+                "group_id": 17,
+                "requires_auth": false
+            },
+            "description": "Description: Enjoy the bustling life of the seaside port, a gateway to adventure.",
+            "languages": ["en", "it", "es"],
+            "tags": ["port", "seaside", "travel"],
+            "requires_auth": false
+        },
+        {
+            "id": 1009,
+            "file_url": "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?ixid=M3wxMjA3fDB8MXxzZWFyY2h8MjN8fHBhcmt8ZW58MHx8fHwxNjgwNjAyNjkw&ixlib=rb-4.0.3",
+            "image_url": "/images/categories/theme-bg.jpg",
+            "title": "Autumn Park",
+            "topic": {
+                "id": 109,
+                "name": "Nature",
+                "image_url": "/images/categories/autumn.jpg",
+                "group_id": 11,
+                "requires_auth": false
+            },
+            "description": "Description: Take a stroll through the park during the vibrant autumn season.",
+            "languages": ["en", "fr", "de"],
+            "tags": ["park", "autumn", "nature"],
+            "requires_auth": false
         }
     ],
     "search-filters": {

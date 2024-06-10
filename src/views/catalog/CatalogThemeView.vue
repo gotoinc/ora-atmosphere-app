@@ -83,7 +83,7 @@
                     :img="video.image_url"
                     :disable="video.requires_auth"
                     @expand="openVideoPopup"
-                    @play="playSimulator"
+                    @play="selectVideo(video)"
                 />
             </div>
         </template>
@@ -103,6 +103,7 @@
 
     import type { VideoContent } from '@/ts/interfaces/contents';
 
+    import { storeToRefs } from 'pinia';
     import { useCatalogStore } from '@/stores/catalog.store.ts';
     import { useSearchStore } from '@/stores/search.store.ts';
 
@@ -121,7 +122,10 @@
     const toast = useToast();
     const router = useRouter();
 
-    const { openVideoPopup, playSimulator } = useCatalogStore();
+    const catalogStore = useCatalogStore();
+    const { openVideoPopup, playSimulator } = catalogStore;
+    const { selectedContent } = storeToRefs(catalogStore);
+
     const { resetSearch } = useSearchStore();
 
     const isSearchPage = computed(() => route.name === 'searchView');
@@ -134,6 +138,11 @@
 
     const isLoading = ref(true);
     const videosData = ref<VideoContent[]>([]);
+
+    const selectVideo = (content: VideoContent) => {
+        selectedContent.value = content;
+        playSimulator();
+    };
 
     onMounted(async () => {
         try {

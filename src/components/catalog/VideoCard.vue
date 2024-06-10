@@ -13,7 +13,7 @@
         >
             <div
                 :class="{ 'group-hover:rounded-b-none': !isDisabled }"
-                class="video-card__bg relative flex h-full w-full items-center justify-center overflow-hidden rounded-2xl text-h2 transition-all max-xl:h-[180px]"
+                class="video-card__bg relative flex h-full w-full items-center justify-center overflow-hidden rounded-2xl text-center text-h2 transition-all max-xl:h-[180px]"
             >
                 <div
                     class="absolute left-0 top-0 -z-10 h-full w-full before:absolute before:left-0 before:top-0 before:z-10 before:h-full before:w-full before:content-normal before:bg-primary-100/35"

@@ -51,7 +51,7 @@
 
                 <h1
                     v-else-if="selectedContent"
-                    class="text-9xl font-extrabold max-2lg:text-[64px]"
+                    class="text-7xl font-extrabold max-2lg:text-[64px]"
                 >
                     {{ selectedContent.title }}
                 </h1>
@@ -119,13 +119,15 @@
     });
 
     onMounted(async () => {
-        isLoading.value = true;
-        try {
-            selectedContent.value = await getSelectedContent();
-        } catch (e) {
-            toast.error('Content was not found');
-        } finally {
-            isLoading.value = false;
+        if (!selectedContent.value) {
+            isLoading.value = true;
+            try {
+                selectedContent.value = await getSelectedContent();
+            } catch (e) {
+                toast.error('Content was not found');
+            } finally {
+                isLoading.value = false;
+            }
         }
     });
 </script>

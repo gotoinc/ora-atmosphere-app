@@ -35,7 +35,7 @@ export const useCatalogStore = defineStore(
     },
     {
         persist: {
-            paths: [],
+            paths: ['selectedContent'],
         },
     }
 );
