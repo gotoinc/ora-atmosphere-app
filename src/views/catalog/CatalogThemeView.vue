@@ -83,7 +83,8 @@
                     :img="video.image_url"
                     :disable="video.requires_auth"
                     @expand="openVideoPopup"
-                    @play="selectVideo(video)"
+                    @play="handlePlay(video)"
+                    @select="selectVideo(video)"
                 />
             </div>
         </template>
@@ -141,6 +142,12 @@
 
     const selectVideo = (content: VideoContent) => {
         selectedContent.value = content;
+
+        window.scrollTo(0, 0);
+    };
+
+    const handlePlay = (content: VideoContent) => {
+        selectedContent.value = content;
         playSimulator();
     };
 
@@ -159,6 +166,6 @@
 
 <style scoped lang="postcss">
     .list {
-        @apply mb-36 mt-6 grid grid-cols-5 gap-3.5 max-2xl:grid-cols-4 max-tab:grid-cols-3 max-sm:grid-cols-2 max-mob-md:grid-cols-1;
+        @apply mb-36 mt-6 grid grid-cols-5 gap-3.5 max-2xl:grid-cols-4 max-lg:grid-cols-3 max-tab:grid-cols-2 max-mob-lg:grid-cols-1;
     }
 </style>

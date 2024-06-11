@@ -4,8 +4,10 @@
         :class="{
             'expand group': expandOnHover,
             'disable text-grey-150': isDisabled,
+            'cursor-pointer': !isDisabled,
         }"
         class="video-card relative z-10 flex justify-center hover:z-20"
+        @click="disable ? '' : emits('select')"
     >
         <div
             :class="{ 'group-hover:rounded-b-none': !isDisabled }"
@@ -13,7 +15,7 @@
         >
             <div
                 :class="{ 'group-hover:rounded-b-none': !isDisabled }"
-                class="video-card__bg relative flex h-full w-full items-center justify-center overflow-hidden rounded-2xl text-center text-h2 transition-all max-xl:h-[180px]"
+                class="video-card__bg relative flex h-full w-full items-center justify-center overflow-hidden rounded-2xl p-2 text-center text-h2 transition-all max-xl:h-[180px] max-xl:rounded-b-none max-xl:text-h3"
             >
                 <div
                     class="absolute left-0 top-0 -z-10 h-full w-full before:absolute before:left-0 before:top-0 before:z-10 before:h-full before:w-full before:content-normal before:bg-primary-100/35"
@@ -37,7 +39,7 @@
                 }"
                 class="video-card__content rounded-2xl rounded-t-none bg-dark p-[34px] transition-all max-xl:!visible max-xl:px-4 max-xl:py-6 max-xl:!opacity-100"
             >
-                <div class="mb-6 flex items-center justify-between">
+                <div class="mb-6 flex items-center justify-between gap-1.5">
                     <div class="flex items-center gap-4">
                         <!-- Play button -->
                         <button
@@ -45,8 +47,8 @@
                                 'bg-white-75 text-grey-100': isDisabled,
                                 'bg-white-100 text-primary-100': !isDisabled,
                             }"
-                            class="flex h-11 w-11 items-center justify-center rounded-full transition-colors hover:bg-white-75"
-                            @click="emits('play')"
+                            class="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full transition-colors hover:bg-white-75"
+                            @click.stop="emits('play')"
                         >
                             <component :is="IconPlay" class="h-3 w-3" />
                         </button>
@@ -57,7 +59,7 @@
                                 'text-grey-150': isDisabled,
                                 'text-primary-50': !isDisabled,
                             }"
-                            class="text-h3 max-xl:text-h4"
+                            class="text-h3 max-xl:text-h5 max-mob-lg:text-h4"
                         >
                             {{ name }}
                         </h3>
@@ -66,8 +68,8 @@
                     <!-- Open details button -->
                     <button
                         :class="{ 'rotate-180': openDescription }"
-                        class="flex h-11 w-11 items-center justify-center rounded-full border border-solid border-white-100 text-white-100 transition-all hover:bg-white-100 hover:text-dark"
-                        @click="emits('expand')"
+                        class="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full border border-solid border-white-100 text-white-100 transition-all hover:bg-white-100 hover:text-dark"
+                        @click.stop="emits('expand')"
                     >
                         <component
                             :is="IconChevronDown"
@@ -129,7 +131,7 @@
                     :aria-hidden="!openDescription"
                     class="video-card__desc mt-6 overflow-hidden pb-1 text-left transition-all aria-hidden:mt-0 aria-hidden:h-0"
                 >
-                    <h3 class="mb-6 text-h3 text-primary-50 max-xl:text-h4">
+                    <h3 class="mb-6 text-h3 text-primary-50 xl:text-h4">
                         {{ name }}
                     </h3>
 
@@ -199,6 +201,7 @@
     interface Emits {
         (e: 'expand'): void;
         (e: 'play'): void;
+        (e: 'select'): void;
     }
 
     const props = withDefaults(defineProps<Props>(), {
