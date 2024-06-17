@@ -32,7 +32,7 @@
                         {{ category.name }}
                     </catalog-link>
 
-                    <fancy-carousel overflow-visible class="cont !p-0">
+                    <fancy-carousel overflow-visible class="max-w-[95vw]">
                         <category-card
                             v-for="item in groups.slice(0, 10)"
                             :key="item.id"
