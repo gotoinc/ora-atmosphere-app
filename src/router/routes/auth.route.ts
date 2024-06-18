@@ -52,6 +52,14 @@ export default {
             ],
         },
         {
+            path: '/confirm-sent',
+            name: 'confirmSentView',
+            component: () => import('@/views/auth/ConfirmSentView.vue'),
+            meta: {
+                title: 'Link sent',
+            },
+        },
+        {
             path: '/reset-password',
             name: 'resetPasswordView',
             component: () => import('@/views/auth/ResetPasswordView.vue'),

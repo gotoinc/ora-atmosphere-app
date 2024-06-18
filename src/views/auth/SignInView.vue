@@ -95,7 +95,10 @@
         isLoading.value = true;
 
         try {
-            const res = await signIn();
+            const res = await signIn({
+                email: email.value,
+                password: password.value,
+            });
 
             await authStore.getProfileData();
 
@@ -108,8 +111,8 @@
 
                 isAuthenticated.value = true;
             }
-        } catch (e) {
-            toast.error('Login error');
+        } catch (err) {
+            toast.error('Unable to log in with provided credentials.');
         } finally {
             isLoading.value = false;
         }

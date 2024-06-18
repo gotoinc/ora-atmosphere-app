@@ -18,24 +18,24 @@ import type {
  * Define schemas for Sign up form
  */
 export const signUpFirstStepSchema: ObjectSchema<SignUpFirstStep> = object({
-    firstName: string().required('Please enter first name'),
-    lastName: string().required('Please enter last name'),
+    first_name: string().required('Please enter first name'),
+    last_name: string().required('Please enter last name'),
     email: emailValidation,
-    password: passwordValidation,
-    confirmPassword: string()
+    password1: passwordValidation,
+    password2: string()
         .required('Please confirm password')
-        .oneOf([ref('password'), ''], 'Passwords must match'),
-    isTermsAgreed: bool()
+        .oneOf([ref('password1'), ''], 'Passwords must match'),
+    agree_with_terms: bool()
         .oneOf([true], 'Please accept')
         .required('Please accept'),
 });
 
 export const signUpSecondStepSchema: ObjectSchema<SignUpSecondStep> = object({
-    companyName: string().required('Please enter company name'),
+    company_name: string().required('Please enter company name'),
     activity: string().required('Please choose activity'),
-    jobTitle: string(),
-    companyWebsite: string().url('Please enter a valid URL'),
-    phone: phoneValidation,
+    job_title: string(),
+    company_website: string().url('Please enter a valid URL'),
+    phone_number: phoneValidation,
 });
 
 /**
@@ -57,8 +57,8 @@ export const forgotPasswordSchema: ObjectSchema<EmailType> = object({
  * Define schema for choose new password
  */
 export const setNewPasswordSchema: ObjectSchema<SetNewPasswordType> = object({
-    password: passwordValidation,
-    confirmPassword: string()
+    password1: passwordValidation,
+    password2: string()
         .required('Please confirm password')
-        .oneOf([ref('password'), ''], 'Passwords must match'),
+        .oneOf([ref('password1'), ''], 'Passwords must match'),
 });

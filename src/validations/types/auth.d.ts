@@ -1,20 +1,10 @@
-export interface SignUpFirstStep {
-    firstName: string;
-    lastName: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-    isTermsAgreed: boolean;
-}
-
 export interface RegisterInput {
+    email: string;
+    password1: string;
+    password2: string;
     first_name: string;
     last_name: string;
-    email: string;
-    password: string;
-    confirm_password: string;
     agree_with_terms: boolean;
-    recaptcha_token?: string;
     company_name: string;
     activity: string;
     job_title?: string;
@@ -22,25 +12,39 @@ export interface RegisterInput {
     phone_number?: string;
 }
 
-export interface SignUpSecondStep {
-    companyName: string;
-    activity: string;
-    jobTitle?: string;
-    companyWebsite?: string;
-    phone?: string;
+export interface SignUpFirstStep
+    extends Pick<
+        RegisterInput,
+        | 'first_name'
+        | 'last_name'
+        | 'email'
+        | 'password1'
+        | 'password2'
+        | 'agree_with_terms'
+    > {}
+
+export interface SignUpSecondStep
+    extends Pick<
+        RegisterInput,
+        | 'company_name'
+        | 'activity'
+        | 'job_title'
+        | 'company_website'
+        | 'phone_number'
+    > {}
+
+export interface SignInInput extends Pick<SignUpFirstStep, 'email'> {
+    password: string;
 }
 
-export interface SignInInput
-    extends Pick<SignUpFirstStep, 'email' | 'password'> {}
-
 export interface SetNewPasswordType
-    extends Pick<SignUpFirstStep, 'confirmPassword' | 'password'> {}
+    extends Pick<SignUpFirstStep, 'password1' | 'password2'> {}
 
 export interface EmailType extends Pick<SignInInput, 'email'> {}
 
 export interface ProfileInfo
     extends Omit<
             SignUpFirstStep,
-            'password' | 'confirmPassword' | 'isTermsAgreed'
+            'password1' | 'password2' | 'agree_with_terms'
         >,
         SignUpSecondStep {}

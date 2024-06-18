@@ -10,16 +10,14 @@ interface LoginSuccessResponse {
     token: string;
 }
 
-interface LoginInput extends SignInInput {
-    remember_me: boolean;
-}
-
-export const signIn = async () => {
+export const signIn = async (body: SignInInput) => {
     try {
-        const res = await axios.get<
-            LoginInput,
+        const res = await axios.post<
+            SignInInput,
             AxiosResponse<LoginSuccessResponse>
-        >(`/login`);
+        >(`/auth/login/`, {
+            ...body,
+        });
 
         return res.data;
     } catch (err) {

@@ -1,19 +1,7 @@
 <template>
     <div class="mx-auto">
         <!-- If request link has been sent -->
-        <template v-if="isRequestSent">
-            <div class="mb-6">
-                <h1 class="mb-2 text-center text-h2">Link sent!</h1>
-
-                <p class="text-base text-grey-100">
-                    A password reset link has been sent to your email address
-                </p>
-            </div>
-
-            <v-button class="w-full" :to="{ name: 'signInView' }">
-                Back to Sign in
-            </v-button>
-        </template>
+        <confirm-sent v-if="isRequestSent" />
 
         <!-- Reset password form -->
         <template v-else>
@@ -61,6 +49,7 @@
 
     import VButton from '@/components/banner/VButton.vue';
     import VInput from '@/components/base/input/VInput.vue';
+    import ConfirmSent from '@/components/templates/ConfirmSent.vue';
 
     import { forgotPasswordSchema } from '@/validations/schemas/auth.schema.ts';
     import type { EmailType } from '@/validations/types/auth';

@@ -7,7 +7,7 @@
                 placeholder="Enter your company name"
                 name="companyName"
                 required
-                :error="secondStepErrors.companyName"
+                :error="secondStepErrors.company_name"
             />
 
             <v-select
@@ -25,7 +25,7 @@
                 label="Job Title"
                 name="jobTitle"
                 placeholder="Enter your job title"
-                :error="secondStepErrors.jobTitle"
+                :error="secondStepErrors.job_title"
             />
 
             <v-input
@@ -33,7 +33,7 @@
                 name="companyWebsite"
                 label="Company Website"
                 placeholder="Enter your company website"
-                :error="secondStepErrors.companyWebsite"
+                :error="secondStepErrors.company_website"
             />
 
             <v-input
@@ -41,7 +41,7 @@
                 name="phone"
                 label="Phone Number"
                 placeholder="Enter your phone number"
-                :error="secondStepErrors.phone"
+                :error="secondStepErrors.phone_number"
             />
         </div>
 
@@ -73,6 +73,7 @@
     import { storeToRefs } from 'pinia';
     import { useSignUpStore } from '@/stores/sign-up.store.ts';
 
+    import type { RegisterErrors } from '@/api/auth/register.api.ts';
     import { signUp } from '@/api/auth/register.api.ts';
     import activitiesList from '@/constants/activities-list.ts';
 
@@ -106,8 +107,8 @@
                 first_name: firstName.value,
                 last_name: lastName.value,
                 email: email.value,
-                password: password.value,
-                confirm_password: confirmPassword.value,
+                password1: password.value,
+                password2: confirmPassword.value,
                 activity: activity.value,
                 company_name: companyName.value,
                 agree_with_terms: isTermsAgreed.value,
@@ -116,14 +117,18 @@
                 phone_number: phone.value,
             });
 
-            toast.success('Your account has been created');
-
-            void router.push({ name: 'signInView' });
+            void router.push({ name: 'confirmSentView' });
 
             signUpStore.resetFirstStep();
             signUpStore.resetSecondStep();
         } catch (e) {
-            toast.error('Register error');
+            const error = e as RegisterErrors;
+
+            if (error.email) {
+                toast.error(error.email[0]);
+            } else {
+                toast.error('Register error');
+            }
         } finally {
             isLoading.value = false;
         }
