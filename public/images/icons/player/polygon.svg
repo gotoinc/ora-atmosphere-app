@@ -1,0 +1,15 @@
+<svg
+    class="polygon absolute bottom-full z-10 hidden h-6"
+    width="33"
+    height="15"
+    viewBox="0 0 33 15"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+>
+    <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M0.256287 0.673767L10.5132 12.2457C13.6965 15.8371 19.3035 15.8371 22.4868 12.2457L32.7437 0.673767H0.256287Z"
+        fill="#29292D"
+    />
+</svg>

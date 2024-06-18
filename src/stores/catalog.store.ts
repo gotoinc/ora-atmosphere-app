@@ -8,11 +8,12 @@ export const useCatalogStore = defineStore(
     'catalog',
     () => {
         const selectedContentUrl = ref(
-            'https://images.unsplash.com/reserve/bOvf94dPRxWu0u3QsPjF_tree.jpg?ixid=M3wxMjA3fDB8MXxzZWFyY2h8M3x8bmF0dXJhbHxlbnwwfHx8fDE3MTY4MDYwMjV8MA&ixlib=rb-4.0.3'
+            'https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-1080p.mp4'
         );
 
         const isContentPopupOpen = ref(false);
         const isSimulatorLoaded = ref(false);
+        const isVideoPlayerOpened = ref(false);
         const isDescriptionOpen = ref(false);
 
         const openVideoPopup = () => {
@@ -29,6 +30,7 @@ export const useCatalogStore = defineStore(
             selectedContentUrl,
             isSimulatorLoaded,
             isContentPopupOpen,
+            isVideoPlayerOpened,
             playSimulator,
             openVideoPopup,
         };

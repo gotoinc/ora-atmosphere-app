@@ -51,8 +51,10 @@
                 <component :is="IconCross" class="h-full w-full text-dark" />
             </button>
 
-            <div class="controls absolute bottom-0 left-0 w-full pb-10">
-                <div class="w-full">
+            <div
+                class="plyr__controls plyr--full-ui absolute bottom-0 left-0 w-full px-4 pb-10"
+            >
+                <div class="plyr__controls-content mx-auto w-full">
                     <div class="flex items-center gap-3">
                         <div class="plyr__progress w-full">
                             <input
@@ -130,7 +132,7 @@
                                 </button>
 
                                 <div
-                                    class="plyr__volume control-modal bg-grey-500 rounded-sm p-0.5"
+                                    class="plyr__volume control-modal rounded-sm bg-grey-500 p-0.5"
                                 >
                                     <input
                                         data-plyr="volume"
@@ -319,6 +321,11 @@
 
     const changeSpeed = (option: number) => {
         activeSpeed.value = option;
+
+        const currentVideo = simulatorInstance.value?.curVideo
+            ?.video as HTMLVideoElement;
+
+        currentVideo.playbackRate = option;
     };
 
     const setSimulatorDiameter = (diameter: SphereDiameter) => {
@@ -337,11 +344,44 @@
             enableBodyScroll(simulatorContainer.value);
 
         router.go(-1);
+
+        // Remove default loader of simulator
+        const simulatorLoader = document.getElementById('babylonjsLoadingDiv');
+        if (simulatorLoader) simulatorLoader.remove();
     };
 
     onMounted(async () => {
-        if (simulatorContainer.value)
+        if (simulatorContainer.value) {
             disableBodyScroll(simulatorContainer.value);
+
+            let controlButton: Element | null = null;
+
+            // Open settings modals for action buttons
+            const setClickEvent = (e: Event) => {
+                const target = e.target as HTMLElement;
+                const controlContainer = target.closest('.control--action');
+
+                if (controlButton !== controlContainer) {
+                    controlButton?.classList.remove('active');
+                }
+
+                if (controlContainer) {
+                    const button = controlContainer.querySelector(
+                        'button'
+                    ) as HTMLButtonElement;
+
+                    if (target === button) {
+                        controlContainer.classList.toggle('active');
+
+                        controlButton = controlContainer;
+                    }
+                } else {
+                    controlButton?.classList.remove('active');
+                }
+            };
+
+            simulatorContainer.value.addEventListener('click', setClickEvent);
+        }
 
         if (simulatorElement.value) {
             const { simulator } = await initSimulator(
@@ -351,6 +391,8 @@
 
             simulator.onFinish(() => {
                 isSimulatorLoaded.value = true;
+
+                // void simulator.curVideo?.video.play();
             });
 
             simulatorInstance.value = simulator;

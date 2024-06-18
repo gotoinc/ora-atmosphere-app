@@ -38,6 +38,7 @@
     interface Props {
         to?: RouteLocationRaw;
         icon?: Component;
+        appendIcon?: Component;
         iconClass?: string;
         reverse?: boolean;
         type?: 'button' | 'submit' | 'reset' | undefined;

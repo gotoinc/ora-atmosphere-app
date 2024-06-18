@@ -109,25 +109,4 @@
     });
 </script>
 
-<style scoped lang="postcss">
-    .actions {
-        top: calc(100% + 8px);
-        min-width: 177px;
-        animation: fade-up 0.3s ease;
-    }
-
-    .link {
-        @apply block px-4 py-2.5 text-white-100 transition-colors hover:bg-grey-200;
-    }
-
-    @keyframes fade-up {
-        0% {
-            opacity: 0;
-            transform: translateY(-20px);
-        }
-        100% {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-</style>
+<style scoped lang="postcss"></style>
