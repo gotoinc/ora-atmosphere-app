@@ -3,7 +3,7 @@
         <v-popup v-model="isPopupOpen" class="z-[51]" is-empty>
             <template #body>
                 <video-player
-                    src="https://videos.pexels.com/video-files/4114797/4114797-hd_1280_720_50fps.mp4"
+                    src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-1080p.mp4"
                 />
             </template>
         </v-popup>
