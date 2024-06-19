@@ -9,6 +9,7 @@
     import IconBackward from '@img/icons/player/backward.svg?raw';
     import IconForward from '@img/icons/player/forward.svg?raw';
     import IconFullScreen from '@img/icons/player/fullscreen.svg?raw';
+    import IconSpeed from '@img/icons/player/speed.svg?raw';
     import IconVolume from '@img/icons/player/volume.svg?raw';
     import IconVolumeOff from '@img/icons/player/volume-off.svg?raw';
     import Plyr from 'plyr';
@@ -46,7 +47,6 @@
                             <span class="plyr__tooltip" role="tooltip">Forward {seektime} secs</span>
                         </button>
 
-
                         <!-- Volume -->
                          <div class="volume__control control">
                              <button type="button" aria-label="Mute" data-plyr="mute">
@@ -65,6 +65,51 @@
                     </div>
 
                     <div class="controls-grid">
+                        <!-- Speed -->
+                         <div class="relative w-full max-w-[840px] control">
+                           <button type="button" class="control" data-plyr="speed">
+                              <span >
+                                  ${IconSpeed}
+                              </span>
+                           </button>
+
+                           <div class="speed-controls absolute rounded-xl bg-grey-400 px-8 py-6">
+                                <h3 class="text-h3 mb-9">Playback Speed</h3>
+                                
+                                <div class="speed-buttons controls-grid pb-16 justify-between">
+                                    <button class="relative">
+                                        <span class="speed-point"></span>
+                                        <span class="label">0.5x</span>
+                                    </button>
+
+                                    <button class="relative">
+                                        <span class="speed-point"></span>
+                                        <span class="label">0.75x</span>
+                                    </button>
+
+                                    <button class="relative">
+                                        <span class="speed-point"></span>
+                                        <span class="label">1x (Normal)</span>
+                                    </button>
+
+                                    <button class="relative">
+                                        <span class="speed-point"></span>
+                                        <span class="label">1.25x</span>
+                                    </button>
+
+                                     <button class="relative">
+                                        <span class="speed-point"></span>
+                                        <span class="label">1.5x</span>
+                                     </button>
+                                </div>
+                            </div>
+
+                             <svg class="polygon absolute bottom-full" width="33" height="15" viewBox="0 0 33 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M0.256287 0.673767L10.5132 12.2457C13.6965 15.8371 19.3035 15.8371 22.4868 12.2457L32.7437 0.673767H0.256287Z" fill="#29292D"/>
+                             </svg>
+                        </div>
+
+                        <!-- Fullscreen -->
                         <button type="button" class="control" data-plyr="fullscreen">
                             <span >
                                 ${IconFullScreen}
@@ -99,6 +144,14 @@
 
         display: flex;
         align-items: center;
+    }
+
+    .speed-point {
+        @apply h-4 w-4 rounded-full bg-grey-150 transition-all;
+    }
+
+    .speed-controls {
+        bottom: calc(100% + 15px);
     }
 
     .controls-grid {
