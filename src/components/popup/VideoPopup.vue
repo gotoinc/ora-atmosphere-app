@@ -4,11 +4,11 @@
             <template #body>
                 <div class="relative">
                     <video-card
+                        v-if="selectedContent"
+                        :data="selectedContent"
                         class="w-full max-w-[566px]"
                         :expand-on-hover="false"
-                        name="Title"
                         :open-description="isDescriptionOpen"
-                        :img="ThemeImg"
                         @play="catalogStore.playSimulator"
                         @expand="isDescriptionOpen = !isDescriptionOpen"
                     />
@@ -29,7 +29,6 @@
 </template>
 
 <script setup lang="ts">
-    import ThemeImg from '@img/categories/theme-bg.jpg';
     import IconCross from '@img/icons/cross.svg?component';
 
     import VideoCard from '@/components/catalog/VideoCard.vue';
@@ -40,7 +39,8 @@
 
     const catalogStore = useCatalogStore();
 
-    const { isContentPopupOpen, isDescriptionOpen } = storeToRefs(catalogStore);
+    const { isContentPopupOpen, isDescriptionOpen, selectedContent } =
+        storeToRefs(catalogStore);
 </script>
 
 <style scoped></style>

@@ -1,10 +1,13 @@
 import { ref } from 'vue';
+import { useToast } from 'vue-toastification';
 
 import type { VideoContent } from '@/ts/interfaces/contents';
 
 import { defineStore } from 'pinia';
 
 import router from '@/router';
+
+const toast = useToast();
 
 export const useCatalogStore = defineStore(
     'catalog',
@@ -21,7 +24,13 @@ export const useCatalogStore = defineStore(
         };
 
         const playSimulator = () => {
-            void router.push({ name: 'simulatorView' });
+            console.log(true);
+            if (selectedContent.value?.file) {
+                console.log(true);
+                void router.push({ name: 'simulatorView' });
+            } else {
+                toast.error('File not found');
+            }
         };
 
         return {

@@ -17,7 +17,7 @@
         <template v-else-if="topicData.length > 0">
             <div class="list fade-t">
                 <category-card
-                    v-for="{ id, name, image_url, requires_auth } in topicData"
+                    v-for="{ id, name, image, requires_auth } in topicData"
                     :key="id"
                     class="!max-w-full"
                     :to="{
@@ -27,7 +27,7 @@
                             topicId: id,
                         },
                     }"
-                    :img="image_url"
+                    :img="image"
                     :name="name"
                     saturate-image
                     :disable="requires_auth"
@@ -35,7 +35,7 @@
             </div>
         </template>
 
-        <h3 v-else class="pt-5 text-center text-h3">No themes found</h3>
+        <h3 v-else class="fade-t pt-8 text-center text-h3">No themes found</h3>
     </template>
 
     <router-view></router-view>
@@ -51,7 +51,7 @@
 
     import type { Topic } from '@/ts/interfaces/catalog';
 
-    import { getTopics } from '@/api/catalog/get-topics.api.ts';
+    import { getGroupTopics } from '@/api/catalog/get-topics.api.ts';
     import {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         useTransformFromPath,
@@ -68,7 +68,7 @@
 
     const loadTopics = async () => {
         try {
-            const res = await getTopics(route.params.groupId as string);
+            const res = await getGroupTopics(route.params.groupId as string);
 
             topicData.value = res ?? [];
         } catch (err) {

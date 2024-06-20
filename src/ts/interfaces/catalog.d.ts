@@ -1,3 +1,5 @@
+import type { VideoContent } from '@/ts/interfaces/contents';
+
 interface CommonCatalogTypes {
     id: number;
     name: string;
@@ -13,6 +15,8 @@ export interface Group extends CommonCatalogTypes {
     topics: Topic[];
 }
 
-export interface Topic extends CommonCatalogTypes {}
+export interface Topic extends CommonCatalogTypes {
+    videos: VideoContent[];
+}
 
 export interface Identifiable extends Pick<CommonCatalogTypes, 'id' | 'name'> {}

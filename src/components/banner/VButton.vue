@@ -43,6 +43,7 @@
         type?: 'button' | 'submit' | 'reset' | undefined;
         variant?: 'primary' | 'white' | 'info' | 'outline' | 'text';
         loading?: boolean;
+        disabled?: boolean;
     }
 
     interface Emits {
@@ -110,6 +111,7 @@
         buttonStyles.value,
         withIconStyles.value,
         { 'pointer-events-none': props.loading },
+        { 'pointer-events-none opacity-50': props.disabled },
     ]);
 </script>
 

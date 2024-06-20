@@ -15,22 +15,23 @@
         >
             <div
                 :class="{ 'group-hover:rounded-b-none': !isDisabled }"
-                class="video-card__bg relative flex h-full w-full items-center justify-center overflow-hidden rounded-2xl p-2 text-center text-h2 transition-all max-xl:h-[180px] max-xl:rounded-b-none max-xl:text-h3"
+                class="video-card__bg relative flex h-full w-full items-center justify-center overflow-hidden rounded-2xl bg-primary-dark p-2 text-center text-h2 transition-all max-xl:h-[180px] max-xl:rounded-b-none max-xl:text-h3"
             >
                 <div
                     class="absolute left-0 top-0 -z-10 h-full w-full before:absolute before:left-0 before:top-0 before:z-10 before:h-full before:w-full before:content-normal before:bg-primary-100/35"
                 >
                     <img
+                        v-if="data.image"
                         :class="{
                             'saturate-0': isDisabled,
                         }"
-                        :src="img"
+                        :src="data.image"
                         class="img-cover transition-transform group-hover:scale-110"
-                        :alt="name"
+                        :alt="data.title"
                     />
                 </div>
 
-                {{ name }}
+                {{ data.title }}
             </div>
 
             <div
@@ -46,6 +47,7 @@
                             :class="{
                                 'bg-white-75 text-grey-100': isDisabled,
                                 'bg-white-100 text-primary-100': !isDisabled,
+                                'pointer-events-none opacity-50': !data.file,
                             }"
                             class="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full transition-colors hover:bg-white-75"
                             @click.stop="emits('play')"
@@ -61,7 +63,7 @@
                             }"
                             class="text-h3 max-xl:text-h5 max-mob-lg:text-h4"
                         >
-                            {{ name }}
+                            {{ data.title }}
                         </h3>
                     </div>
 
@@ -79,9 +81,9 @@
                 </div>
 
                 <div class="flex flex-wrap items-center justify-between gap-4">
-                    <ul class="languages flex items-center gap-1.5">
+                    <ul class="languages flex flex-wrap items-center gap-1.5">
                         <li
-                            v-for="lang in searchLangs"
+                            v-for="lang in data.languages"
                             :key="lang.id"
                             class="tag tag--lang pointer-events-none"
                         >
@@ -93,7 +95,7 @@
                         <div class="flex items-center gap-3">
                             <component
                                 :is="IconVoiceOn"
-                                v-if="voice"
+                                v-if="data.with_narration"
                                 class="h-6 w-6 text-white-100"
                             />
 
@@ -104,22 +106,22 @@
                             />
 
                             <img
-                                v-if="!audio"
-                                src="@img/icons/audio-off.svg"
+                                v-if="data.with_sound"
+                                src="@img/icons/audio-on.svg"
                                 class="h-6 w-6 object-contain"
                                 alt=""
                             />
 
                             <img
                                 v-else
-                                src="@img/icons/audio-on.svg"
+                                src="@img/icons/audio-off.svg"
                                 class="h-6 w-6 object-contain"
                                 alt=""
                             />
                         </div>
 
                         <div class="tag tag--lang pointer-events-none">
-                            02:35
+                            {{ useFormatVideoDuration(data.duration ?? 0) }}
                         </div>
                     </div>
                 </div>
@@ -132,31 +134,22 @@
                     class="video-card__desc mt-6 overflow-hidden pb-1 text-left transition-all aria-hidden:mt-0 aria-hidden:h-0"
                 >
                     <h3 class="mb-6 text-h3 text-primary-50 xl:text-h4">
-                        {{ name }}
+                        {{ data.title }}
                     </h3>
 
                     <div class="video-card__text mb-8 overflow-y-auto pr-2.5">
                         <p>
-                            Description Lorem ipsum dolor sit amet, consectetur
-                            adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore et dolore magna aliqua. Ut enim ad minim
-                            veniam, quis nostrud exercitation ullamco laboris
-                            nisi ut aliquip ex ea commodo consequat. Duis aute
-                            irure dolor in reprehenderit in voluptate velit esse
-                            cillum dolore eu fugiat nulla pariatur. Excepteur
-                            sint occaecat cupidatat non proident, sunt in culpa
-                            qui officia deserunt mollit anim id est laborum.
-                            Learn more
+                            {{ data.description }}
                         </p>
                     </div>
 
                     <ul class="flex flex-wrap gap-2">
                         <li
-                            v-for="tag in searchTags"
-                            :key="tag.id"
+                            v-for="tag in data.tags"
+                            :key="tag"
                             class="tag pointer-events-none"
                         >
-                            {{ tag.name }}
+                            {{ tag }}
                         </li>
                     </ul>
                 </div>
@@ -181,18 +174,17 @@
     import IconVoiceOff from '@img/icons/voice-off.svg?component';
     import IconVoiceOn from '@img/icons/voice-on.svg?component';
 
+    import type { VideoContent } from '@/ts/interfaces/contents';
+
     import { storeToRefs } from 'pinia';
     import { useAuthStore } from '@/stores/auth.store.ts';
 
-    import searchLangs from '@/fixtures/search-langs.json';
-    import searchTags from '@/fixtures/search-tags.json';
     import { useFloatingTooltip } from '@/hooks/useFloatingTooltip.ts';
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    import { useFormatVideoDuration } from '@/hooks/useFormatVideoDuration.ts';
 
     interface Props {
-        name: string;
-        img: string;
-        voice?: boolean;
-        audio?: boolean;
+        data: VideoContent;
         expandOnHover?: boolean;
         openDescription?: boolean;
         disable?: boolean;

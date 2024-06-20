@@ -243,7 +243,6 @@
 
 <script setup lang="ts">
     import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
-    import { useToast } from 'vue-toastification';
     import IconClose from '@img/icons/close.svg?component';
     import IconRecent from '@img/icons/recent.svg?component';
     import IconSearch from '@img/icons/search.svg?component';
@@ -272,8 +271,6 @@
     }
 
     const emits = defineEmits<Emits>();
-
-    const toast = useToast();
 
     /**
      * DOM elements
@@ -330,8 +327,6 @@
 
         try {
             searchFilters.value = await getSearchFilters();
-        } catch (e) {
-            toast.error('Filters were not found');
         } finally {
             isFiltersLoading.value = false;
         }

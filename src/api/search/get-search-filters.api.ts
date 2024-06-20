@@ -5,7 +5,7 @@ import { useThrowError } from '@/hooks/useThrowError.ts';
 
 export const getSearchFilters = async () => {
     try {
-        const res = await axios.get<SearchFilters>(`/search-filters`);
+        const res = await axios.post<SearchFilters>(`/search/`);
 
         return res.data;
     } catch (err) {

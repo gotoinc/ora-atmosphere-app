@@ -79,8 +79,7 @@
                 <video-card
                     v-for="video in videosData"
                     :key="video.id"
-                    :name="video.title"
-                    :img="video.image_url"
+                    :data="video"
                     :disable="video.requires_auth"
                     @expand="openVideoPopup"
                     @play="handlePlay(video)"
@@ -89,7 +88,9 @@
             </div>
         </template>
 
-        <h3 v-else class="pt-5 text-center text-h3">No contents found</h3>
+        <h3 v-else class="fade-t pt-8 text-center text-h3">
+            No contents found
+        </h3>
     </div>
 </template>
 
@@ -108,7 +109,7 @@
     import { useCatalogStore } from '@/stores/catalog.store.ts';
     import { useSearchStore } from '@/stores/search.store.ts';
 
-    import { getVideos } from '@/api/catalog/get-videos.api.ts';
+    import { getTopicVideos } from '@/api/catalog/get-videos.api.ts';
     import {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         useTransformFromPath,
@@ -153,7 +154,7 @@
 
     onMounted(async () => {
         try {
-            const res = await getVideos(route.params.topicId as string);
+            const res = await getTopicVideos(route.params.topicId as string);
 
             videosData.value = res ?? [];
         } catch (err) {

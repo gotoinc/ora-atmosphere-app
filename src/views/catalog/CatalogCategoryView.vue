@@ -12,20 +12,20 @@
     <template v-else-if="groupsData.length > 0">
         <div class="list fade-t">
             <category-card
-                v-for="{ id, name, image_url, requires_auth } in groupsData"
+                v-for="{ id, name, image, requires_auth } in groupsData"
                 :key="id"
                 :to="{
                     name: 'catalogGroupView',
                     params: { groupName: useTransformPath(name), groupId: id },
                 }"
-                :img="image_url"
+                :img="image"
                 :name="name"
                 :disable="requires_auth"
             />
         </div>
     </template>
 
-    <h3 v-else class="pt-5 text-center text-h3">No groups found</h3>
+    <h3 v-else class="fade-t pt-5 text-center text-h3">No groups found</h3>
 </template>
 
 <script setup lang="ts">
@@ -38,7 +38,7 @@
 
     import type { Group } from '@/ts/interfaces/catalog';
 
-    import { getGroups } from '@/api/catalog/get-groups.api.ts';
+    import { getCategoryGroups } from '@/api/catalog/get-groups.api.ts';
     import {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         useTransformFromPath,
@@ -54,7 +54,7 @@
 
     onMounted(async () => {
         try {
-            const res = await getGroups(route.params.id as string);
+            const res = await getCategoryGroups(route.params.id as string);
 
             groupsData.value = res ?? [];
         } catch (err) {

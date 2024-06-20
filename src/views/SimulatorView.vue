@@ -117,6 +117,8 @@
             });
 
             simulatorInstance.value = simulator;
+        } else {
+            closePage();
         }
     });
 

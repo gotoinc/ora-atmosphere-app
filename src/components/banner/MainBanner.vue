@@ -20,7 +20,7 @@
                 Back
             </v-button>
 
-            <div class="fade-r banner__heading">
+            <div class="fade-r banner__heading max-w-3xl">
                 <div class="mb-2 flex items-center gap-3">
                     <v-skeleton
                         v-if="isLoading"
@@ -66,8 +66,9 @@
                     <v-button
                         variant="white"
                         :icon="IconPlay"
+                        :disabled="!selectedContent.file"
                         icon-class="!w-2.5 !h-3 mr-2"
-                        :to="{ name: 'simulatorView' }"
+                        @click="catalogStore.playSimulator"
                     >
                         Play
                     </v-button>
@@ -88,7 +89,6 @@
 <script setup lang="ts">
     import { computed, onMounted, ref } from 'vue';
     import { useRouter } from 'vue-router';
-    import { useToast } from 'vue-toastification';
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     import bannerImg from '@img/banner.jpg';
     import IconChevronLeft from '@img/icons/chevron-left.svg?component';
@@ -104,7 +104,6 @@
     import { getDefaultContent } from '@/api/catalog/get-selected-content.api.ts';
 
     const router = useRouter();
-    const toast = useToast();
 
     const catalogStore = useCatalogStore();
     const { selectedContent } = storeToRefs(catalogStore);
@@ -126,8 +125,6 @@
             isLoading.value = true;
             try {
                 selectedContent.value = await getDefaultContent();
-            } catch (e) {
-                toast.error('Content was not found');
             } finally {
                 isLoading.value = false;
             }
