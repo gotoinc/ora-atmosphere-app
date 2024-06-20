@@ -3,7 +3,7 @@
         <div class="cont w-full">
             <div class="banner__img absolute left-0 top-0 h-full w-full">
                 <img
-                    :src="selectedContent?.image_url ?? bannerImg"
+                    :src="selectedContent?.image ?? bannerImg"
                     alt="Banner"
                     class="img-cover"
                 />
@@ -38,7 +38,10 @@
                             />
                         </div>
 
-                        <h3 class="font-light uppercase">
+                        <h3
+                            v-if="selectedContent.topic"
+                            class="font-light uppercase"
+                        >
                             {{ selectedContent.topic.name }}
                         </h3>
                     </template>
@@ -98,7 +101,7 @@
     import { storeToRefs } from 'pinia';
     import { useCatalogStore } from '@/stores/catalog.store.ts';
 
-    import { getSelectedContent } from '@/api/catalog/get-selected-content.api.ts';
+    import { getDefaultContent } from '@/api/catalog/get-selected-content.api.ts';
 
     const router = useRouter();
     const toast = useToast();
@@ -122,7 +125,7 @@
         if (!selectedContent.value) {
             isLoading.value = true;
             try {
-                selectedContent.value = await getSelectedContent();
+                selectedContent.value = await getDefaultContent();
             } catch (e) {
                 toast.error('Content was not found');
             } finally {

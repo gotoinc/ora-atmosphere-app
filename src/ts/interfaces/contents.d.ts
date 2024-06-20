@@ -1,13 +1,13 @@
-import type { Topic } from '@/ts/interfaces/catalog';
+import type { Identifiable } from '@/ts/interfaces/catalog';
 
 export interface VideoContent {
     id: number;
-    topic: Topic;
-    file_url: string;
-    image_url: string;
+    topic: Identifiable;
+    file: string | null;
+    image: string;
     title: string;
     description?: string;
-    languages: string[];
+    languages: Identifiable[];
     tags: string[];
     requires_auth: boolean;
 }

@@ -1,27 +1,18 @@
-export interface Category {
+interface CommonCatalogTypes {
     id: number;
     name: string;
-    image_url: string;
+    image: string | null;
     requires_auth: boolean;
 }
 
-export interface Group {
-    id: number;
-    name: string;
-    image_url: string;
-    category_id: number;
-    requires_auth: boolean;
-}
-
-export interface Topic {
-    id: number;
-    name: string;
-    image_url: string;
-    group_id: number;
-    requires_auth: boolean;
-}
-
-export interface Catalog {
-    category: Category;
+export interface Category extends CommonCatalogTypes {
     groups: Group[];
 }
+
+export interface Group extends CommonCatalogTypes {
+    topics: Topic[];
+}
+
+export interface Topic extends CommonCatalogTypes {}
+
+export interface Identifiable extends Pick<CommonCatalogTypes, 'id' | 'name'> {}

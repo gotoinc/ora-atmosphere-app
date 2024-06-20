@@ -106,10 +106,10 @@
         if (simulatorContainer.value)
             disableBodyScroll(simulatorContainer.value);
 
-        if (simulatorElement.value) {
+        if (simulatorElement.value && selectedContent.value?.file) {
             const { simulator } = await initSimulator(
                 simulatorElement.value,
-                selectedContent.value.file_url
+                selectedContent.value.file
             );
 
             simulator.onFinish(() => {

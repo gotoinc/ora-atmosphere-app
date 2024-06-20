@@ -21,12 +21,12 @@
         <template v-else-if="catalogData.length > 0">
             <div class="grid gap-12">
                 <div
-                    v-for="{ category, groups } in catalogData.slice(0, 10)"
+                    v-for="category in catalogData"
                     :key="category.id"
                     class="fade-t"
                 >
                     <catalog-link
-                        :to="isCatalogLink(category, groups.length)"
+                        :to="isCatalogLink(category, category.groups.length)"
                         class="mb-4"
                     >
                         {{ category.name }}
@@ -34,19 +34,19 @@
 
                     <fancy-carousel overflow-visible class="max-w-[95vw]">
                         <category-card
-                            v-for="item in groups.slice(0, 10)"
-                            :key="item.id"
+                            v-for="group in category.groups.slice(0, 10)"
+                            :key="group.id"
                             class="f-carousel__slide !mr-3.5 !max-w-[347px] max-sm:!max-w-[268px]"
                             :to="{
                                 name: 'catalogGroupView',
                                 params: {
-                                    groupName: useTransformPath(item.name),
-                                    groupId: item.id,
+                                    groupName: useTransformPath(group.name),
+                                    groupId: group.id,
                                 },
                             }"
-                            :img="item.image_url"
-                            :name="item.name"
-                            :disable="item.requires_auth"
+                            :img="group.image"
+                            :name="group.name"
+                            :disable="group.requires_auth"
                         />
                     </fancy-carousel>
                 </div>
@@ -77,7 +77,7 @@
     import CatalogLink from '@/components/catalog/CatalogLink.vue';
     import CategoryCard from '@/components/catalog/CategoryCard.vue';
 
-    import type { Catalog, Category } from '@/ts/interfaces/catalog';
+    import type { Category } from '@/ts/interfaces/catalog';
 
     import { getCatalog } from '@/api/catalog/get-catalog.api.ts';
     import { useTransformPath } from '@/hooks/transform-queries.ts';
@@ -100,7 +100,7 @@
     const isCatalogPage = computed(() => route.name === 'catalogView');
 
     const isLoading = ref(true);
-    const catalogData = ref<Catalog[]>([]);
+    const catalogData = ref<Category[]>([]);
 
     const loadCatalog = async () => {
         try {
