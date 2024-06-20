@@ -126,6 +126,10 @@
 
             if (error.email) {
                 toast.error(error.email[0]);
+                signUpStore.setFirstStepErrors('email', 'Email already exists');
+            } else if (error.password) {
+                toast.error(error.password[0]);
+                signUpStore.setFirstStepErrors('password1', error.password[0]);
             } else {
                 toast.error('Register error');
             }

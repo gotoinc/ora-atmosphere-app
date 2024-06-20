@@ -56,29 +56,22 @@
 <script setup lang="ts">
     import { ref } from 'vue';
     import { useRouter } from 'vue-router';
-    import { useToast } from 'vue-toastification';
     import { useForm } from 'vee-validate';
 
     import VButton from '@/components/banner/VButton.vue';
     import VInput from '@/components/base/input/VInput.vue';
     import VCheckbox from '@/components/base/VCheckbox.vue';
 
-    import { storeToRefs } from 'pinia';
     import { useAuthStore } from '@/stores/auth.store.ts';
 
-    import { signIn } from '@/api/auth/login.api.ts';
     import { signInSchema } from '@/validations/schemas/auth.schema.ts';
     import type { SignInInput } from '@/validations/types/auth';
-
-    const toast = useToast();
 
     const isRememberChecked = ref(false);
     const isLoading = ref(false);
     const router = useRouter();
 
     const authStore = useAuthStore();
-
-    const { isAuthenticated } = storeToRefs(authStore);
 
     const { defineField, handleSubmit, errors } = useForm<SignInInput>({
         validationSchema: signInSchema,
@@ -95,29 +88,17 @@
         isLoading.value = true;
 
         try {
-            const res = await signIn({
+            const body = {
                 email: email.value,
                 password: password.value,
-            });
+            };
 
-            if (res) {
-                toast.success('Login success');
+            await authStore.login(body, isRememberChecked.value);
 
-                authStore.login(res.key);
-
-                void router.push({ name: 'main' });
-
-                isAuthenticated.value = true;
-            }
-
-            // Get profile data
-            await authStore.getProfileData();
-        } catch (err) {
-            toast.error('Unable to log in with provided credentials.');
+            void router.push({ name: 'main' });
         } finally {
-            isLoading.value = false;
+            isLoading.value = true;
         }
-
         // setFieldError('email', 'Email already exists');
     });
 </script>

@@ -10,7 +10,10 @@ axios.interceptors.response.use(
 
 axios.interceptors.request.use(function (config) {
     const token = Cookies.get('ora_auth');
-    config.headers.Authorization = `Token ${token}`;
+
+    if (token) {
+        config.headers.Authorization = `Token ${token}`;
+    }
 
     return config;
 });

@@ -8,7 +8,7 @@
                 label="Password"
                 variant="white"
                 placeholder="Set your password"
-                :error="errors.password"
+                :error="errors.new_password1"
                 hint="Use 8 or more characters with a mix of letters, numbers & symbols"
             />
 
@@ -19,7 +19,7 @@
                 type="password"
                 label="Confirm Password"
                 placeholder="Confirm your password"
-                :error="errors.confirmPassword"
+                :error="errors.new_password2"
                 hint="Use 8 or more characters with a mix of letters, numbers & symbols"
             />
         </div>
@@ -48,13 +48,13 @@
         useForm<SetNewPasswordType>({
             validationSchema: setNewPasswordSchema,
             initialValues: {
-                password: '',
-                confirmPassword: '',
+                new_password1: '',
+                new_password2: '',
             },
         });
 
-    const [password] = defineField('password');
-    const [confirmPassword] = defineField('confirmPassword');
+    const [password] = defineField('new_password1');
+    const [confirmPassword] = defineField('new_password2');
 
     const isLoading = ref(false);
 
@@ -62,12 +62,14 @@
         isLoading.value = true;
 
         try {
-            await resetPassword({
-                password: password.value,
-                confirmPassword: confirmPassword.value,
+            const res = await resetPassword({
+                new_password1: password.value,
+                new_password2: confirmPassword.value,
             });
 
-            toast.success('Saved successfully');
+            if (res) {
+                toast.success(res.detail);
+            }
         } catch (e) {
             toast.error('Password was not changed');
         } finally {

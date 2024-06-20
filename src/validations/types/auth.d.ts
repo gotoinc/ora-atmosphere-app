@@ -37,8 +37,10 @@ export interface SignInInput extends Pick<SignUpFirstStep, 'email'> {
     password: string;
 }
 
-export interface SetNewPasswordType
-    extends Pick<SignUpFirstStep, 'password1' | 'password2'> {}
+export interface SetNewPasswordType {
+    new_password1: string;
+    new_password2: string;
+}
 
 export interface EmailType extends Pick<SignInInput, 'email'> {}
 

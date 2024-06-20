@@ -105,7 +105,7 @@
     const router = useRouter();
     const toast = useToast();
 
-    const { logout } = useAuthStore();
+    const { clearAuth } = useAuthStore();
 
     enum ProfileLinks {
         Info = 'Personal information',
@@ -142,7 +142,7 @@
         try {
             toast.success('Profile has been deleted');
 
-            logout();
+            clearAuth();
 
             void router.replace({ name: 'main' });
         } catch (e) {

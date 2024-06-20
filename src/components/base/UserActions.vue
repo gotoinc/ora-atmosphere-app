@@ -72,7 +72,6 @@
 <script setup lang="ts">
     import { onMounted, onUnmounted, ref } from 'vue';
     import { useRoute, useRouter } from 'vue-router';
-    import { useToast } from 'vue-toastification';
     import IconChevronDown from '@img/icons/chevron-down.svg?component';
     import IconUser from '@img/icons/user.svg?component';
 
@@ -89,7 +88,6 @@
 
     const router = useRouter();
     const route = useRoute();
-    const toast = useToast();
 
     const actionsElement = ref<HTMLDivElement | null>(null);
 
@@ -97,7 +95,6 @@
 
     const authStore = useAuthStore();
     const { profileData, isProfileLoading } = storeToRefs(authStore);
-    const { logout, getProfileData } = authStore;
 
     const setClickEvent = (e: Event) => {
         if (actionsElement.value) {
@@ -109,21 +106,21 @@
         }
     };
 
-    const handleLogout = () => {
-        logout();
+    const handleLogout = async () => {
+        try {
+            await authStore.logout();
 
-        void router.replace({ name: 'main' });
-
-        isLogOutOpen.value = false;
-
-        toast.success('Logout success');
+            void router.replace({ name: 'main' });
+        } finally {
+            isLogOutOpen.value = false;
+        }
     };
 
     onMounted(async () => {
         document.addEventListener('click', setClickEvent);
 
         if (!profileData.value && route.name !== 'profileInfoView') {
-            await getProfileData();
+            await authStore.getProfileData();
         }
     });
 

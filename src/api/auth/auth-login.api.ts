@@ -8,7 +8,7 @@ interface LoginSuccessResponse {
     key: string;
 }
 
-export const signIn = async (body: SignInInput) => {
+export const authLogin = async (body: SignInInput) => {
     try {
         const res = await axios.post<
             SignInInput,

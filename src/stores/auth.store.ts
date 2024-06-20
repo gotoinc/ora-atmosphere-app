@@ -6,7 +6,10 @@ import type { UserProfile } from '@/ts/interfaces/profile';
 
 import { defineStore } from 'pinia';
 
+import { authLogin } from '@/api/auth/auth-login.api.ts';
+import { authLogout } from '@/api/auth/auth-logout.api.ts';
 import { getProfile } from '@/api/auth/get-profile.ts';
+import type { SignInInput } from '@/validations/types/auth';
 
 const toast = useToast();
 
@@ -16,19 +19,45 @@ export const useAuthStore = defineStore('auth', () => {
     const isAuthenticated = ref(!!Cookies.get('ora_auth'));
     const profileData = ref<UserProfile | undefined>();
 
-    const logout = () => {
+    const clearAuth = () => {
         Cookies.remove('ora_auth');
         isAuthenticated.value = false;
     };
 
-    const login = (token: string) => {
-        Cookies.set('ora_auth', token, {
-            expires: 7,
-            sameSite: 'strict',
-            secure: true,
-        });
+    // Logout functionality
+    const logout = async () => {
+        try {
+            const res = await authLogout();
 
-        isAuthenticated.value = true;
+            if (res) {
+                clearAuth();
+
+                toast.success(res.detail);
+            }
+        } catch (e) {
+            toast.error('Logout error');
+        }
+    };
+
+    // Login functionality
+    const login = async (body: SignInInput, remember?: boolean) => {
+        try {
+            const res = await authLogin(body);
+
+            if (res) {
+                Cookies.set('ora_auth', res.key, {
+                    expires: remember ? 14 : undefined,
+                    sameSite: 'Strict',
+                    secure: true,
+                });
+
+                toast.success('Login success');
+
+                isAuthenticated.value = true;
+            }
+        } catch (err) {
+            toast.error('Unable to log in with provided credentials.');
+        }
     };
 
     const getProfileData = async () => {
@@ -49,6 +78,7 @@ export const useAuthStore = defineStore('auth', () => {
         profileData,
         isProfileLoading,
         getProfileData,
+        clearAuth,
         logout,
         login,
     };
