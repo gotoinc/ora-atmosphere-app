@@ -34,19 +34,44 @@
                 </h1>
 
                 <div class="flex gap-4">
-                    <v-button
-                        variant="white"
-                        :icon="IconPlay"
-                        icon-class="!w-2.5 !h-3 mr-2"
-                        :to="{ name: 'simulatorView' }"
-                    >
-                        Play
-                    </v-button>
+                    <div ref="playButton" class="relative">
+                        <v-button
+                            variant="white"
+                            :icon="IconPlay"
+                            class="!pr-4"
+                            icon-class="!w-2.5 !h-3 mr-2"
+                            @click="isActionsOpen = !isActionsOpen"
+                        >
+                            <span class="flex items-center">
+                                Play
+
+                                <component :is="IconChevronDown" class="ml-2" />
+                            </span>
+                        </v-button>
+
+                        <ul
+                            v-show="isActionsOpen"
+                            class="actions absolute left-0 z-20 overflow-hidden rounded-lg bg-grey-400"
+                        >
+                            <li
+                                class="link"
+                                @click="isVideoPlayerOpened = true"
+                            >
+                                Play on Sphere
+                            </li>
+
+                            <li class="link">
+                                <router-link :to="{ name: 'simulatorView' }">
+                                    Play on Simulator
+                                </router-link>
+                            </li>
+                        </ul>
+                    </div>
 
                     <v-button
                         :icon="IconInfo"
                         variant="info"
-                        @click="openVideoPopup"
+                        @click="catalogStore.openVideoPopup"
                     >
                         More info
                     </v-button>
@@ -57,19 +82,24 @@
 </template>
 
 <script setup lang="ts">
-    import { computed } from 'vue';
+    import { computed, onMounted, onUnmounted, ref } from 'vue';
     import { useRouter } from 'vue-router';
+    import IconChevronDown from '@img/icons/chevron-down.svg?component';
     import IconChevronLeft from '@img/icons/chevron-left.svg?component';
     import IconInfo from '@img/icons/info.svg?component';
     import IconPlay from '@img/icons/play.svg?component';
 
     import VButton from '@/components/banner/VButton.vue';
 
+    import { storeToRefs } from 'pinia';
     import { useCatalogStore } from '@/stores/catalog.store.ts';
+
+    import { useClickOutsideElement } from '@/hooks/useClickOutsideElement.ts';
 
     const router = useRouter();
 
-    const { openVideoPopup } = useCatalogStore();
+    const catalogStore = useCatalogStore();
+    const { isVideoPlayerOpened } = storeToRefs(catalogStore);
 
     const showBackLink = computed(() => {
         const name = router.currentRoute.value.name;
@@ -79,6 +109,27 @@
             'catalogThemeView',
             'catalogGroupView',
         ].some((routeName) => routeName === name);
+    });
+
+    const isActionsOpen = ref(false);
+    const playButton = ref<HTMLButtonElement | null>(null);
+
+    const setClickEvent = (e: Event) => {
+        if (playButton.value) {
+            useClickOutsideElement(
+                e,
+                playButton.value,
+                () => (isActionsOpen.value = false)
+            );
+        }
+    };
+
+    onMounted(() => {
+        document.addEventListener('click', setClickEvent);
+    });
+
+    onUnmounted(() => {
+        document.removeEventListener('click', setClickEvent);
     });
 </script>
 

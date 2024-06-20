@@ -100,6 +100,10 @@
             enableBodyScroll(simulatorContainer.value);
 
         router.go(-1);
+
+        // Remove default loader of simulator
+        const simulatorLoader = document.getElementById('babylonjsLoadingDiv');
+        if (simulatorLoader) simulatorLoader.remove();
     };
 
     onMounted(async () => {

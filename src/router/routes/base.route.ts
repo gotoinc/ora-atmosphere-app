@@ -1,7 +1,6 @@
 import catalogRoute from '@/router/routes/catalog.route.ts';
 import searchRoute from '@/router/routes/search.route.ts';
 import simulatorRoute from '@/router/routes/simulator.route.ts';
-import videoRoute from '@/router/routes/video.route.ts';
 
 export default {
     path: '/',
@@ -10,5 +9,5 @@ export default {
 
     redirect: { name: 'catalogView' },
 
-    children: [catalogRoute, simulatorRoute, searchRoute, videoRoute],
+    children: [catalogRoute, simulatorRoute, searchRoute],
 };

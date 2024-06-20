@@ -1,7 +1,7 @@
 <template>
     <transition>
         <div
-            v-show="modelValue"
+            v-if="modelValue"
             ref="modalElement"
             class="fixed inset-0 z-50 overflow-y-auto bg-grey-400/40 backdrop-blur-sm"
         >
@@ -60,12 +60,12 @@
     watch(
         () => props.modelValue,
         async (value) => {
-            await nextTick();
+            if (value) {
+                await nextTick();
 
-            if (modalElement.value) {
-                value
-                    ? disableBodyScroll(modalElement.value)
-                    : enableBodyScroll(modalElement.value);
+                if (modalElement.value) disableBodyScroll(modalElement.value);
+            } else {
+                if (modalElement.value) enableBodyScroll(modalElement.value);
             }
         }
     );
@@ -73,6 +73,7 @@
     function close() {
         emits('update:modelValue', false);
         emits('close');
+        clearAllBodyScrollLocks();
     }
 
     onMounted(() => {

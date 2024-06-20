@@ -11,12 +11,17 @@
         </section>
     </main>
 
-    <video-popup />
+    <teleport to="body">
+        <video-popup />
+
+        <video-player-popup />
+    </teleport>
 </template>
 
 <script setup lang="ts">
     import MainBanner from '@/components/banner/MainBanner.vue';
     import VHeader from '@/components/layout/VHeader.vue';
+    import VideoPlayerPopup from '@/components/popup/VideoPlayerPopup.vue';
     import VideoPopup from '@/components/popup/VideoPopup.vue';
 </script>
 

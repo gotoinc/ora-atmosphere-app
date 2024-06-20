@@ -18,7 +18,18 @@
 
     import 'plyr/dist/plyr.css';
 
-    defineProps<{ src: string; title?: string }>();
+    interface Emits {
+        (e: 'close'): void;
+    }
+
+    interface Props {
+        src: string;
+        title?: string;
+        poster?: string;
+    }
+
+    const props = defineProps<Props>();
+    const emits = defineEmits<Emits>();
 
     const videoElement = ref<HTMLVideoElement>();
     const player = ref<Plyr>();
@@ -154,10 +165,20 @@
         if (videoElement.value) {
             player.value = new Plyr(videoElement.value, {
                 controls,
+
+                storage: {
+                    enabled: false,
+                },
+
                 fullscreen: {
                     iosNative: true,
                 },
             });
+
+            // Set poster
+            if (props.poster) {
+                player.value.poster = props.poster;
+            }
 
             player.value.on('enterfullscreen', () => {
                 if (player.value)
@@ -173,10 +194,19 @@
                     );
             });
 
+            const closeButton = document.querySelector('.close-btn');
+
             const speedControls = document.querySelectorAll('.speed-btn');
             const speedControlsModal =
                 document.querySelector('#speed-controls');
             const speedButton = document.querySelector('#speed-control');
+
+            if (closeButton) {
+                closeButton.addEventListener('click', () => {
+                    player.value?.pause();
+                    emits('close');
+                });
+            }
 
             if (speedButton && speedControlsModal) {
                 speedButton.addEventListener('click', () => {
@@ -194,7 +224,6 @@
 
                     button.addEventListener('click', () => {
                         if (player.value) {
-                            console.log(button.dataset.speed);
                             player.value.speed = Number(button.dataset.speed);
 
                             speedControls.forEach((btn) => {
