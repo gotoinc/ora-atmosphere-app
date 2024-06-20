@@ -4,6 +4,26 @@
     max-width: 1432px;
     position: absolute;
     margin: 10px;
+
+    .close-btn {
+        @apply absolute right-16 top-16 z-20 flex h-11 w-11 items-center justify-center rounded text-white-100 transition-colors hover:bg-white-15;
+
+        svg {
+            @apply h-5 w-5;
+        }
+    }
+}
+
+.plyr__controls {
+    --plyr-video-controls-background: none;
+
+    transition: 0.3s ease;
+    max-width: 1432px;
+    margin: 0 auto;
+
+    &.fullscreen--active {
+        padding-bottom: 66px !important;
+    }
 }
 
 .plyr--video {

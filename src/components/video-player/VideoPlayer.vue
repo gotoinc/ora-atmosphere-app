@@ -6,6 +6,7 @@
 
 <script setup lang="ts">
     import { onMounted, ref } from 'vue';
+    import IconClose from '@img/icons/close.svg?raw';
     import IconPlay from '@img/icons/play.svg?raw';
     import IconBackward from '@img/icons/player/backward.svg?raw';
     import IconForward from '@img/icons/player/forward.svg?raw';
@@ -17,7 +18,7 @@
 
     import 'plyr/dist/plyr.css';
 
-    defineProps<{ src: string }>();
+    defineProps<{ src: string; title?: string }>();
 
     const videoElement = ref<HTMLVideoElement>();
     const player = ref<Plyr>();
@@ -67,6 +68,8 @@
                             </div>
                          </div>
                     </div>
+
+                    <h3></h3>
 
                     <div class="controls-grid">
                         <!-- Speed -->
@@ -141,6 +144,10 @@
             ${IconPlay}
             <span class="plyr__sr-only">Play</span>
         </button>
+
+        <button type="button" class="close-btn" data-plyr="close">
+            ${IconClose}
+        </button>
     `;
 
     onMounted(() => {
@@ -150,6 +157,20 @@
                 fullscreen: {
                     iosNative: true,
                 },
+            });
+
+            player.value.on('enterfullscreen', () => {
+                if (player.value)
+                    player.value.elements.controls?.classList.add(
+                        'fullscreen--active'
+                    );
+            });
+
+            player.value.on('exitfullscreen', () => {
+                if (player.value)
+                    player.value.elements.controls?.classList.remove(
+                        'fullscreen--active'
+                    );
             });
 
             const speedControls = document.querySelectorAll('.speed-btn');
