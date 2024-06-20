@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 axios.interceptors.response.use(
     (response) => response,
@@ -7,6 +8,12 @@ axios.interceptors.response.use(
     }
 );
 
+axios.interceptors.request.use(function (config) {
+    const token = Cookies.get('ora_auth');
+    config.headers.Authorization = token;
+
+    return config;
+});
 axios.defaults.baseURL = 'http://127.0.0.1:8000';
 
 export default axios;

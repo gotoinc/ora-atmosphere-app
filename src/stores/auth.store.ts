@@ -13,16 +13,16 @@ const toast = useToast();
 export const useAuthStore = defineStore('auth', () => {
     const isEmailConfirmed = ref(true);
     const isProfileLoading = ref(false);
-    const isAuthenticated = ref(!!Cookies.get('ora'));
+    const isAuthenticated = ref(!!Cookies.get('ora_auth'));
     const profileData = ref<UserProfile | undefined>();
 
     const logout = () => {
-        Cookies.remove('ora');
+        Cookies.remove('ora_auth');
         isAuthenticated.value = false;
     };
 
     const login = (token: string) => {
-        Cookies.set('ora', token, {
+        Cookies.set('ora_auth', token, {
             expires: 7,
             sameSite: 'strict',
             secure: true,

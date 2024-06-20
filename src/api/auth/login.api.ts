@@ -5,9 +5,7 @@ import { useThrowError } from '@/hooks/useThrowError.ts';
 import type { SignInInput } from '@/validations/types/auth';
 
 interface LoginSuccessResponse {
-    success: boolean;
-    message: string;
-    token: string;
+    key: string;
 }
 
 export const signIn = async (body: SignInInput) => {

@@ -100,17 +100,18 @@
                 password: password.value,
             });
 
-            await authStore.getProfileData();
-
-            if (res?.success) {
+            if (res) {
                 toast.success('Login success');
 
-                authStore.login(res.token);
+                authStore.login(res.key);
 
                 void router.push({ name: 'main' });
 
                 isAuthenticated.value = true;
             }
+
+            // Get profile data
+            await authStore.getProfileData();
         } catch (err) {
             toast.error('Unable to log in with provided credentials.');
         } finally {
