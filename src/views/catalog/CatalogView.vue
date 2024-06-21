@@ -79,7 +79,7 @@
 
     import type { Category } from '@/ts/interfaces/catalog';
 
-    import { getCatalog } from '@/api/catalog/get-catalog.api.ts';
+    import { getCategories } from '@/api/catalog/get-categories.api.ts';
     import { useTransformPath } from '@/hooks/transform-queries.ts';
 
     const route = useRoute();
@@ -104,7 +104,7 @@
 
     const loadCatalog = async () => {
         try {
-            catalogData.value = (await getCatalog()) ?? [];
+            catalogData.value = (await getCategories()) ?? [];
         } catch (err) {
             toast.error('Catalog was not found');
         } finally {
