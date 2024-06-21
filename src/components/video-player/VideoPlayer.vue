@@ -34,13 +34,11 @@
     const videoElement = ref<HTMLVideoElement>();
     const player = ref<Plyr>();
 
-    const isOpenSpeed = ref(false);
-
     const controls = `
         <div class="plyr__controls">
             <div class="w-full">
                 <div class="flex items-center gap-3">
-                    <div class="plyr__progress w-full">
+                     <div class="plyr__progress w-full">
                         <input data-plyr="seek" type="range" min="0" max="100" step="0.01" value="0" aria-label="Seek">
                         <progress class="plyr__progress__buffer" min="0" max="100" value="0">% buffered</progress>
                         <span role="tooltip" class="plyr__tooltip">00:00</span>
@@ -63,88 +61,87 @@
                             <span class="plyr__tooltip" role="tooltip">Forward {seektime} secs</span>
                         </button>
 
-                        <!-- Volume -->
-                         <div class="volume__control control">
+                         <!-- Volume -->
+                         <div class="volume__control control control--action">
                              <button type="button" aria-label="Mute" data-plyr="mute">
-                                <span class="icon--pressed">
+                                <span class="pointer-events-none icon--pressed">
                                   ${IconVolume}
                                 </span>
 
-                                <span class="icon--not-pressed">
+                                <span class=" pointer-events-none icon--not-pressed">
                                   ${IconVolumeOff}
                                 </span>
                             </button>
-                            <div class="plyr__volume bg-grey-500 p-0.5 rounded-sm">
+
+                            <div class="plyr__volume control-modal bg-grey-500 p-0.5 rounded-sm">
                                 <input data-plyr="volume" type="range" min="0" max="1" step="0.05" value="1" autocomplete="off" aria-label="Volume">
                             </div>
                          </div>
                     </div>
 
-                    <h3></h3>
+                    <h3 class="text-xl max-sm:hidden" >${props.title ?? ''}</h3>
 
                     <div class="controls-grid">
                         <!-- Speed -->
-                         <div id="speed-controls" class="relative w-full control max-md:static">
-                             <button type="button" class="control" id="speed-control" data-plyr="speed">
-                              <span>
-                                  ${IconSpeed}
-                              </span>
-                           </button>
+                         <div class="relative control--action w-full control max-md:static">
+                             <button type="button" class="control" data-plyr="speed">
+                                  <span class="pointer-events-none">
+                                      ${IconSpeed}
+                                  </span>
+                             </button>
 
-                             <div class="speed-modal absolute rounded-xl bg-grey-400 px-12 py-6">
+                             <div class="speed-modal control-modal absolute rounded-xl bg-grey-400 px-12 py-6">
                                 <h3 class="text-h3 text-left text-white-100 mb-9 max-lg:text-xl">Playback Speed</h3>
 
                                 <div class="speed-buttons controls-grid pb-16 justify-between">
                                     <button data-speed="0.5" class="speed-btn relative">
-                                        <span class="relative">
-                                            <span class="speed-point"></span>
-                                            <span class="label">0.5x</span>
-                                        </span>
+                                        <span class="speed-point"></span>
+                                        <span class="label">0.5x</span>
                                     </button>
 
                                     <button data-speed="0.75" class="speed-btn relative">
-                                        <span class="relative">
-                                            <span class="speed-point"></span>
-                                            <span class="label">0.75x</span>
-                                        </span>
+                                        <span class="speed-point"></span>
+                                        <span class="label">0.75x</span>
                                     </button>
 
                                     <button data-speed="1" class="speed-btn active relative">
-                                        <span class="relative">
-                                            <span class="speed-point"></span>
-                                            <span class="label">1x <span class="max-md:hidden">(Normal)</span></span>
-                                        </span>
+                                        <span class="speed-point"></span>
+                                        <span class="label">1x <span class="max-md:hidden">(Normal)</span></span>
                                     </button>
 
                                     <button data-speed="1.25" class="speed-btn relative">
-                                        <span class="relative">
-                                            <span class="speed-point"></span>
-                                            <span class="label">1.25x</span>
-                                        </span>
+                                        <span class="speed-point"></span>
+                                        <span class="label">1.25x</span>
                                     </button>
 
                                      <button data-speed="1.5" class="speed-btn relative">
-                                        <span class="relative">
-                                            <span class="speed-point"></span>
-                                            <span class="label">1.5x</span>
-                                        </span>
+                                        <span class="speed-point"></span>
+                                        <span class="label">1.5x</span>
                                      </button>
                                 </div>
-                            </div>
+                             </div>
 
-                             <svg class="polygon hidden absolute h-6 z-10 bottom-full" width="33" height="15" viewBox="0 0 33 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                             <svg class="polygon hidden control-modal absolute h-6 z-10 bottom-full" width="33" height="15" viewBox="0 0 33 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M0.256287 0.673767L10.5132 12.2457C13.6965 15.8371 19.3035 15.8371 22.4868 12.2457L32.7437 0.673767H0.256287Z" fill="#29292D"/>
                              </svg>
                         </div>
 
                         <!-- Fullscreen -->
-                        <button type="button" class="control" data-plyr="fullscreen">
+                        <button type="button" class="control max-sm:!hidden" data-plyr="fullscreen">
                             <span >
                                 ${IconFullScreen}
                             </span>
 
                             <span class="label--pressed plyr__tooltip" role="tooltip">Exit fullscreen</span>
                             <span class="label--not-pressed plyr__tooltip" role="tooltip">Enter fullscreen</span>
+                        </button>
+
+                        <!-- Play -->
+                        <button type="button" class="control sm:!hidden flex items-center justify-center" aria-label="Play, {title}" data-plyr="play">
+                            <svg class="icon--not-pressed w-1/2" role="presentation"><use xlink:href="#plyr-pause"></use></svg>
+                            <svg class="icon--pressed w-1/2" role="presentation"><use xlink:href="#plyr-play"></use></svg>
+                            <span class="label--pressed plyr__tooltip" role="tooltip">Pause</span>
+                            <span class="label--not-pressed plyr__tooltip" role="tooltip">Play</span>
                         </button>
                     </div>
                 </div>
@@ -155,6 +152,8 @@
             ${IconPlay}
             <span class="plyr__sr-only">Play</span>
         </button>
+
+         <h3 class="text-xl absolute top-[9%] sm:hidden z-10 left-1/2 -translate-x-1/2" >${props.title ?? ''}</h3>
 
         <button type="button" class="close-btn" data-plyr="close">
             ${IconClose}
@@ -180,6 +179,7 @@
                 player.value.poster = props.poster;
             }
 
+            // Fullscreen toggle
             player.value.on('enterfullscreen', () => {
                 if (player.value)
                     player.value.elements.controls?.classList.add(
@@ -194,13 +194,44 @@
                     );
             });
 
+            // Action buttons
             const closeButton = document.querySelector('.close-btn');
-
             const speedControls = document.querySelectorAll('.speed-btn');
-            const speedControlsModal =
-                document.querySelector('#speed-controls');
-            const speedButton = document.querySelector('#speed-control');
+            const plyrActions =
+                player.value.elements.controls?.querySelectorAll(
+                    '.control--action'
+                );
 
+            // Player container
+            const plyrContainer = player.value.elements.container;
+
+            // Open settings modals for action buttons
+            const setClickEvent = (e: Event) => {
+                e.stopPropagation();
+
+                if (plyrActions) {
+                    plyrActions.forEach((action) => {
+                        const button = action.querySelector(
+                            'button'
+                        ) as HTMLButtonElement;
+
+                        const target = e.target as HTMLElement;
+
+                        if (target === button) {
+                            action.classList.toggle('active');
+                        }
+
+                        if (!action.contains(target)) {
+                            action.classList.remove('active');
+                        }
+                    });
+                }
+            };
+
+            if (plyrContainer)
+                plyrContainer.addEventListener('click', setClickEvent);
+
+            // Close player
             if (closeButton) {
                 closeButton.addEventListener('click', () => {
                     player.value?.pause();
@@ -208,17 +239,8 @@
                 });
             }
 
-            if (speedButton && speedControlsModal) {
-                speedButton.addEventListener('click', () => {
-                    isOpenSpeed.value = !isOpenSpeed.value;
-
-                    isOpenSpeed.value
-                        ? speedControlsModal.classList.add('show')
-                        : speedControlsModal.classList.remove('show');
-                });
-            }
-
-            if (speedControls.length) {
+            // Change speed controls
+            if (speedControls.length > 0) {
                 speedControls.forEach((btn) => {
                     const button = btn as HTMLElement;
 

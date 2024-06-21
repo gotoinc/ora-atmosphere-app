@@ -2,6 +2,7 @@
     <v-popup v-model="isVideoPlayerOpened" class="z-[51]" is-empty>
         <template #body>
             <video-player
+                title="Marine Whales"
                 poster="/images/banner.jpg"
                 src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-1080p.mp4"
                 @close="isVideoPlayerOpened = false"

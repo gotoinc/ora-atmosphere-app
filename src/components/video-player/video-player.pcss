@@ -1,9 +1,10 @@
 .plyr--video {
-    border-radius: 5px;
+    border-radius: 8px;
     width: 98%;
+    height: 98%;
     max-width: 1432px;
     position: absolute;
-    margin: 10px;
+    max-height: 805px;
 
     .close-btn {
         @apply absolute right-[4.5%] top-[8%] z-20 flex h-11 w-11 items-center justify-center rounded text-white-100 transition-colors hover:bg-white-15;
@@ -12,6 +13,10 @@
             @apply h-5 w-5;
         }
     }
+}
+
+.plyr--video {
+    @apply max-sm:rounded-none;
 }
 
 .plyr__controls {
@@ -27,7 +32,7 @@
 }
 
 .plyr--video {
-    @apply max-sm:h-full max-sm:w-full;
+    @apply max-sm:h-full max-sm:max-h-full max-sm:w-full;
 }
 
 .plyr__control--overlaid {
@@ -52,7 +57,7 @@
 }
 
 .control {
-    width: 56px;
+    width: 56px !important;
     height: 56px;
 
     display: flex;
@@ -65,13 +70,11 @@
     }
 }
 
-#speed-controls.show {
-    .speed-modal {
-        display: block;
-    }
-
-    .polygon {
-        @apply md:block;
+.control--action {
+    &.active {
+        .control-modal {
+            display: block;
+        }
     }
 }
 
@@ -81,21 +84,29 @@
     right: -80px;
     bottom: calc(100% + 15px);
     display: none;
+
+    &.show {
+        display: block;
+
+        & + .polygon {
+            @apply md:block;
+        }
+    }
 }
 
 .speed-modal {
-    @apply max-md:bottom-3/4 max-md:bottom-full max-md:right-1/2 max-md:w-[95%] max-md:translate-x-1/2 max-md:px-9 max-md:py-4 max-sm:px-7 md:min-w-[640px];
+    @apply max-md:bottom-3/4  max-md:right-1/2 max-md:w-[95%] max-md:translate-x-1/2 max-md:px-9 max-md:py-4 max-sm:px-7 md:min-w-[640px];
 }
 
 .speed-btn {
     @apply flex h-[53px] !w-[53px] items-center justify-center max-sm:h-9 max-sm:w-9;
 
     &:first-child {
-        @apply justify-start;
+        @apply -ml-[26.5px];
     }
 
     &:last-child {
-        @apply justify-end;
+        @apply -mr-[26.5px];
     }
 
     &:hover {
@@ -113,8 +124,8 @@
 
         &:before {
             content: '';
-            width: calc(100% + 37px);
-            height: calc(100% + 37px);
+            width: 100%;
+            height: 100%;
         }
 
         &:before {
@@ -123,7 +134,7 @@
     }
 
     .label {
-        @apply absolute left-1/2 top-full w-max -translate-x-1/2 translate-y-6 text-2xl text-white-50 transition-all max-lg:text-lg max-sm:text-base;
+        @apply absolute left-1/2 top-full w-max -translate-x-1/2 translate-y-1 text-2xl text-white-50 transition-all max-lg:text-lg max-sm:text-base;
     }
 
     &.active {
@@ -136,7 +147,7 @@
         }
 
         .label {
-            @apply translate-y-5 text-white-100;
+            @apply text-white-100;
         }
     }
 }
@@ -154,7 +165,7 @@
 }
 
 .controls-grid {
-    @apply flex items-center gap-7;
+    @apply flex items-center gap-7 max-sm:gap-2;
 }
 
 .icon--not-pressed {
@@ -171,28 +182,22 @@
     }
 }
 
-.volume__control {
-    &:hover {
-        .plyr__volume {
-            bottom: calc(100% + 8px);
-            opacity: 1;
-            visibility: visible;
-        }
+.plyr__volume {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    display: none;
+
+    /*input[type='range'] {
+        max-width: 65px;
+    }*/
+
+    &.show {
+        display: block;
     }
 }
 
 .plyr__volume {
-    transition: 0.3s ease;
-    position: absolute;
-    transform: rotate(-90deg) translateY(-23px);
-
-    opacity: 0;
-    bottom: 90%;
-    visibility: hidden;
-
-    .plyr__volume input[type='range'] {
-        max-width: 65px;
-    }
+    @apply -translate-x-6 -rotate-90 max-mob-md:bottom-[125%];
 }
 
 .plyr--full-ui input[type='range'] {
