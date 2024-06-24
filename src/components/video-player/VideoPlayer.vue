@@ -1,5 +1,5 @@
 <template>
-    <video ref="videoElement" controls playsinline>
+    <video ref="videoElement" crossorigin playsinline>
         <source :src="src" type="video/mp4" />
     </video>
 </template>
