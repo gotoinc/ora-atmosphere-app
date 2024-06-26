@@ -148,7 +148,7 @@
                                 </div>
                             </div>
 
-                            <component :is="Polygon" />
+                            <component :is="Polygon" class="polygon" />
                         </div>
 
                         <!-- Speed -->
@@ -202,7 +202,7 @@
                                 </div>
                             </div>
 
-                            <component :is="Polygon" />
+                            <component :is="Polygon" class="polygon" />
                         </div>
 
                         <!-- Fullscreen -->
