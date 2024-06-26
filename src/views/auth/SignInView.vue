@@ -97,7 +97,7 @@
 
             void router.push({ name: 'main' });
         } finally {
-            isLoading.value = true;
+            isLoading.value = false;
         }
         // setFieldError('email', 'Email already exists');
     });

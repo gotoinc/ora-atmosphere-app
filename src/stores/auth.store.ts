@@ -9,6 +9,7 @@ import { defineStore } from 'pinia';
 import { authLogin } from '@/api/auth/auth-login.api.ts';
 import { authLogout } from '@/api/auth/auth-logout.api.ts';
 import { getProfile } from '@/api/auth/get-profile.ts';
+import { useThrowError } from '@/hooks/useThrowError.ts';
 import type { SignInInput } from '@/validations/types/auth';
 
 const toast = useToast();
@@ -57,6 +58,8 @@ export const useAuthStore = defineStore('auth', () => {
             }
         } catch (err) {
             toast.error('Unable to log in with provided credentials.');
+
+            useThrowError(err);
         }
     };
 
