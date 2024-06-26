@@ -70,32 +70,64 @@
     }
 }
 
+.lang-btn {
+    @apply relative flex items-center py-4 text-left text-white-50 transition-colors hover:text-white-100;
+
+    &.active {
+        @apply text-white-100;
+
+        &:before {
+            visibility: visible;
+            opacity: 1;
+        }
+    }
+}
+
+.lang-btn:before {
+    content: '';
+    position: absolute;
+    right: calc(100% + 5px);
+    width: 18px;
+    height: 8px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    background-image: url('data:image/svg+xml,<svg width="19" height="14" viewBox="0 0 19 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 5.80615L6.99343 12.3393L18.2135 0.543461" stroke="white"/></svg>');
+}
+
 .control--action {
     &.active {
         .control-modal {
             display: block;
         }
+
+        .polygon {
+            @apply md:block;
+        }
+    }
+}
+
+.control-modal {
+    width: max-content;
+    bottom: calc(100% + 15px);
+    display: none;
+    right: -80px;
+}
+
+.control-modal {
+    @apply max-md:bottom-3/4 max-md:right-1/2 max-md:w-[95%] max-md:translate-x-1/2 max-md:px-9 max-md:py-4 max-sm:px-7;
+
+    &.speed-modal {
+        @apply md:min-w-[640px];
     }
 }
 
 .speed-modal {
     width: 43.75vw;
     max-width: 840px;
-    right: -80px;
-    bottom: calc(100% + 15px);
-    display: none;
-
-    &.show {
-        display: block;
-
-        & + .polygon {
-            @apply md:block;
-        }
-    }
-}
-
-.speed-modal {
-    @apply max-md:bottom-3/4  max-md:right-1/2 max-md:w-[95%] max-md:translate-x-1/2 max-md:px-9 max-md:py-4 max-sm:px-7 md:min-w-[640px];
 }
 
 .speed-btn {
@@ -186,14 +218,7 @@
     position: absolute;
     bottom: calc(100% + 8px);
     display: none;
-
-    /*input[type='range'] {
-        max-width: 65px;
-    }*/
-
-    &.show {
-        display: block;
-    }
+    right: auto;
 }
 
 .plyr__volume {

@@ -1,19 +1,302 @@
 <template>
     <video ref="videoElement" crossorigin playsinline>
-        <source :src="src" type="video/mp4" />
+        <source
+            v-for="{ src, language } in sources"
+            :key="language"
+            :src="src"
+            type="video/mp4"
+        />
     </video>
+
+    <div ref="controls">
+        <div
+            class="plyr__controls"
+            :class="{ 'fullscreen--active': isFullScreenActive }"
+        >
+            <div class="w-full">
+                <div class="flex items-center gap-3">
+                    <div class="plyr__progress w-full">
+                        <input
+                            data-plyr="seek"
+                            type="range"
+                            min="0"
+                            max="100"
+                            step="0.01"
+                            value="0"
+                            aria-label="Seek"
+                        />
+
+                        <progress
+                            class="plyr__progress__buffer"
+                            min="0"
+                            max="100"
+                            value="0"
+                        >
+                            % buffered
+                        </progress>
+
+                        <span role="tooltip" class="plyr__tooltip">00:00</span>
+                    </div>
+
+                    <div
+                        class="plyr__time plyr__time--current"
+                        aria-label="Current time"
+                    >
+                        00:00
+                    </div>
+                </div>
+
+                <div class="controls-grid w-full justify-between">
+                    <div class="controls-grid">
+                        <!-- Backward -->
+                        <button
+                            type="button"
+                            class="control"
+                            data-plyr="rewind"
+                        >
+                            <component :is="IconBackward" />
+
+                            <span class="plyr__tooltip" role="tooltip"
+                                >Rewind {seektime} secs</span
+                            >
+                        </button>
+
+                        <!-- Forward -->
+                        <button
+                            type="button"
+                            class="control"
+                            data-plyr="fast-forward"
+                        >
+                            <component :is="IconForward" />
+
+                            <span class="plyr__tooltip" role="tooltip"
+                                >Forward {seektime} secs</span
+                            >
+                        </button>
+
+                        <!-- Volume -->
+                        <div class="volume__control control control--action">
+                            <button
+                                type="button"
+                                aria-label="Mute"
+                                data-plyr="mute"
+                            >
+                                <span class="icon--pressed pointer-events-none">
+                                    <component :is="IconVolume" />
+                                </span>
+
+                                <span
+                                    class="icon--not-pressed pointer-events-none"
+                                >
+                                    <component :is="IconVolumeOff" />
+                                </span>
+                            </button>
+
+                            <div
+                                class="plyr__volume control-modal rounded-sm bg-grey-500 p-0.5"
+                            >
+                                <input
+                                    data-plyr="volume"
+                                    type="range"
+                                    min="0"
+                                    max="1"
+                                    step="0.05"
+                                    value="1"
+                                    autocomplete="off"
+                                    aria-label="Volume"
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl max-sm:hidden">{{ title ?? '' }}</h3>
+
+                    <div class="controls-grid">
+                        <!-- Languages -->
+                        <div
+                            class="control--action control relative w-full max-md:static"
+                        >
+                            <button
+                                type="button"
+                                class="control"
+                                data-plyr="speed"
+                            >
+                                <span class="pointer-events-none">
+                                    <component :is="IconSubtitles" />
+                                </span>
+                            </button>
+
+                            <div
+                                class="control-modal absolute rounded-xl bg-grey-400 px-10 py-3"
+                            >
+                                <h3
+                                    class="mb-2.5 text-left text-h4 text-white-100"
+                                >
+                                    Audio
+                                </h3>
+
+                                <div class="grid grid-cols-2 gap-x-10">
+                                    <button
+                                        v-for="{ src, language } in sources"
+                                        :key="language"
+                                        class="lang-btn"
+                                        :class="{ active: selectedSrc === src }"
+                                        @click="changeVideoSrc(src)"
+                                    >
+                                        {{ language }}
+                                    </button>
+                                </div>
+                            </div>
+
+                            <component :is="Polygon" />
+                        </div>
+
+                        <!-- Speed -->
+                        <div
+                            class="control--action control relative w-full max-md:static"
+                        >
+                            <button
+                                type="button"
+                                class="control"
+                                data-plyr="speed"
+                            >
+                                <span class="pointer-events-none">
+                                    <component :is="IconSpeed" />
+                                </span>
+                            </button>
+
+                            <div
+                                class="speed-modal control-modal absolute rounded-xl bg-grey-400 px-12 py-6"
+                            >
+                                <h3
+                                    class="mb-9 text-left text-h4 text-white-100"
+                                >
+                                    Playback Speed
+                                </h3>
+
+                                <div
+                                    class="speed-buttons controls-grid justify-between pb-16"
+                                >
+                                    <button
+                                        v-for="option in speedOptions"
+                                        :key="option"
+                                        class="speed-btn relative"
+                                        :class="{
+                                            active: option === activeSpeed,
+                                        }"
+                                        @click="changeSpeed(option)"
+                                    >
+                                        <span class="speed-point"></span>
+
+                                        <span class="label">
+                                            {{ option }}x
+
+                                            <span
+                                                v-if="option === 1"
+                                                class="max-md:hidden"
+                                            >
+                                                (Normal)
+                                            </span>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <component :is="Polygon" />
+                        </div>
+
+                        <!-- Fullscreen -->
+                        <button
+                            type="button"
+                            class="control max-sm:!hidden"
+                            data-plyr="fullscreen"
+                        >
+                            <span>
+                                <component :is="IconFullScreen" />
+                            </span>
+                        </button>
+
+                        <!-- Play -->
+                        <button
+                            type="button"
+                            class="control flex items-center justify-center sm:!hidden"
+                            aria-label="Play, {title}"
+                            data-plyr="play"
+                        >
+                            <svg
+                                class="icon--not-pressed w-1/2"
+                                role="presentation"
+                            >
+                                <use xlink:href="#plyr-pause"></use>
+                            </svg>
+
+                            <svg
+                                class="icon--pressed w-1/2"
+                                role="presentation"
+                            >
+                                <use xlink:href="#plyr-play"></use>
+                            </svg>
+
+                            <span
+                                class="label--pressed plyr__tooltip"
+                                role="tooltip"
+                            >
+                                Pause
+                            </span>
+
+                            <span
+                                class="label--not-pressed plyr__tooltip"
+                                role="tooltip"
+                            >
+                                Play
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button
+            type="button"
+            class="plyr__control text-primary plyr__control--overlaid"
+            data-plyr="play"
+            aria-pressed="false"
+            aria-label="Play"
+        >
+            <component :is="IconPlay" />
+
+            <span class="plyr__sr-only">Play</span>
+        </button>
+
+        <h3
+            class="absolute left-1/2 top-[9%] z-10 -translate-x-1/2 text-xl sm:hidden"
+        >
+            {{ title ?? '' }}
+        </h3>
+
+        <button
+            type="button"
+            class="close-btn"
+            data-plyr="close"
+            @click="closePlayer"
+        >
+            <component :is="IconClose" />
+        </button>
+    </div>
 </template>
 
 <script setup lang="ts">
     import { onMounted, ref } from 'vue';
-    import IconClose from '@img/icons/close.svg?raw';
-    import IconPlay from '@img/icons/play.svg?raw';
-    import IconBackward from '@img/icons/player/backward.svg?raw';
-    import IconForward from '@img/icons/player/forward.svg?raw';
-    import IconFullScreen from '@img/icons/player/fullscreen.svg?raw';
-    import IconSpeed from '@img/icons/player/speed.svg?raw';
-    import IconVolume from '@img/icons/player/volume.svg?raw';
-    import IconVolumeOff from '@img/icons/player/volume-off.svg?raw';
+    import IconClose from '@img/icons/close.svg?component';
+    import IconPlay from '@img/icons/play.svg?component';
+    import IconBackward from '@img/icons/player/backward.svg?component';
+    import IconForward from '@img/icons/player/forward.svg?component';
+    import IconFullScreen from '@img/icons/player/fullscreen.svg?component';
+    import Polygon from '@img/icons/player/polygon.svg?component';
+    import IconSpeed from '@img/icons/player/speed.svg?component';
+    import IconSubtitles from '@img/icons/player/subtitles.svg?component';
+    import IconVolume from '@img/icons/player/volume.svg?component';
+    import IconVolumeOff from '@img/icons/player/volume-off.svg?component';
     import Plyr from 'plyr';
 
     import 'plyr/dist/plyr.css';
@@ -23,7 +306,6 @@
     }
 
     interface Props {
-        src: string;
         title?: string;
         poster?: string;
     }
@@ -33,137 +315,62 @@
 
     const videoElement = ref<HTMLVideoElement>();
     const player = ref<Plyr>();
+    const controls = ref<HTMLElement>();
 
-    const controls = `
-        <div class="plyr__controls">
-            <div class="w-full">
-                <div class="flex items-center gap-3">
-                     <div class="plyr__progress w-full">
-                        <input data-plyr="seek" type="range" min="0" max="100" step="0.01" value="0" aria-label="Seek">
-                        <progress class="plyr__progress__buffer" min="0" max="100" value="0">% buffered</progress>
-                        <span role="tooltip" class="plyr__tooltip">00:00</span>
-                    </div>
+    // Speed options
+    const speedOptions = [0.5, 0.75, 1, 1.25, 1.5];
+    const activeSpeed = ref(speedOptions[2]);
 
-                    <div class="plyr__time plyr__time--current" aria-label="Current time">00:00</div>
-                </div>
+    // Sources
+    const sources = [
+        {
+            language: 'French',
+            src: 'https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-1080p.mp4',
+        },
+        {
+            language: 'English',
+            src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+        },
+        {
+            language: 'German',
+            src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+        },
+        {
+            language: 'Spanish',
+            src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
+        },
+    ];
+    const selectedSrc = ref(sources[0].src);
 
-                <div class="controls-grid justify-between w-full">
-                    <div class="controls-grid">
-                         <!-- Backward -->
-                        <button type="button" class="control" data-plyr="rewind">
-                            ${IconBackward}
-                            <span class="plyr__tooltip" role="tooltip">Rewind {seektime} secs</span>
-                        </button>
+    const isFullScreenActive = ref(false);
 
-                        <!-- Forward -->
-                        <button type="button" class="control" data-plyr="fast-forward">
-                            ${IconForward}
-                            <span class="plyr__tooltip" role="tooltip">Forward {seektime} secs</span>
-                        </button>
+    const changeSpeed = (option: number) => {
+        activeSpeed.value = option;
 
-                         <!-- Volume -->
-                         <div class="volume__control control control--action">
-                             <button type="button" aria-label="Mute" data-plyr="mute">
-                                <span class="pointer-events-none icon--pressed">
-                                  ${IconVolume}
-                                </span>
+        if (player.value) player.value.speed = option;
+    };
 
-                                <span class=" pointer-events-none icon--not-pressed">
-                                  ${IconVolumeOff}
-                                </span>
-                            </button>
+    const closePlayer = () => {
+        player.value?.pause();
+        emits('close');
+    };
 
-                            <div class="plyr__volume control-modal bg-grey-500 p-0.5 rounded-sm">
-                                <input data-plyr="volume" type="range" min="0" max="1" step="0.05" value="1" autocomplete="off" aria-label="Volume">
-                            </div>
-                         </div>
-                    </div>
+    const changeVideoSrc = (src: string) => {
+        selectedSrc.value = src;
 
-                    <h3 class="text-xl max-sm:hidden" >${props.title ?? ''}</h3>
+        if (videoElement.value) {
+            videoElement.value.src = src;
+        }
 
-                    <div class="controls-grid">
-                        <!-- Speed -->
-                         <div class="relative control--action w-full control max-md:static">
-                             <button type="button" class="control" data-plyr="speed">
-                                  <span class="pointer-events-none">
-                                      ${IconSpeed}
-                                  </span>
-                             </button>
-
-                             <div class="speed-modal control-modal absolute rounded-xl bg-grey-400 px-12 py-6">
-                                <h3 class="text-h3 text-left text-white-100 mb-9 max-lg:text-xl">Playback Speed</h3>
-
-                                <div class="speed-buttons controls-grid pb-16 justify-between">
-                                    <button data-speed="0.5" class="speed-btn relative">
-                                        <span class="speed-point"></span>
-                                        <span class="label">0.5x</span>
-                                    </button>
-
-                                    <button data-speed="0.75" class="speed-btn relative">
-                                        <span class="speed-point"></span>
-                                        <span class="label">0.75x</span>
-                                    </button>
-
-                                    <button data-speed="1" class="speed-btn active relative">
-                                        <span class="speed-point"></span>
-                                        <span class="label">1x <span class="max-md:hidden">(Normal)</span></span>
-                                    </button>
-
-                                    <button data-speed="1.25" class="speed-btn relative">
-                                        <span class="speed-point"></span>
-                                        <span class="label">1.25x</span>
-                                    </button>
-
-                                     <button data-speed="1.5" class="speed-btn relative">
-                                        <span class="speed-point"></span>
-                                        <span class="label">1.5x</span>
-                                     </button>
-                                </div>
-                             </div>
-
-                             <svg class="polygon hidden control-modal absolute h-6 z-10 bottom-full" width="33" height="15" viewBox="0 0 33 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M0.256287 0.673767L10.5132 12.2457C13.6965 15.8371 19.3035 15.8371 22.4868 12.2457L32.7437 0.673767H0.256287Z" fill="#29292D"/>
-                             </svg>
-                        </div>
-
-                        <!-- Fullscreen -->
-                        <button type="button" class="control max-sm:!hidden" data-plyr="fullscreen">
-                            <span >
-                                ${IconFullScreen}
-                            </span>
-
-                            <span class="label--pressed plyr__tooltip" role="tooltip">Exit fullscreen</span>
-                            <span class="label--not-pressed plyr__tooltip" role="tooltip">Enter fullscreen</span>
-                        </button>
-
-                        <!-- Play -->
-                        <button type="button" class="control sm:!hidden flex items-center justify-center" aria-label="Play, {title}" data-plyr="play">
-                            <svg class="icon--not-pressed w-1/2" role="presentation"><use xlink:href="#plyr-pause"></use></svg>
-                            <svg class="icon--pressed w-1/2" role="presentation"><use xlink:href="#plyr-play"></use></svg>
-                            <span class="label--pressed plyr__tooltip" role="tooltip">Pause</span>
-                            <span class="label--not-pressed plyr__tooltip" role="tooltip">Play</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <button type="button" class="plyr__control text-primary plyr__control--overlaid" data-plyr="play" aria-pressed="false" aria-label="Play">
-            ${IconPlay}
-            <span class="plyr__sr-only">Play</span>
-        </button>
-
-         <h3 class="text-xl absolute top-[9%] sm:hidden z-10 left-1/2 -translate-x-1/2" >${props.title ?? ''}</h3>
-
-        <button type="button" class="close-btn" data-plyr="close">
-            ${IconClose}
-        </button>
-    `;
+        if (player.value) {
+            player.value.poster = '';
+        }
+    };
 
     onMounted(() => {
-        if (videoElement.value) {
+        if (videoElement.value && controls.value) {
             player.value = new Plyr(videoElement.value, {
-                controls,
+                controls: controls.value,
 
                 storage: {
                     enabled: false,
@@ -181,82 +388,44 @@
 
             // Fullscreen toggle
             player.value.on('enterfullscreen', () => {
-                if (player.value)
-                    player.value.elements.controls?.classList.add(
-                        'fullscreen--active'
-                    );
+                isFullScreenActive.value = true;
             });
 
             player.value.on('exitfullscreen', () => {
-                if (player.value)
-                    player.value.elements.controls?.classList.remove(
-                        'fullscreen--active'
-                    );
+                isFullScreenActive.value = false;
             });
-
-            // Action buttons
-            const closeButton = document.querySelector('.close-btn');
-            const speedControls = document.querySelectorAll('.speed-btn');
-            const plyrActions =
-                player.value.elements.controls?.querySelectorAll(
-                    '.control--action'
-                );
 
             // Player container
             const plyrContainer = player.value.elements.container;
 
+            let controlButton: Element | null = null;
+
             // Open settings modals for action buttons
             const setClickEvent = (e: Event) => {
-                e.stopPropagation();
+                const target = e.target as HTMLElement;
+                const controlContainer = target.closest('.control--action');
 
-                if (plyrActions) {
-                    plyrActions.forEach((action) => {
-                        const button = action.querySelector(
-                            'button'
-                        ) as HTMLButtonElement;
+                if (controlButton !== controlContainer) {
+                    controlButton?.classList.remove('active');
+                }
 
-                        const target = e.target as HTMLElement;
+                if (controlContainer) {
+                    const button = controlContainer.querySelector(
+                        'button'
+                    ) as HTMLButtonElement;
 
-                        if (target === button) {
-                            action.classList.toggle('active');
-                        }
+                    if (target === button) {
+                        controlContainer.classList.toggle('active');
 
-                        if (!action.contains(target)) {
-                            action.classList.remove('active');
-                        }
-                    });
+                        controlButton = controlContainer;
+                    }
+                } else {
+                    controlButton?.classList.remove('active');
                 }
             };
 
             if (plyrContainer)
                 plyrContainer.addEventListener('click', setClickEvent);
-
-            // Close player
-            if (closeButton) {
-                closeButton.addEventListener('click', () => {
-                    player.value?.pause();
-                    emits('close');
-                });
-            }
-
-            // Change speed controls
-            if (speedControls.length > 0) {
-                speedControls.forEach((btn) => {
-                    const button = btn as HTMLElement;
-
-                    button.addEventListener('click', () => {
-                        if (player.value) {
-                            player.value.speed = Number(button.dataset.speed);
-
-                            speedControls.forEach((btn) => {
-                                btn.classList.remove('active');
-                            });
-
-                            button.classList.add('active');
-                        }
-                    });
-                });
-            }
         }
     });
 </script>
