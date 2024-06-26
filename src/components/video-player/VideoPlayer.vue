@@ -56,9 +56,9 @@
                         >
                             <component :is="IconBackward" />
 
-                            <span class="plyr__tooltip" role="tooltip"
-                                >Rewind {seektime} secs</span
-                            >
+                            <span class="plyr__tooltip" role="tooltip">
+                                Rewind {seektime} secs
+                            </span>
                         </button>
 
                         <!-- Forward -->
@@ -127,7 +127,7 @@
                             </button>
 
                             <div
-                                class="control-modal absolute rounded-xl bg-grey-400 px-10 py-3"
+                                class="control-modal audio-modal absolute rounded-xl bg-grey-400 px-10 py-3"
                             >
                                 <h3
                                     class="mb-2.5 text-left text-h4 text-white-100"
