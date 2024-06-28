@@ -32,6 +32,7 @@
                 ]"
                 class="input"
                 @input="onInput($event)"
+                @click="emits('click-input')"
                 @blur="emits('blur')"
                 @keyup.enter="onEnter($event)"
             />

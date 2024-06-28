@@ -23,4 +23,5 @@ export interface InputEmits {
     (e: 'blur'): void;
     (e: 'enter', value?: string): void;
     (e: 'click-icon'): void;
+    (e: 'click-input'): void;
 }

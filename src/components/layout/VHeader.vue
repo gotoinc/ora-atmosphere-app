@@ -28,7 +28,7 @@
     import VButton from '@/components/banner/VButton.vue';
     import MainLogo from '@/components/base/MainLogo.vue';
     import UserActions from '@/components/base/UserActions.vue';
-    import MainSearch from '@/components/search/MainSearch.vue';
+    import MainSearch from '@/components/search/main-search/MainSearch.vue';
 
     import { storeToRefs } from 'pinia';
     import { useAuthStore } from '@/stores/auth.store.ts';
