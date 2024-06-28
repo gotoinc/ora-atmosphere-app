@@ -2,9 +2,17 @@
     <teleport to="body">
         <div
             ref="simulatorContainer"
-            class="slide-top fixed left-0 top-0 z-[100] h-screen w-screen bg-dark"
+            class="slide-top fixed left-0 top-0 z-[100] h-vh w-screen select-none bg-dark"
         >
-            <div ref="simulatorElement" class="h-screen"></div>
+            <div ref="simulatorElement" class="simulator h-screen">
+                <video
+                    ref="videoElement"
+                    class="hidden"
+                    controls
+                    crossorigin
+                    playsinline
+                ></video>
+            </div>
 
             <div
                 v-show="isSimulatorLoaded"
@@ -51,203 +59,12 @@
                 <component :is="IconCross" class="h-full w-full text-dark" />
             </button>
 
-            <div
-                class="plyr__controls plyr--full-ui absolute bottom-0 left-0 w-full px-4 pb-10"
-            >
-                <div class="plyr__controls-content mx-auto w-full">
-                    <div class="flex items-center gap-3">
-                        <div class="plyr__progress w-full">
-                            <input
-                                data-plyr="seek"
-                                type="range"
-                                min="0"
-                                max="100"
-                                step="0.01"
-                                value="0"
-                                aria-label="Seek"
-                            />
-
-                            <progress
-                                class="plyr__progress__buffer"
-                                min="0"
-                                max="100"
-                                value="0"
-                            >
-                                % buffered
-                            </progress>
-
-                            <span role="tooltip" class="plyr__tooltip">
-                                00:00
-                            </span>
-                        </div>
-
-                        <div
-                            class="plyr__time plyr__time--current"
-                            aria-label="Current time"
-                        >
-                            00:00
-                        </div>
-                    </div>
-
-                    <div class="controls-grid w-full justify-between">
-                        <div class="controls-grid">
-                            <!-- Backward -->
-                            <button
-                                type="button"
-                                class="control"
-                                data-plyr="rewind"
-                            >
-                                <component :is="IconBackward" />
-                            </button>
-
-                            <!-- Forward -->
-                            <button
-                                type="button"
-                                class="control"
-                                data-plyr="fast-forward"
-                            >
-                                <component :is="IconForward" />
-                            </button>
-
-                            <!-- Volume -->
-                            <div
-                                class="volume__control control control--action"
-                            >
-                                <button
-                                    type="button"
-                                    aria-label="Mute"
-                                    data-plyr="mute"
-                                >
-                                    <span
-                                        class="icon--pressed pointer-events-none"
-                                    >
-                                        <component :is="IconVolume" />
-                                    </span>
-
-                                    <span
-                                        class="icon--not-pressed pointer-events-none"
-                                    >
-                                        <component :is="IconVolumeOff" />
-                                    </span>
-                                </button>
-
-                                <div
-                                    class="plyr__volume control-modal rounded-sm bg-grey-500 p-0.5"
-                                >
-                                    <input
-                                        data-plyr="volume"
-                                        type="range"
-                                        min="0"
-                                        max="1"
-                                        step="0.05"
-                                        value="1"
-                                        autocomplete="off"
-                                        aria-label="Volume"
-                                    />
-                                </div>
-                            </div>
-                        </div>
-
-                        <h3 class="text-xl max-sm:hidden">Title</h3>
-
-                        <div class="controls-grid">
-                            <!-- Languages -->
-                            <div
-                                class="control--action control relative w-full max-md:static"
-                            >
-                                <button
-                                    type="button"
-                                    class="control"
-                                    data-plyr="speed"
-                                >
-                                    <span class="pointer-events-none">
-                                        <component :is="IconSubtitles" />
-                                    </span>
-                                </button>
-
-                                <div
-                                    class="control-modal absolute rounded-xl bg-grey-400 px-10 py-3"
-                                >
-                                    <h3
-                                        class="mb-2.5 text-left text-h4 text-white-100"
-                                    >
-                                        Audio
-                                    </h3>
-
-                                    <div class="grid grid-cols-2 gap-x-10">
-                                        <button
-                                            v-for="{ src, language } in sources"
-                                            :key="language"
-                                            class="lang-btn"
-                                            :class="{
-                                                active: selectedSrc === src,
-                                            }"
-                                            @click="changeVideoSrc(src)"
-                                        >
-                                            {{ language }}
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <component :is="Polygon" />
-                            </div>
-
-                            <!-- Speed -->
-                            <div
-                                class="control--action control relative w-full max-md:static"
-                            >
-                                <button
-                                    type="button"
-                                    class="control"
-                                    data-plyr="speed"
-                                >
-                                    <span class="pointer-events-none">
-                                        <component :is="IconSpeed" />
-                                    </span>
-                                </button>
-
-                                <div
-                                    class="speed-modal control-modal absolute rounded-xl bg-grey-400 px-12 py-6"
-                                >
-                                    <h3
-                                        class="mb-9 text-left text-h4 text-white-100"
-                                    >
-                                        Playback Speed
-                                    </h3>
-
-                                    <div
-                                        class="speed-buttons controls-grid justify-between pb-16"
-                                    >
-                                        <button
-                                            v-for="option in speedOptions"
-                                            :key="option"
-                                            class="speed-btn relative"
-                                            :class="{
-                                                active: option === activeSpeed,
-                                            }"
-                                            @click="changeSpeed(option)"
-                                        >
-                                            <span class="speed-point"></span>
-
-                                            <span class="label">
-                                                {{ option }}x
-
-                                                <span
-                                                    v-if="option === 1"
-                                                    class="max-md:hidden"
-                                                >
-                                                    (Normal)
-                                                </span>
-                                            </span>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <component :is="Polygon" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div ref="controls">
+                <player-controls
+                    :container="simulatorContainer"
+                    :player="player"
+                    class="plyr--full-ui absolute bottom-0 left-0 w-full px-4 pb-10"
+                />
             </div>
 
             <transition>
@@ -266,21 +83,18 @@
     import { onMounted, onUnmounted, ref } from 'vue';
     import { useRouter } from 'vue-router';
     import IconCross from '@img/icons/cross.svg?component';
-    import IconBackward from '@img/icons/player/backward.svg?component';
-    import IconForward from '@img/icons/player/forward.svg?component';
-    import Polygon from '@img/icons/player/polygon.svg?component';
-    import IconSpeed from '@img/icons/player/speed.svg?component';
-    import IconSubtitles from '@img/icons/player/subtitles.svg?component';
-    import IconVolume from '@img/icons/player/volume.svg?component';
-    import IconVolumeOff from '@img/icons/player/volume-off.svg?component';
     import type { Simulator } from '@simulator/demo';
     import { initSimulator } from '@simulator/demo/src';
     import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
+    import Plyr from 'plyr';
 
     import VLoader from '@/components/base/VLoader.vue';
+    import PlayerControls from '@/components/video-player/PlayerControls.vue';
 
     import { storeToRefs } from 'pinia';
     import { useCatalogStore } from '@/stores/catalog.store.ts';
+
+    import { plyrOptions } from '@/libs/plyr/plyr-options.ts';
 
     type SphereDiameter = 100 | 80 | 60;
 
@@ -290,53 +104,19 @@
         storeToRefs(useCatalogStore());
 
     const simulatorElement = ref<HTMLDivElement | null>(null);
-    const simulatorContainer = ref<HTMLDivElement | null>(null);
+    const simulatorContainer = ref<HTMLDivElement>();
+    const videoElement = ref<HTMLVideoElement>();
     const activeDiameter = ref<SphereDiameter>(80);
     const simulatorInstance = ref<Simulator | null>(null);
 
-    // Sources
-    const sources = [
-        {
-            language: 'French',
-            src: 'https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-1080p.mp4',
-        },
-        {
-            language: 'English',
-            src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
-        },
-        {
-            language: 'German',
-            src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-        },
-        {
-            language: 'Spanish',
-            src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
-        },
-    ];
-    const selectedSrc = ref(sources[0].src);
-
-    // Speed options
-    const speedOptions = [0.5, 0.75, 1, 1.25, 1.5];
-    const activeSpeed = ref(speedOptions[2]);
-
-    const changeSpeed = (option: number) => {
-        activeSpeed.value = option;
-
-        const currentVideo = simulatorInstance.value?.curVideo
-            ?.video as HTMLVideoElement;
-
-        currentVideo.playbackRate = option;
-    };
+    const player = ref<Plyr>();
+    const controls = ref<HTMLElement>();
 
     const setSimulatorDiameter = (diameter: SphereDiameter) => {
         if (simulatorInstance.value) {
             simulatorInstance.value.setDiameter(diameter);
             activeDiameter.value = diameter;
         }
-    };
-
-    const changeVideoSrc = (src: string) => {
-        selectedSrc.value = src;
     };
 
     const closePage = () => {
@@ -350,51 +130,51 @@
         if (simulatorLoader) simulatorLoader.remove();
     };
 
+    const createPromiseFromCallback = (
+        callbackFunction: (callback: () => void) => void
+    ): Promise<void> => {
+        return new Promise((resolve) => {
+            callbackFunction(() => {
+                resolve();
+            });
+        });
+    };
+
     onMounted(async () => {
         if (simulatorContainer.value) {
             disableBodyScroll(simulatorContainer.value);
-
-            let controlButton: Element | null = null;
-
-            // Open settings modals for action buttons
-            const setClickEvent = (e: Event) => {
-                const target = e.target as HTMLElement;
-                const controlContainer = target.closest('.control--action');
-
-                if (controlButton !== controlContainer) {
-                    controlButton?.classList.remove('active');
-                }
-
-                if (controlContainer) {
-                    const button = controlContainer.querySelector(
-                        'button'
-                    ) as HTMLButtonElement;
-
-                    if (target === button) {
-                        controlContainer.classList.toggle('active');
-
-                        controlButton = controlContainer;
-                    }
-                } else {
-                    controlButton?.classList.remove('active');
-                }
-            };
-
-            simulatorContainer.value.addEventListener('click', setClickEvent);
         }
 
         if (simulatorElement.value) {
             const { simulator } = await initSimulator(
                 simulatorElement.value,
-                selectedContentUrl.value
+                selectedContentUrl.value,
+                'video',
+                videoElement.value
             );
 
-            simulator.onFinish(() => {
-                isSimulatorLoaded.value = true;
-
-                // void simulator.curVideo?.video.play();
+            player.value = new Plyr(videoElement.value as HTMLVideoElement, {
+                controls: controls.value,
+                autoplay: false,
+                muted: true,
+                ...plyrOptions,
             });
 
+            // Wait for loading scene and video resource
+            await Promise.all([
+                createPromiseFromCallback((callback) => {
+                    simulator.onFinish(callback);
+                }),
+                createPromiseFromCallback((callback) => {
+                    simulator.onLoadedMedia(callback);
+                }),
+            ]);
+
+            player.value.pause();
+            player.value.currentTime = 0;
+            player.value.muted = false;
+
+            isSimulatorLoaded.value = true;
             simulatorInstance.value = simulator;
         }
     });
@@ -450,5 +230,19 @@
 <style lang="postcss">
     #babylonjsLoadingDiv {
         display: none !important;
+    }
+
+    .simulator {
+        .plyr {
+            max-width: 100%;
+            width: 100%;
+            max-height: 125px;
+            bottom: 0;
+            overflow: visible;
+        }
+
+        .plyr__video-wrapper {
+            display: none;
+        }
     }
 </style>

@@ -23,6 +23,7 @@ function WebGPUSupportedAsync(): Promise<boolean> {
 export async function attachSimulator(
     root: HTMLDivElement,
     content: Content,
+    video?: HTMLVideoElement,
     room?: Room
 ): Promise<Simulator> {
     let engine: Engine;
@@ -47,7 +48,7 @@ export async function attachSimulator(
 
     engine.resize();
 
-    let viz = new Simulator(engine, canvas, content, room);
+    let viz = new Simulator(engine, canvas, content, video, room);
 
     initDragnDrop(canvas, viz);
 

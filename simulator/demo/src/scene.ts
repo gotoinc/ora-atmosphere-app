@@ -53,16 +53,21 @@ export class Simulator {
     playPlanes: AbstractMesh[];
     curVideo: VideoTexture | null = null;
     camera: ArcRotateCamera;
+    video?: HTMLVideoElement;
     dragdropmesh: AbstractMesh;
     private _peopleVisible: boolean = true;
     private _onFinishCallback?: () => void;
+    private _onLoadedMediaCallback?: () => void;
 
     constructor(
         engine: Engine,
         canvas: HTMLCanvasElement,
         default_content: Content,
+        video?: HTMLVideoElement,
         default_room?: Room
     ) {
+        this.video = video;
+
         let scene = new Scene(engine);
 
         let dragdroptex = new Texture(drop_icon_url);
@@ -296,15 +301,15 @@ export class Simulator {
     }
 
     set peopleVisible(visible: boolean) {
-        for (let mesh of this.scene.meshes) {
-            if (mesh.name.startsWith('person')) {
-                mesh.isVisible = visible;
-            }
-        }
+        // for (let mesh of this.scene.meshes) {
+        //     if (mesh.name.startsWith('person')) {
+        //         mesh.isVisible = visible;
+        //     }
+        // }
 
         this._peopleVisible = visible;
-        document.getElementById('settings-people-visible')!.style.display =
-            visible ? 'none' : 'flex';
+        // document.getElementById('settings-people-visible')!.style.display =
+        //     visible ? 'none' : 'flex';
     }
 
     get peopleVisible() {
@@ -346,24 +351,32 @@ export class Simulator {
                     this.curVideo.video.currentTime = 0;
                     this.curVideo.dispose();
                 }
-                let video = document.createElement('video');
-                video.src = content.URL;
-                video.crossOrigin = 'anonymous';
-                video.preload = 'auto';
-                video.autoplay = false;
 
-                video.onloadeddata = () => {
+                if (this.video) {
+                    this.video.src = content.URL;
+                    this.video.crossOrigin = 'anonymous';
+
                     this.curVideo = new VideoTexture(
                         'sphereVideo',
-                        video,
+                        this.video as HTMLVideoElement,
                         this.scene,
                         false,
                         undefined,
-                        undefined,
-                        {
-                            autoPlay: false,
-                        }
+                        undefined
                     );
+
+                    this.video.onpause = () => {
+                        for (let plane of this.playPlanes) {
+                            plane.isVisible = true;
+                        }
+                    };
+
+                    this.video.onplay = () => {
+                        for (let plane of this.playPlanes) {
+                            plane.isVisible = false;
+                        }
+                    };
+
                     this.curVideo.onLoadObservable.addOnce(() => {
                         if (content?.paused) {
                             for (let plane of this.playPlanes) {
@@ -373,9 +386,12 @@ export class Simulator {
                         } else {
                             this.curVideo!.video.play();
                         }
+
                         updateEmissive(this.curVideo!)();
+
+                        this._onLoadedMedia();
                     });
-                };
+                }
 
                 return;
             case 'image':
@@ -460,9 +476,19 @@ export class Simulator {
         this._onFinishCallback = callback;
     }
 
+    onLoadedMedia(callback: () => void) {
+        this._onLoadedMedia = callback;
+    }
+
     private _onFinish() {
         if (this._onFinishCallback) {
             this._onFinishCallback();
+        }
+    }
+
+    private _onLoadedMedia() {
+        if (this._onLoadedMediaCallback) {
+            this._onLoadedMediaCallback();
         }
     }
 }

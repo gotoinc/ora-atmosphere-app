@@ -6,7 +6,8 @@ import { URLState } from './url_state.ts';
 export async function initSimulator(
     root: HTMLDivElement,
     url: string,
-    mediaType: 'video' | 'image' = 'video'
+    mediaType: 'video' | 'image' = 'video',
+    video?: HTMLVideoElement
 ) {
     let libraryURL = '/simulator/demo/public/library.json';
 
@@ -20,6 +21,7 @@ export async function initSimulator(
             paused: true,
             mediaType,
         },
+        video,
         state.room
     );
 
