@@ -12,11 +12,11 @@ export function initOverlay(
     state: URLState,
     scene: Simulator
 ) {
-    document
-        .getElementById('settings-people-visible')!
-        .addEventListener('click', () => {
-            scene.peopleVisible = true;
-        });
+    // document
+    //     .getElementById('settings-people-visible')!
+    //     .addEventListener('click', () => {
+    //         scene.peopleVisible = true;
+    //     });
 
     let button60 = document.getElementById('sphere-button-60')!;
     let button80 = document.getElementById('sphere-button-80')!;

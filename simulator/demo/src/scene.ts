@@ -296,15 +296,15 @@ export class Simulator {
     }
 
     set peopleVisible(visible: boolean) {
-        for (let mesh of this.scene.meshes) {
-            if (mesh.name.startsWith('person')) {
-                mesh.isVisible = visible;
-            }
-        }
+        // for (let mesh of this.scene.meshes) {
+        //     if (mesh.name.startsWith('person')) {
+        //         mesh.isVisible = visible;
+        //     }
+        // }
 
         this._peopleVisible = visible;
-        document.getElementById('settings-people-visible')!.style.display =
-            visible ? 'none' : 'flex';
+        // document.getElementById('settings-people-visible')!.style.display =
+        //     visible ? 'none' : 'flex';
     }
 
     get peopleVisible() {
@@ -346,10 +346,13 @@ export class Simulator {
                     this.curVideo.video.currentTime = 0;
                     this.curVideo.dispose();
                 }
+
                 let video = document.createElement('video');
                 video.src = content.URL;
-                video.crossOrigin = 'anonymous';
+                // video.crossOrigin = 'anonymous';
                 video.preload = 'auto';
+                video.autoplay = false;
+                video.playsInline = true; // Важно для iOS
                 video.autoplay = false;
 
                 video.onloadeddata = () => {
@@ -362,8 +365,10 @@ export class Simulator {
                         undefined,
                         {
                             autoPlay: false,
+                            muted: true,
                         }
                     );
+
                     this.curVideo.onLoadObservable.addOnce(() => {
                         if (content?.paused) {
                             for (let plane of this.playPlanes) {
