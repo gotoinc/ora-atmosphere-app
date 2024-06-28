@@ -13,7 +13,7 @@
             class="plyr__controls"
             :class="{ 'fullscreen--active': isFullScreenActive }"
         >
-            <div class="w-full">
+            <div class="plyr__controls-content mx-auto w-full">
                 <div class="flex items-center gap-3">
                     <div class="plyr__progress w-full">
                         <input
