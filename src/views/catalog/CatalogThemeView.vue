@@ -112,6 +112,7 @@
 
     import { useCatalogStore } from '@/stores/catalog.store.ts';
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     import { useTransformFromPath } from '@/hooks/useTransformPath.ts';
 
     const route = useRoute();
