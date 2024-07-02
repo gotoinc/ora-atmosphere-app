@@ -91,7 +91,7 @@
     import { useRouter } from 'vue-router';
     import { useToast } from 'vue-toastification';
 
-    import VButton from '@/components/banner/VButton.vue';
+    import VButton from '@/components/base/VButton.vue';
     import VSelect from '@/components/base/VSelect.vue';
     import VHeader from '@/components/layout/VHeader.vue';
     import VPopup from '@/components/popup/VPopup.vue';

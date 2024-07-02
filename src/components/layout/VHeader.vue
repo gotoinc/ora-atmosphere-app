@@ -25,9 +25,9 @@
 </template>
 
 <script setup lang="ts">
-    import VButton from '@/components/banner/VButton.vue';
     import MainLogo from '@/components/base/MainLogo.vue';
     import UserActions from '@/components/base/UserActions.vue';
+    import VButton from '@/components/base/VButton.vue';
     import MainSearch from '@/components/search/main-search/MainSearch.vue';
 
     import { storeToRefs } from 'pinia';

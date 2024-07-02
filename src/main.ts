@@ -23,6 +23,8 @@ const toastOptions: PluginOptions = {
     pauseOnHover: false,
 };
 
+import './utils/vh.utils.js';
+
 import App from './App.vue';
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-argument

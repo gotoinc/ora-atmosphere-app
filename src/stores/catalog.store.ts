@@ -7,12 +7,45 @@ import router from '@/router';
 export const useCatalogStore = defineStore(
     'catalog',
     () => {
-        const selectedContentUrl = ref(
-            'https://images.unsplash.com/reserve/bOvf94dPRxWu0u3QsPjF_tree.jpg?ixid=M3wxMjA3fDB8MXxzZWFyY2h8M3x8bmF0dXJhbHxlbnwwfHx8fDE3MTY4MDYwMjV8MA&ixlib=rb-4.0.3'
-        );
+        const selectedContent = ref({
+            id: 1,
+            title: 'Sample Title',
+            description: 'This is a sample description',
+            file: 'https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-1080p.mp4',
+            languages: [
+                {
+                    id: 1,
+                    name: 'English',
+                },
+                {
+                    id: 2,
+                    name: 'Spanish',
+                },
+            ],
+            tags: 'sample, test, example',
+            requires_auth: true,
+            image: '/images/banner.jpg',
+            audio: [
+                {
+                    id: 2,
+                    name: 'Test',
+                    file: '/audio/test.mp3',
+                },
+                {
+                    id: 3,
+                    name: 'Test 2',
+                    file: '/audio/test-2.mp3',
+                },
+            ],
+            speech: true,
+            duration: 3600,
+            date_created: '2023-01-01T00:00:00Z',
+            topic_name: 'Sample Topic',
+        });
 
         const isContentPopupOpen = ref(false);
-        const isSimulatorLoaded = ref(false);
+        const isSimulatorLoading = ref(false);
+        const isVideoPlayerOpened = ref(false);
         const isDescriptionOpen = ref(false);
 
         const openVideoPopup = () => {
@@ -21,14 +54,16 @@ export const useCatalogStore = defineStore(
         };
 
         const playSimulator = () => {
+            isSimulatorLoading.value = true;
             void router.push({ name: 'simulatorView' });
         };
 
         return {
             isDescriptionOpen,
-            selectedContentUrl,
-            isSimulatorLoaded,
+            selectedContent,
+            isSimulatorLoading,
             isContentPopupOpen,
+            isVideoPlayerOpened,
             playSimulator,
             openVideoPopup,
         };

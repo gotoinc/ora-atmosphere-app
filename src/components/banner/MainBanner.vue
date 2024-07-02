@@ -35,10 +35,11 @@
 
                 <div class="flex gap-4">
                     <v-button
+                        :loading="isSimulatorLoading"
                         variant="white"
                         :icon="IconPlay"
                         icon-class="!w-2.5 !h-3 mr-2"
-                        :to="{ name: 'simulatorView' }"
+                        @click="catalogStore.playSimulator"
                     >
                         Play
                     </v-button>
@@ -46,7 +47,7 @@
                     <v-button
                         :icon="IconInfo"
                         variant="info"
-                        @click="openVideoPopup"
+                        @click="catalogStore.openVideoPopup"
                     >
                         More info
                     </v-button>
@@ -63,13 +64,15 @@
     import IconInfo from '@img/icons/info.svg?component';
     import IconPlay from '@img/icons/play.svg?component';
 
-    import VButton from '@/components/banner/VButton.vue';
+    import VButton from '@/components/base/VButton.vue';
 
+    import { storeToRefs } from 'pinia';
     import { useCatalogStore } from '@/stores/catalog.store.ts';
 
     const router = useRouter();
 
-    const { openVideoPopup } = useCatalogStore();
+    const catalogStore = useCatalogStore();
+    const { isSimulatorLoading } = storeToRefs(catalogStore);
 
     const showBackLink = computed(() => {
         const name = router.currentRoute.value.name;

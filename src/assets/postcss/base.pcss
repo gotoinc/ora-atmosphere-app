@@ -55,6 +55,31 @@ h2 {
     }
 }
 
+.actions {
+    top: calc(100% + 8px);
+    min-width: 177px;
+    animation: fade-up 0.3s ease;
+
+    li {
+        cursor: pointer;
+    }
+
+    .link {
+        @apply block px-4 py-2.5 text-white-100 transition-colors hover:bg-grey-200;
+    }
+}
+
+@keyframes fade-up {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .tooltip {
     @apply rounded-lg bg-white-100 px-4 py-2.5 text-left text-base text-dark opacity-0 transition-all;
 }
