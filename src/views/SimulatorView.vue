@@ -9,13 +9,14 @@
                     ref="videoElement"
                     class="hidden"
                     controls
+                    muted
                     crossorigin
                     playsinline
                 ></video>
             </div>
 
             <div
-                v-show="isSimulatorLoaded"
+                v-show="!isSimulatorLoading"
                 class="settings absolute flex flex-col items-center gap-4"
             >
                 <button
@@ -63,13 +64,15 @@
                 <player-controls
                     :container="simulatorContainer"
                     :player="player"
+                    :title="selectedContent.title"
+                    :audio="selectedContent.audio"
                     class="plyr--full-ui absolute bottom-0 left-0 w-full px-4 pb-10"
                 />
             </div>
 
             <transition>
                 <div
-                    v-show="!isSimulatorLoaded"
+                    v-show="isSimulatorLoading"
                     class="absolute left-0 top-0 z-[100] h-full w-full bg-dark"
                 >
                     <v-loader />
@@ -100,7 +103,7 @@
 
     const router = useRouter();
 
-    const { selectedContentUrl, isSimulatorLoaded } =
+    const { selectedContent, isSimulatorLoading } =
         storeToRefs(useCatalogStore());
 
     const simulatorElement = ref<HTMLDivElement | null>(null);
@@ -148,7 +151,7 @@
         if (simulatorElement.value) {
             const { simulator } = await initSimulator(
                 simulatorElement.value,
-                selectedContentUrl.value,
+                selectedContent.value.file,
                 'video',
                 videoElement.value
             );
@@ -157,6 +160,9 @@
                 controls: controls.value,
                 autoplay: false,
                 muted: true,
+                fullscreen: {
+                    enabled: false,
+                },
                 ...plyrOptions,
             });
 
@@ -174,13 +180,13 @@
             player.value.currentTime = 0;
             player.value.muted = false;
 
-            isSimulatorLoaded.value = true;
+            isSimulatorLoading.value = false;
             simulatorInstance.value = simulator;
         }
     });
 
     onUnmounted(() => {
-        isSimulatorLoaded.value = false;
+        isSimulatorLoading.value = false;
     });
 </script>
 

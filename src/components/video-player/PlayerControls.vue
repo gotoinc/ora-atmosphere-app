@@ -57,13 +57,19 @@
                         <button
                             type="button"
                             aria-label="Mute"
-                            data-plyr="mute"
+                            class="h-full w-full"
                         >
-                            <span class="icon--pressed pointer-events-none">
+                            <span
+                                v-show="volumeProgress > 0"
+                                class="pointer-events-none"
+                            >
                                 <component :is="IconVolume" />
                             </span>
 
-                            <span class="icon--not-pressed pointer-events-none">
+                            <span
+                                v-show="volumeProgress === 0"
+                                class="pointer-events-none"
+                            >
                                 <component :is="IconVolumeOff" />
                             </span>
                         </button>
@@ -73,7 +79,10 @@
                             class="plyr__volume control-modal rounded-sm bg-grey-500 p-0.5"
                         >
                             <input
-                                data-plyr="volume"
+                                :style="{
+                                    '--value':
+                                        formatToPercentage(volumeProgress),
+                                }"
                                 type="range"
                                 min="0"
                                 max="1"
@@ -81,15 +90,18 @@
                                 value="1"
                                 autocomplete="off"
                                 aria-label="Volume"
+                                @input="changeVolume"
                             />
                         </div>
                     </div>
                 </div>
 
-                <h3 class="text-xl max-sm:hidden">Title</h3>
+                <h3 class="text-xl max-sm:hidden">
+                    {{ title }}
+                </h3>
 
                 <div class="controls-grid">
-                    <!-- Languages -->
+                    <!-- Audio -->
                     <div
                         class="control--action control relative w-full max-md:static"
                     >
@@ -108,13 +120,15 @@
 
                             <div class="grid grid-cols-2 gap-x-10">
                                 <button
-                                    v-for="{ src, language } in sources"
-                                    :key="language"
+                                    v-for="{ file, name, id } in audio"
+                                    :key="id"
                                     class="lang-btn"
-                                    :class="{ active: selectedSrc === src }"
-                                    @click="changeVideoSrc(src)"
+                                    :class="{
+                                        active: selectedAudioSrc === file,
+                                    }"
+                                    @click="changeAudioSrc(file)"
                                 >
-                                    {{ language }}
+                                    {{ name }}
                                 </button>
                             </div>
                         </div>
@@ -218,6 +232,8 @@
                 </div>
             </div>
         </div>
+
+        <audio v-if="audio" ref="audioElement" class="hidden"></audio>
     </div>
 </template>
 
@@ -237,38 +253,32 @@
 
     import 'plyr/dist/plyr.css';
 
+    interface Audio {
+        id: number;
+        name: string;
+        file: string;
+    }
+
     interface Props {
+        title: string;
         player?: Plyr;
         fullscreen?: boolean;
         container?: HTMLElement;
+        audio?: Audio[];
     }
 
     const props = defineProps<Props>();
 
     const mainPlayer = computed<Plyr | undefined>(() => props.player);
 
-    const isFullScreenActive = ref(false);
+    const volumeProgress = ref(1);
 
-    // Sources
-    const sources = [
-        {
-            language: 'French',
-            src: 'https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-1080p.mp4',
-        },
-        {
-            language: 'English',
-            src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
-        },
-        {
-            language: 'German',
-            src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-        },
-        {
-            language: 'Spanish',
-            src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
-        },
-    ];
-    const selectedSrc = ref(sources[0].src);
+    const formatToPercentage = (value: number) => `${value * 100}%`;
+
+    const audioElement = ref<HTMLAudioElement>();
+    const selectedAudioSrc = ref('');
+
+    const isFullScreenActive = ref(false);
 
     // Speed options
     const speedOptions = [0.5, 0.75, 1, 1.25, 1.5];
@@ -282,13 +292,57 @@
 
     changeSpeed(1);
 
-    const changeVideoSrc = (src: string) => {
-        selectedSrc.value = src;
+    const changeAudioSrc = (src: string) => {
+        if (audioElement.value) {
+            if (selectedAudioSrc.value === src) {
+                selectedAudioSrc.value = '';
+
+                handleAudio(false);
+
+                return;
+            }
+
+            selectedAudioSrc.value = src;
+            audioElement.value.src = src;
+
+            handleAudio(true);
+        }
     };
 
-    let controlButton: Element | null = null;
+    const handleAudio = (isAudioPlay: boolean) => {
+        if (mainPlayer.value && audioElement.value) {
+            mainPlayer.value.muted = isAudioPlay;
+
+            audioElement.value.volume = volumeProgress.value;
+
+            if (isAudioPlay) {
+                audioElement.value.playbackRate = mainPlayer.value.speed;
+                audioElement.value.currentTime = mainPlayer.value.currentTime;
+
+                void audioElement.value.play();
+            } else {
+                audioElement.value.pause();
+                mainPlayer.value.volume = volumeProgress.value;
+            }
+
+            void mainPlayer.value.play();
+        }
+    };
+
+    const changeVolume = (e: Event) => {
+        const target = e.target as HTMLInputElement;
+        volumeProgress.value = Number(target.value);
+
+        if (audioElement.value && selectedAudioSrc.value) {
+            audioElement.value.volume = volumeProgress.value;
+        } else if (mainPlayer.value) {
+            mainPlayer.value.volume = volumeProgress.value;
+        }
+    };
 
     // Open settings modals for action buttons
+    let controlButton: Element | null = null;
+
     const setClickEvent = (e: Event) => {
         const target = e.target as HTMLElement;
         const controlContainer = target.closest('.control--action');
@@ -312,6 +366,7 @@
         }
     };
 
+    // Set event handlers for controls when player is active
     watch(
         () => props.player,
         (player) => {
@@ -337,6 +392,41 @@
                     });
                 }
             }
+
+            // Connect audio element with player
+            if (mainPlayer.value && audioElement.value) {
+                // Pause audio with player
+                mainPlayer.value.on('pause', () => {
+                    if (selectedAudioSrc.value) audioElement.value!.pause();
+                });
+
+                // Play audio with player
+                mainPlayer.value.on('play', () => {
+                    mainPlayer.value!.volume = volumeProgress.value;
+
+                    if (selectedAudioSrc.value) {
+                        mainPlayer.value!.muted = true;
+                        void audioElement.value!.play();
+                    }
+                });
+
+                mainPlayer.value.on('ratechange', () => {
+                    if (selectedAudioSrc.value) {
+                        audioElement.value!.playbackRate =
+                            mainPlayer.value!.speed;
+                    }
+                });
+
+                mainPlayer.value.on('seeked', () => {
+                    if (selectedAudioSrc.value) {
+                        audioElement.value!.currentTime =
+                            mainPlayer.value!.currentTime;
+                    }
+                });
+            }
+        },
+        {
+            once: true,
         }
     );
 </script>

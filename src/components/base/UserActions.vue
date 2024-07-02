@@ -65,7 +65,7 @@
     import IconChevronDown from '@img/icons/chevron-down.svg?component';
     import IconUser from '@img/icons/user.svg?component';
 
-    import VButton from '@/components/banner/VButton.vue';
+    import VButton from '@/components/base/VButton.vue';
     import VPopup from '@/components/popup/VPopup.vue';
 
     import { useAuthStore } from '@/stores/auth.store.ts';

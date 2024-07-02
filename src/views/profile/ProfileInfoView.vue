@@ -86,8 +86,8 @@
     import { useToast } from 'vue-toastification';
     import { useForm } from 'vee-validate';
 
-    import VButton from '@/components/banner/VButton.vue';
     import VInput from '@/components/base/input/VInput.vue';
+    import VButton from '@/components/base/VButton.vue';
     import VSelect from '@/components/base/VSelect.vue';
 
     import activitiesList from '@/constants/activities-list.ts';

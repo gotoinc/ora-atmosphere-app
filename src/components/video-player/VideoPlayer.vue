@@ -1,15 +1,15 @@
 <template>
     <video ref="videoElement" crossorigin playsinline>
-        <source
-            v-for="{ src, language } in sources"
-            :key="language"
-            :src="src"
-            type="video/mp4"
-        />
+        <source :src="selectedContent.file" />
     </video>
 
     <div ref="controls">
-        <player-controls fullscreen :player="player" />
+        <player-controls
+            :title="selectedContent.title"
+            :audio="selectedContent.audio"
+            fullscreen
+            :player="player"
+        />
 
         <button
             type="button"
@@ -48,6 +48,9 @@
 
     import PlayerControls from '@/components/video-player/PlayerControls.vue';
 
+    import { storeToRefs } from 'pinia';
+    import { useCatalogStore } from '@/stores/catalog.store.ts';
+
     import { plyrOptions } from '@/libs/plyr/plyr-options.ts';
 
     interface Emits {
@@ -62,29 +65,11 @@
     const props = defineProps<Props>();
     const emits = defineEmits<Emits>();
 
+    const { selectedContent } = storeToRefs(useCatalogStore());
+
     const videoElement = ref<HTMLVideoElement>();
     const player = ref<Plyr>();
     const controls = ref<HTMLElement>();
-
-    // Sources
-    const sources = [
-        {
-            language: 'French',
-            src: 'https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-1080p.mp4',
-        },
-        {
-            language: 'English',
-            src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
-        },
-        {
-            language: 'German',
-            src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-        },
-        {
-            language: 'Spanish',
-            src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
-        },
-    ];
 
     const closePlayer = () => {
         player.value?.pause();
@@ -95,6 +80,9 @@
         if (videoElement.value && controls.value) {
             player.value = new Plyr(videoElement.value, {
                 controls: controls.value,
+                fullscreen: {
+                    iosNative: true,
+                },
                 ...plyrOptions,
             });
 

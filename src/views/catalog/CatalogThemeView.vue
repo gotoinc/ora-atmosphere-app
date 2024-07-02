@@ -105,8 +105,8 @@
     import { useRoute, useRouter } from 'vue-router';
     import ThemeImg from '@img/categories/theme-bg.jpg';
 
-    import VButton from '@/components/banner/VButton.vue';
     import MainPagination from '@/components/base/MainPagination.vue';
+    import VButton from '@/components/base/VButton.vue';
     import VideoCard from '@/components/catalog/VideoCard.vue';
 
     import { useCatalogStore } from '@/stores/catalog.store.ts';

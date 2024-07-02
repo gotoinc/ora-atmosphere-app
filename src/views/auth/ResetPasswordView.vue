@@ -57,8 +57,8 @@
     import { ref } from 'vue';
     import { useForm } from 'vee-validate';
 
-    import VButton from '@/components/banner/VButton.vue';
     import VInput from '@/components/base/input/VInput.vue';
+    import VButton from '@/components/base/VButton.vue';
 
     import { forgotPasswordSchema } from '@/validations/schemas/auth.schema.ts';
     import type { EmailType } from '@/validations/types/auth';

@@ -56,8 +56,8 @@
     import { useRouter } from 'vue-router';
     import { useForm } from 'vee-validate';
 
-    import VButton from '@/components/banner/VButton.vue';
     import VInput from '@/components/base/input/VInput.vue';
+    import VButton from '@/components/base/VButton.vue';
     import VCheckbox from '@/components/base/VCheckbox.vue';
 
     import { storeToRefs } from 'pinia';

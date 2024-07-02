@@ -355,6 +355,7 @@ export class Simulator {
                 if (this.video) {
                     this.video.src = content.URL;
                     this.video.crossOrigin = 'anonymous';
+                    this.video.muted = true;
 
                     this.curVideo = new VideoTexture(
                         'sphereVideo',
@@ -362,7 +363,10 @@ export class Simulator {
                         this.scene,
                         false,
                         undefined,
-                        undefined
+                        undefined,
+                        {
+                            muted: true,
+                        }
                     );
 
                     this.video.onpause = () => {
