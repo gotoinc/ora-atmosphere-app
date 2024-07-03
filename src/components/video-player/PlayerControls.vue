@@ -265,6 +265,7 @@
         fullscreen?: boolean;
         container?: HTMLElement;
         audio?: Audio[];
+        muted?: boolean;
     }
 
     const props = defineProps<Props>();
@@ -402,7 +403,9 @@
 
                 // Play audio with player
                 mainPlayer.value.on('play', () => {
-                    mainPlayer.value!.volume = volumeProgress.value;
+                    if (!props.muted) {
+                        mainPlayer.value!.volume = volumeProgress.value;
+                    }
 
                     if (selectedAudioSrc.value) {
                         mainPlayer.value!.muted = true;

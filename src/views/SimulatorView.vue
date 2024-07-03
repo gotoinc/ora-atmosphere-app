@@ -10,7 +10,6 @@
                     class="hidden"
                     controls
                     muted
-                    crossorigin
                     playsinline
                 ></video>
             </div>
@@ -62,6 +61,7 @@
 
             <div ref="controls">
                 <player-controls
+                    :muted="isMuted"
                     :container="simulatorContainer"
                     :player="player"
                     :title="selectedContent.title"
@@ -114,6 +114,7 @@
 
     const player = ref<Plyr>();
     const controls = ref<HTMLElement>();
+    const isMuted = ref(true);
 
     const setSimulatorDiameter = (diameter: SphereDiameter) => {
         if (simulatorInstance.value) {
@@ -133,6 +134,15 @@
         if (simulatorLoader) simulatorLoader.remove();
     };
 
+    const setPlayerToStart = () => {
+        if (player.value) {
+            player.value.currentTime = 0;
+            player.value.pause();
+            player.value.muted = false;
+            isMuted.value = false;
+        }
+    };
+
     const createPromiseFromCallback = (
         callbackFunction: (callback: () => void) => void
     ): Promise<void> => {
@@ -144,6 +154,8 @@
     };
 
     onMounted(async () => {
+        isSimulatorLoading.value = true;
+
         if (simulatorContainer.value) {
             disableBodyScroll(simulatorContainer.value);
         }
@@ -176,12 +188,10 @@
                 }),
             ]);
 
-            player.value.pause();
-            player.value.currentTime = 0;
-            player.value.muted = false;
+            setPlayerToStart();
 
-            isSimulatorLoading.value = false;
             simulatorInstance.value = simulator;
+            isSimulatorLoading.value = false;
         }
     });
 
