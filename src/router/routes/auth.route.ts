@@ -1,4 +1,3 @@
-import { useAuthStore } from '@/stores/auth.store.ts';
 import { useSignUpStore } from '@/stores/sign-up.store.ts';
 
 export default {
@@ -52,25 +51,18 @@ export default {
             ],
         },
         {
-            path: '/reset-password',
+            path: '/reset-password/:uid/:token',
             name: 'resetPasswordView',
             component: () => import('@/views/auth/ResetPasswordView.vue'),
+
             meta: {
                 title: 'Reset password',
             },
         },
         {
-            path: '/set-new-password',
-            name: 'setNewPasswordView',
-            component: () => import('@/views/auth/SetNewPasswordView.vue'),
-
-            beforeEnter: () => {
-                const { isEmailConfirmed } = useAuthStore();
-
-                if (!isEmailConfirmed) {
-                    return { name: 'main' };
-                }
-            },
+            path: '/forgot-password',
+            name: 'forgotPassword',
+            component: () => import('@/views/auth/ForgotPasswordView.vue'),
         },
     ],
 };
