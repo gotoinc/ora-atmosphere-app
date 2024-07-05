@@ -28,6 +28,8 @@
         "allowSyntheticDefaultImports": true
     },
 
+    "exclude": ["./vite.config.ts"],
+
     "include": [
         "src/**/*.ts",
         "src/**/*.tsx",

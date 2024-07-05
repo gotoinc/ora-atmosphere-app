@@ -114,10 +114,12 @@
     const isResetSelect = ref(false);
     const navigationLink = ref('');
 
-    const changeLink = (link: ProfileLinks) => {
-        if (link === ProfileLinks.Info) {
+    const changeLink = (link: string) => {
+        const profileLink = link as ProfileLinks;
+
+        if (profileLink === ProfileLinks.Info) {
             void router.push({ name: 'profileInfoView' });
-        } else if (link === ProfileLinks.Password) {
+        } else if (profileLink === ProfileLinks.Password) {
             void router.push({ name: 'profileChangePasswordView' });
         } else {
             isDeleteOpen.value = true;

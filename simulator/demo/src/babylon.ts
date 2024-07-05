@@ -26,7 +26,7 @@ export async function attachSimulator(
     video?: HTMLVideoElement,
     room?: Room
 ): Promise<Simulator> {
-    let engine: Engine;
+    let engine: Engine | WebGPUEngine;
 
     root.style.display = 'flex';
     let canvas = document.createElement('canvas');
@@ -48,7 +48,7 @@ export async function attachSimulator(
 
     engine.resize();
 
-    let viz = new Simulator(engine, canvas, content, video, room);
+    let viz = new Simulator(engine as Engine, canvas, content, video, room);
 
     initDragnDrop(canvas, viz);
 

@@ -1,5 +1,5 @@
 <template>
-    <video ref="videoElement" crossorigin playsinline>
+    <video ref="videoElement" crossorigin="anonymous" playsinline>
         <source :src="selectedContent.file" />
     </video>
 
