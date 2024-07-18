@@ -55,6 +55,7 @@
                     <!-- Volume -->
                     <div class="volume__control control control--action">
                         <button
+                            v-if="audioEnabled"
                             type="button"
                             aria-label="Mute"
                             class="h-full w-full"
@@ -103,6 +104,7 @@
                 <div class="controls-grid">
                     <!-- Audio -->
                     <div
+                        v-if="audios && audios.length > 0"
                         class="control--action control relative w-full max-md:static"
                     >
                         <button type="button" class="control" data-plyr="speed">
@@ -120,7 +122,7 @@
 
                             <div class="grid grid-cols-2 gap-x-10">
                                 <button
-                                    v-for="{ file, name, id } in audio"
+                                    v-for="{ file, name, id } in audios"
                                     :key="id"
                                     class="lang-btn"
                                     :class="{
@@ -128,7 +130,9 @@
                                     }"
                                     @click="changeAudioSrc(file)"
                                 >
-                                    {{ name }}
+                                    <span class="line-camp-2">
+                                        {{ name }}
+                                    </span>
                                 </button>
                             </div>
                         </div>
@@ -233,7 +237,7 @@
             </div>
         </div>
 
-        <audio v-if="audio" ref="audioElement" class="hidden"></audio>
+        <audio v-if="audios" ref="audioElement" class="hidden"></audio>
     </div>
 </template>
 
@@ -252,20 +256,16 @@
     import { isIOS } from '@/utils/navigator.utils.ts';
 
     import 'plyr/dist/plyr.css';
-
-    interface Audio {
-        id: number;
-        name: string;
-        file: string;
-    }
+    import type { Audio } from '@/ts/common';
 
     interface Props {
         title: string;
         player?: Plyr;
         fullscreen?: boolean;
         container?: HTMLElement;
-        audio?: Audio[];
+        audios?: Audio[];
         muted?: boolean;
+        audioEnabled?: boolean;
     }
 
     const props = defineProps<Props>();

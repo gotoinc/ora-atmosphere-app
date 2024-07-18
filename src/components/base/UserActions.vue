@@ -4,7 +4,17 @@
         class="relative flex cursor-pointer items-center"
         @click="isActionsOpen = !isActionsOpen"
     >
-        <p class="mr-4 text-base font-bold max-mob:hidden">John Doe</p>
+        <v-skeleton
+            v-if="isProfileLoading"
+            class="mr-4 h-7 w-32 rounded-lg bg-white-50"
+        />
+
+        <p
+            v-else-if="profileData && Object.keys(profileData).length > 0"
+            class="mr-4 text-base font-bold max-mob:hidden"
+        >
+            {{ `${profileData.first_name} ${profileData.last_name}` }}
+        </p>
 
         <div
             class="border-white mr-1 flex h-11 w-11 items-center justify-center rounded-full border-4 border-solid bg-primary-50"
@@ -61,13 +71,15 @@
 
 <script setup lang="ts">
     import { onMounted, onUnmounted, ref } from 'vue';
-    import { useRouter } from 'vue-router';
+    import { useRoute, useRouter } from 'vue-router';
     import IconChevronDown from '@img/icons/chevron-down.svg?component';
     import IconUser from '@img/icons/user.svg?component';
 
     import VButton from '@/components/base/VButton.vue';
+    import VSkeleton from '@/components/base/VSkeleton.vue';
     import VPopup from '@/components/popup/VPopup.vue';
 
+    import { storeToRefs } from 'pinia';
     import { useAuthStore } from '@/stores/auth.store.ts';
 
     import { useClickOutsideElement } from '@/hooks/useClickOutsideElement.ts';
@@ -75,12 +87,14 @@
     const isActionsOpen = ref(false);
 
     const router = useRouter();
+    const route = useRoute();
 
     const actionsElement = ref<HTMLDivElement | null>(null);
 
     const isLogOutOpen = ref(false);
 
-    const { logout } = useAuthStore();
+    const authStore = useAuthStore();
+    const { profileData, isProfileLoading } = storeToRefs(authStore);
 
     const setClickEvent = (e: Event) => {
         if (actionsElement.value) {
@@ -92,16 +106,22 @@
         }
     };
 
-    const handleLogout = () => {
-        logout();
+    const handleLogout = async () => {
+        try {
+            await authStore.logout();
 
-        void router.replace({ name: 'main' });
-
-        isLogOutOpen.value = false;
+            void router.replace({ name: 'main' });
+        } finally {
+            isLogOutOpen.value = false;
+        }
     };
 
-    onMounted(() => {
+    onMounted(async () => {
         document.addEventListener('click', setClickEvent);
+
+        if (!profileData.value && route.name !== 'profileInfoView') {
+            await authStore.getProfileData();
+        }
     });
 
     onUnmounted(() => {
@@ -109,4 +129,25 @@
     });
 </script>
 
-<style scoped lang="postcss"></style>
+<style scoped lang="postcss">
+    .actions {
+        top: calc(100% + 8px);
+        min-width: 177px;
+        animation: fade-up 0.3s ease;
+    }
+
+    .link {
+        @apply block px-4 py-2.5 text-white-100 transition-colors hover:bg-grey-200;
+    }
+
+    @keyframes fade-up {
+        0% {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>

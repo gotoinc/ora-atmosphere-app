@@ -4,8 +4,7 @@ import type { LocationQueryValue } from 'vue-router';
 import { defineStore } from 'pinia';
 
 import {
-    transformArraysFromQueries,
-    transformArraysToQueries,
+    // transformArraysFromQueries,
     useTransformPath,
 } from '@/hooks/transform-queries.ts';
 import router from '@/router';
@@ -20,13 +19,19 @@ export const useSearchStore = defineStore(
     () => {
         const resentSearches = ref<string[]>([]);
 
-        const searchValue = ref('');
-
-        const selectedTags = ref<LocationQueryValue[]>(routerTags.value);
-        const selectedLangs = ref<LocationQueryValue[]>([...routerLangs.value]);
-        const selectedCategories = ref<LocationQueryValue[]>(
-            transformArraysFromQueries(routerCategories.value)
+        const searchValue = ref(
+            (router.currentRoute.value.query.value ?? '') as string
         );
+
+        const selectedTags = ref<Array<string | LocationQueryValue>>([
+            ...routerTags.value,
+        ]);
+        const selectedLangs = ref<Array<number | LocationQueryValue>>([
+            ...routerLangs.value,
+        ]);
+        const selectedCategories = ref<Array<number | LocationQueryValue>>([
+            ...routerCategories.value,
+        ]);
 
         /**
          * Function for reset filters
@@ -44,22 +49,20 @@ export const useSearchStore = defineStore(
         const onSearch = () => {
             void router.push({
                 name: 'searchView',
-                params: {
-                    value: useTransformPath(searchValue.value.toLowerCase()),
-                },
-
                 query: {
-                    tags: transformArraysToQueries(selectedTags.value),
-                    langs: transformArraysToQueries(selectedLangs.value),
-                    categories: transformArraysToQueries(
-                        selectedCategories.value
-                    ),
+                    value: searchValue.value
+                        ? useTransformPath(searchValue.value)
+                        : '',
+                    tags: selectedTags.value,
+                    langs: selectedLangs.value,
+                    categories: selectedCategories.value,
                 },
             });
 
-            console.log(transformArraysToQueries(selectedCategories.value));
-
-            if (!resentSearches.value.includes(searchValue.value)) {
+            if (
+                searchValue.value &&
+                !resentSearches.value.includes(searchValue.value)
+            ) {
                 resentSearches.value.unshift(searchValue.value);
             }
         };

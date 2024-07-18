@@ -1,0 +1,6 @@
+{
+    "/api/*": "/$1",
+    "/api/categories/:category_id/groups": "/groups?category_id=:category_id",
+    "/api/groups/:group_id/topics": "/topics?group_id=:group_id",
+    "/api/topics/:topic_id/videos": "/videos?topic_id=:topic_id"
+}

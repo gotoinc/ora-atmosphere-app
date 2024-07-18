@@ -1,5 +1,5 @@
 export default {
-    path: '/search/:value',
+    path: '/search',
     name: 'searchView',
     component: () => import('@/views/catalog/CatalogThemeView.vue'),
 };

@@ -1,24 +1,52 @@
-export interface SignUpFirstStep {
-    firstName: string;
-    lastName: string;
+export interface RegisterInput {
     email: string;
-    password: string;
-    confirmPassword: string;
-    isTermsAgreed: boolean;
-}
-
-export interface SignUpSecondStep {
-    companyName: string;
+    password1: string;
+    password2: string;
+    first_name: string;
+    last_name: string;
+    agree_with_terms: boolean;
+    company_name: string;
     activity: string;
-    jobTitle?: string;
-    companyWebsite?: string;
-    phone?: string;
+    job_title?: string;
+    company_website?: string;
+    phone_number?: string;
 }
 
-export interface SignInType
-    extends Pick<SignUpFirstStep, 'email' | 'password'> {}
+export interface SignUpFirstStep
+    extends Pick<
+        RegisterInput,
+        | 'first_name'
+        | 'last_name'
+        | 'email'
+        | 'password1'
+        | 'password2'
+        | 'agree_with_terms'
+    > {}
 
-export interface SetNewPasswordType
-    extends Pick<SignUpFirstStep, 'confirmPassword' | 'password'> {}
+export interface SignUpSecondStep
+    extends Pick<
+        RegisterInput,
+        | 'company_name'
+        | 'activity'
+        | 'job_title'
+        | 'company_website'
+        | 'phone_number'
+    > {}
 
-export interface EmailType extends Pick<SignInType, 'email'> {}
+export interface SignInInput extends Pick<SignUpFirstStep, 'email'> {
+    password: string;
+}
+
+export interface SetNewPasswordType {
+    new_password1: string;
+    new_password2: string;
+}
+
+export interface EmailType extends Pick<SignInInput, 'email'> {}
+
+export interface ProfileInfo
+    extends Omit<
+            SignUpFirstStep,
+            'password1' | 'password2' | 'agree_with_terms'
+        >,
+        SignUpSecondStep {}

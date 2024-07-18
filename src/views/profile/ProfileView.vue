@@ -6,7 +6,7 @@
             <h2 class="mb-12 text-h2 max-sm:mb-8">My Profile</h2>
 
             <div class="flex gap-10 max-sm:flex-col max-sm:gap-6">
-                <aside class="w-full max-sm:!max-w-full">
+                <aside class="fade-r w-full max-sm:!max-w-full">
                     <div class="max-sm:hidden">
                         <nav class="mb-2">
                             <ul class="flex flex-col gap-2">
@@ -52,7 +52,7 @@
                     />
                 </aside>
 
-                <section class="flex-grow">
+                <section class="fade-l flex-grow">
                     <router-view></router-view>
                 </section>
             </div>
@@ -77,7 +77,11 @@
                         Cancel
                     </v-button>
 
-                    <v-button class="flex-grow" @click="deleteProfile">
+                    <v-button
+                        :loading="isLoading"
+                        class="flex-grow"
+                        @click="deleteProfile"
+                    >
                         Yes, delete
                     </v-button>
                 </div>
@@ -96,13 +100,12 @@
     import VHeader from '@/components/layout/VHeader.vue';
     import VPopup from '@/components/popup/VPopup.vue';
 
-    import { storeToRefs } from 'pinia';
     import { useAuthStore } from '@/stores/auth.store.ts';
 
     const router = useRouter();
     const toast = useToast();
 
-    const { isAuthenticated } = storeToRefs(useAuthStore());
+    const { clearAuth } = useAuthStore();
 
     enum ProfileLinks {
         Info = 'Personal information',
@@ -113,6 +116,7 @@
     const isDeleteOpen = ref(false);
     const isResetSelect = ref(false);
     const navigationLink = ref('');
+    const isLoading = ref(false);
 
     const changeLink = (link: string) => {
         const profileLink = link as ProfileLinks;
@@ -135,12 +139,20 @@
     };
 
     const deleteProfile = () => {
-        isDeleteOpen.value = false;
-        isAuthenticated.value = false;
+        isLoading.value = true;
 
-        void router.replace({ name: 'main' });
+        try {
+            toast.success('Profile has been deleted');
 
-        toast.success('Deleted successfully');
+            clearAuth();
+
+            void router.replace({ name: 'main' });
+        } catch (e) {
+            toast.error('Profile was not deleted');
+        } finally {
+            isLoading.value = false;
+            isDeleteOpen.value = false;
+        }
     };
 </script>
 

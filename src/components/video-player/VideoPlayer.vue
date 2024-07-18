@@ -1,13 +1,18 @@
 <template>
-    <video ref="videoElement" crossorigin="anonymous" playsinline>
-        <source :src="selectedContent.file" />
+    <video
+        v-if="contentToPlay"
+        ref="videoElement"
+        crossorigin="anonymous"
+        playsinline
+    >
+        <source :src="contentToPlay.file" />
     </video>
 
-    <div ref="controls">
+    <div v-if="contentToPlay" ref="controls">
         <player-controls
-            :title="selectedContent.title"
-            :audio="selectedContent.audio"
-            fullscreen
+            :title="contentToPlay.title"
+            :audios="contentToPlay.audios"
+            fullscree
             :player="player"
         />
 
@@ -65,7 +70,7 @@
     const props = defineProps<Props>();
     const emits = defineEmits<Emits>();
 
-    const { selectedContent } = storeToRefs(useCatalogStore());
+    const { contentToPlay } = storeToRefs(useCatalogStore());
 
     const videoElement = ref<HTMLVideoElement>();
     const player = ref<Plyr>();

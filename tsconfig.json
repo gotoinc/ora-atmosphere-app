@@ -36,10 +36,10 @@
         "src/**/*.vue",
         "src/**/*.d.ts",
         "src/**/*.pcss",
+        "src/json-server/server.js",
         "./tailwind.config.ts",
         "./postcss.config.js",
         "./vue-shim.d.ts",
-        "./vite.config.ts"
     ],
     "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -44,6 +44,7 @@
         type?: 'button' | 'submit' | 'reset' | undefined;
         variant?: 'primary' | 'white' | 'info' | 'outline' | 'text';
         loading?: boolean;
+        disabled?: boolean;
     }
 
     interface Emits {
@@ -111,25 +112,8 @@
         buttonStyles.value,
         withIconStyles.value,
         { 'pointer-events-none': props.loading },
+        { 'pointer-events-none opacity-50': props.disabled },
     ]);
 </script>
 
-<style scoped lang="postcss">
-    .loader-btn {
-        @apply mx-auto block h-6 w-6 rounded-full border-4 border-solid border-white-100 border-l-transparent;
-    }
-
-    .loader-btn {
-        animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-        0% {
-            transform: rotate(0deg);
-        }
-
-        100% {
-            transform: rotate(360deg);
-        }
-    }
-</style>
+<style scoped lang="postcss"></style>

@@ -21,6 +21,7 @@ export default {
                     50: '#0ACFFE',
                     100: '#495AFF',
                     200: '#0839FB',
+                    dark: '#1A1F59',
                 },
 
                 white: {
@@ -79,7 +80,7 @@ export default {
                 'mob-md': '480px',
                 'mob-lg': '551px',
                 tab: '901px',
-                lg: '1025px',
+                // lg: '1025px',
                 '2lg': '1200px',
                 desktop: '1440px',
             },
