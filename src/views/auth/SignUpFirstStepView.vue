@@ -58,15 +58,23 @@
         >
             <span>
                 Agree to our
-                <a href="#" class="underline hover:text-primary-100">
+                <router-link
+                    :to="{ name: 'termsView' }"
+                    class="underline hover:text-primary-100"
+                >
                     Terms of use
-                </a>
+                </router-link>
 
                 and
 
-                <a href="#" class="underline hover:text-primary-100">
+                <router-link
+                    :to="{ name: 'privacyView' }"
+                    class="underline hover:text-primary-100"
+                >
                     Privacy Policy
-                </a>
+                </router-link>
+
+                <a href="#" class="underline hover:text-primary-100"> </a>
             </span>
         </v-checkbox>
 
