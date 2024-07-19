@@ -8,7 +8,7 @@ import { authLogin } from '@/api/auth/auth-login.api.ts';
 import { authLogout } from '@/api/auth/auth-logout.api.ts';
 import { getProfile } from '@/api/auth/get-profile.ts';
 import { useThrowError } from '@/hooks/useThrowError.ts';
-import type { UserProfile } from '@/ts/profile';
+import type { ProfileData } from '@/ts/profile';
 import type { SignInInput } from '@/validations/types/auth';
 
 const toast = useToast();
@@ -17,7 +17,7 @@ export const useAuthStore = defineStore('auth', () => {
     const isEmailConfirmed = ref(true);
     const isProfileLoading = ref(false);
     const isAuthenticated = ref(!!Cookies.get('ora_auth'));
-    const profileData = ref<UserProfile | undefined>();
+    const profileData = ref<ProfileData | undefined>();
 
     const clearAuth = () => {
         Cookies.remove('ora_auth');

@@ -7,9 +7,9 @@ export interface RegisterInput {
     agree_with_terms: boolean;
     company_name: string;
     activity: string;
-    job_title?: string;
-    company_website?: string;
-    phone_number?: string;
+    job_title?: string | null;
+    company_website?: string | null;
+    phone_number?: string | null;
 }
 
 export interface SignUpFirstStep

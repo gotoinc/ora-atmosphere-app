@@ -33,8 +33,8 @@ export const signUpFirstStepSchema: ObjectSchema<SignUpFirstStep> = object({
 export const signUpSecondStepSchema: ObjectSchema<SignUpSecondStep> = object({
     company_name: string().required('Please enter company name'),
     activity: string().required('Please choose activity'),
-    job_title: string(),
-    company_website: string().url('Please enter a valid URL'),
+    job_title: string().nullable(),
+    company_website: string().url('Please enter a valid URL').nullable(),
     phone_number: phoneValidation,
 });
 

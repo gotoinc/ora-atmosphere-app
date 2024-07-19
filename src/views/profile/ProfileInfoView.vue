@@ -112,10 +112,10 @@
     import { storeToRefs } from 'pinia';
     import { useAuthStore } from '@/stores/auth.store.ts';
 
+    import { getUser } from '@/api/auth/get-user.ts';
     import { updateProfile } from '@/api/auth/update-profile.ap.ts';
     import activitiesList from '@/constants/activities-list.ts';
     import { useCompareArrays } from '@/hooks/useCompareObjects.ts';
-    import type { UserProfile } from '@/ts/profile';
     import {
         signUpFirstStepSchema,
         signUpSecondStepSchema,
@@ -129,6 +129,8 @@
 
     const isLoading = ref(false);
     const isFieldsLoading = ref(true);
+
+    const profileInfo = ref<ProfileInfo>();
 
     const profileInfoSchema = signUpFirstStepSchema
         .omit(['password1', 'password2', 'agree_with_terms'])
@@ -153,20 +155,10 @@
 
     const onSubmit = handleSubmit(async (values) => {
         if (profileData.value) {
-            const profileValues: UserProfile = {
-                company_name: profileData.value.company_name,
-                email: profileData.value.email,
-                activity: profileData.value.activity,
-                first_name: profileData.value.first_name,
-                last_name: profileData.value.last_name,
-                phone_number: profileData.value.phone_number,
-                job_title: profileData.value.job_title,
-                company_website: profileData.value.company_website,
-            };
-
             if (
+                profileInfo.value &&
                 useCompareArrays(
-                    Object.values(profileValues),
+                    Object.values(profileInfo.value) as string[],
                     Object.values(values) as string[]
                 )
             ) {
@@ -176,25 +168,35 @@
             }
         }
 
-        isLoading.value = true;
+        if (profileData.value) {
+            isLoading.value = true;
 
-        try {
-            profileData.value = await updateProfile({
-                company_name: companyName.value,
-                email: email.value,
-                activity: activity.value,
-                first_name: firstName.value,
-                last_name: lastName.value,
-                phone_number: phone.value,
-                job_title: jobTitle.value,
-                company_website: companyWebsite.value,
-            });
+            try {
+                const res = await updateProfile(profileData.value.pk, {
+                    company_name: companyName.value,
+                    email: email.value,
+                    activity: activity.value,
+                    first_name: firstName.value,
+                    last_name: lastName.value,
+                    phone_number: phone.value,
+                    job_title: jobTitle.value,
+                    company_website: companyWebsite.value,
+                    // TODO: remove role
+                    role: 'admin',
+                });
 
-            toast.success('Changes were saved');
-        } catch (e) {
-            toast.error('No changes were saved');
-        } finally {
-            isLoading.value = false;
+                if (res) {
+                    profileData.value.email = res.email;
+                    profileData.value.first_name = res.first_name;
+                    profileData.value.last_name = res.last_name;
+                }
+
+                toast.success('Changes were saved');
+            } catch (e) {
+                toast.error('No changes were saved');
+            } finally {
+                isLoading.value = false;
+            }
         }
     });
 
@@ -204,7 +206,12 @@
         }
 
         if (profileData.value) {
-            setValues(profileData.value);
+            const res = await getUser(profileData.value.pk);
+
+            if (res) {
+                profileInfo.value = res;
+                setValues(res);
+            }
         }
 
         isFieldsLoading.value = false;

@@ -80,7 +80,7 @@
                     <v-button
                         :loading="isLoading"
                         class="flex-grow"
-                        @click="deleteProfile"
+                        @click="hadnleDeleteProfile"
                     >
                         Yes, delete
                     </v-button>
@@ -100,12 +100,18 @@
     import VHeader from '@/components/layout/VHeader.vue';
     import VPopup from '@/components/popup/VPopup.vue';
 
+    import { storeToRefs } from 'pinia';
     import { useAuthStore } from '@/stores/auth.store.ts';
+
+    import { deleteProfile } from '@/api/auth/delete-profile.api.ts';
 
     const router = useRouter();
     const toast = useToast();
 
-    const { clearAuth } = useAuthStore();
+    const authStore = useAuthStore();
+
+    const { clearAuth } = authStore;
+    const { profileData } = storeToRefs(authStore);
 
     enum ProfileLinks {
         Info = 'Personal information',
@@ -138,20 +144,24 @@
         void router.push({ name: 'profileInfoView' });
     };
 
-    const deleteProfile = () => {
-        isLoading.value = true;
+    const hadnleDeleteProfile = async () => {
+        if (profileData.value) {
+            isLoading.value = true;
 
-        try {
-            toast.success('Profile has been deleted');
+            try {
+                await deleteProfile(profileData.value.pk);
 
-            clearAuth();
+                toast.success('Profile has been deleted');
 
-            void router.replace({ name: 'main' });
-        } catch (e) {
-            toast.error('Profile was not deleted');
-        } finally {
-            isLoading.value = false;
-            isDeleteOpen.value = false;
+                clearAuth();
+
+                void router.replace({ name: 'main' });
+            } catch (e) {
+                toast.error('Profile was not deleted');
+            } finally {
+                isLoading.value = false;
+                isDeleteOpen.value = false;
+            }
         }
     };
 </script>
