@@ -9,7 +9,7 @@ export async function initSimulator(
     mediaType: 'video' | 'image' = 'video',
     video?: HTMLVideoElement
 ) {
-    let libraryURL = '/public/simulator/library.json';
+    let libraryURL = '/simulator/library.json';
 
     let library = await initLibrary(libraryURL);
     let state = new URLState(library);
