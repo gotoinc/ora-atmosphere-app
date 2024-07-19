@@ -27,7 +27,6 @@ axios.interceptors.request.use(function (config) {
     return config;
 });
 
-axios.defaults.baseURL =
-    'http://atmosphere-api.eba-menjd7cv.eu-west-3.elasticbeanstalk.com';
+axios.defaults.baseURL = 'https://api-staging.atmosphere.space';
 
 export default axios;
