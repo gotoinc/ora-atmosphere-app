@@ -15,7 +15,7 @@
         {
             "name": "winter",
             "mediaType": "image",
-            "URL": "public/simulator/images/origin_Winter.png"
+            "URL": "simulator/images/origin_Winter.png"
         },
         {
             "name": "tony",
@@ -33,14 +33,14 @@
     "rooms": [
         {
             "name": "sky",
-            "scene_glb": "public/simulator/images/sky.glb",
-            "environment": "public/simulator/images/environment.env",
+            "scene_glb": "simulator/images/sky.glb",
+            "environment": "simulator/images/environment.env",
             "content": ["orange", "winter", "star", "menu"]
         },
         {
             "name": "expo",
-            "scene_glb": "public/simulator/images/expo.glb",
-            "people_glb": "public/simulator/images/people.glb",
+            "scene_glb": "simulator/images/expo.glb",
+            "people_glb": "simulator/images/people.glb",
             "content": [
                 "menu",
                 "star",
@@ -54,14 +54,14 @@
         },
         {
             "name": "aquarium",
-            "scene_glb": "public/simulator/images/aquarium.glb",
-            "environment": "public/simulator/images/environment.env",
+            "scene_glb": "simulator/images/aquarium.glb",
+            "environment": "simulator/images/environment.env",
             "content": ["orange", "winter", "star", "menu"]
         },
         {
             "name": "classroom",
-            "scene_glb": "public/simulator/images/classroom.glb",
-            "environment": "public/simulator/images/environment.env",
+            "scene_glb": "simulator/images/classroom.glb",
+            "environment": "simulator/images/environment.env",
             "content": ["orange", "winter", "star", "menu"]
         }
     ]

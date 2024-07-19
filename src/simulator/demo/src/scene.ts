@@ -26,7 +26,7 @@ import {
     ShadowGenerator,
 } from '@babylonjs/core';
 
-const s3_bucket = 'public/simulator/images/';
+const s3_bucket = 'simulator/images/';
 const default_room_glb_url = s3_bucket + 'expo.glb';
 const default_environment_url = s3_bucket + 'environment.env';
 const default_people_glb_url = s3_bucket + 'people.glb';
