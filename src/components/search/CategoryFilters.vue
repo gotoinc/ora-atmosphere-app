@@ -35,11 +35,12 @@
 
 <script setup lang="ts">
     import { computed } from 'vue';
+    import type { LocationQueryValue } from 'vue-router';
 
     import type { Category } from '@/ts/catalog';
 
     interface Props {
-        modelValue: number[];
+        modelValue: Array<number | LocationQueryValue>;
         categories: Category[];
         categoryClass?: string;
     }

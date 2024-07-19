@@ -87,7 +87,7 @@
                                 v-else-if="searchFilters.categories.length > 0"
                             >
                                 <category-filters
-                                    v-model="selectedCategories as number[]"
+                                    v-model="selectedCategories"
                                     :categories="searchFilters.categories"
                                 />
                             </template>
@@ -118,7 +118,7 @@
                             <template v-else-if="searchFilters">
                                 <fancy-carousel>
                                     <category-filters
-                                        v-model="selectedCategories as number[]"
+                                        v-model="selectedCategories"
                                         category-class="f-carousel__slide !w-fit !mr-5"
                                         :categories="searchFilters.categories"
                                     />

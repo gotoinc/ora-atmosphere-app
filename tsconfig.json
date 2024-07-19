@@ -17,7 +17,7 @@
         "paths": {
             "@/*": ["./src/*"],
             "@public/*": ["./public/*"],
-            "@simulator/*": ["./simulator/*"]
+            "@simulator/*": ["./src/simulator/*"]
         },
 
         /* Linting */
@@ -39,7 +39,7 @@
         "src/json-server/server.js",
         "./tailwind.config.ts",
         "./postcss.config.js",
-        "./vue-shim.d.ts",
+        "./vue-shim.d.ts"
     ],
     "references": [{ "path": "./tsconfig.node.json" }]
 }
