@@ -117,7 +117,9 @@
                 phone_number: phone.value,
             });
 
-            void router.push({ name: 'confirmSentView' });
+            toast.success('Registration has been completed');
+
+            void router.push({ name: 'signInView' });
 
             signUpStore.resetFirstStep();
             signUpStore.resetSecondStep();
