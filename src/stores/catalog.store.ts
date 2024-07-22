@@ -9,7 +9,7 @@ export const useCatalogStore = defineStore(
     'oraCatalog',
     () => {
         const selectedContent = ref<VideoContent>();
-        const contentToPlay = ref<VideoContent>();
+        const contentToPlay = ref<VideoContent | null>(null);
 
         const isContentPopupOpen = ref(false);
         const isSimulatorLoading = ref(false);
