@@ -16,7 +16,10 @@
                 Back
             </v-button>
 
-            <div class="fade-r banner__heading mt-[9.6vw] max-w-3xl">
+            <div
+                :class="{ 'max-w-3xl': contentToPlay }"
+                class="fade-r banner__heading mt-[9.6vw]"
+            >
                 <div class="mb-2 flex items-center gap-3">
                     <v-skeleton
                         v-if="isLoading"
@@ -118,14 +121,18 @@
     });
 
     onMounted(async () => {
-        if (!contentToPlay.value) {
-            isLoading.value = true;
+        isLoading.value = true;
 
-            try {
-                contentToPlay.value = await getDefaultContent();
-            } finally {
-                isLoading.value = false;
+        try {
+            const res = await getDefaultContent();
+
+            if (res) {
+                contentToPlay.value = res;
             }
+        } catch (e) {
+            contentToPlay.value = null;
+        } finally {
+            isLoading.value = false;
         }
     });
 </script>

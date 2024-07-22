@@ -19,7 +19,7 @@
             />
         </span>
 
-        <span class="text-xs font-semibold uppercase">
+        <span class="name text-xs font-semibold uppercase">
             {{ name }}
         </span>
 
@@ -67,4 +67,8 @@
     };
 </script>
 
-<style scoped></style>
+<style scoped lang="postcss">
+    .name {
+        word-break: break-word;
+    }
+</style>
