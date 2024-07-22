@@ -10,8 +10,8 @@ export async function initSimulator(
     video?: HTMLVideoElement
 ) {
     let libraryURL = window.location.href.includes('localhost')
-        ? 'public/simulator/library.json'
-        : 'https://akias53xj4ry2g2mrnok-coffre-s3-test.s3.eu-west-3.amazonaws.com/library.json';
+        ? '/public/simulator/library.json'
+        : '/simulator/library.json';
 
     let library = await initLibrary(libraryURL);
     let state = new URLState(library);

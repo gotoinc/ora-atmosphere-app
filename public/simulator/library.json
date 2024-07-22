@@ -15,7 +15,7 @@
         {
             "name": "winter",
             "mediaType": "image",
-            "URL": "public/simulator/images/origin_Winter.png"
+            "URL": "https://akias53xj4ry2g2mrnok-coffre-s3-test.s3.eu-west-3.amazonaws.com/origin_Winter.png"
         },
         {
             "name": "tony",
@@ -33,14 +33,14 @@
     "rooms": [
         {
             "name": "sky",
-            "scene_glb": "public/simulator/images/sky.glb",
-            "environment": "public/simulator/images/environment.env",
+            "scene_glb": "https://akias53xj4ry2g2mrnok-coffre-s3-test.s3.eu-west-3.amazonaws.com/sky.glb",
+            "environment": "https://akias53xj4ry2g2mrnok-coffre-s3-test.s3.eu-west-3.amazonaws.com/environment.env",
             "content": ["orange", "winter", "star", "menu"]
         },
         {
             "name": "expo",
-            "scene_glb": "public/simulator/images/expo.glb",
-            "people_glb": "public/simulator/images/people.glb",
+            "scene_glb": "https://akias53xj4ry2g2mrnok-coffre-s3-test.s3.eu-west-3.amazonaws.com/expo.glb",
+            "people_glb": "https://akias53xj4ry2g2mrnok-coffre-s3-test.s3.eu-west-3.amazonaws.com/people.glb",
             "content": [
                 "menu",
                 "star",
@@ -54,14 +54,14 @@
         },
         {
             "name": "aquarium",
-            "scene_glb": "public/simulator/images/aquarium.glb",
-            "environment": "public/simulator/images/environment.env",
+            "scene_glb": "https://akias53xj4ry2g2mrnok-coffre-s3-test.s3.eu-west-3.amazonaws.com/aquarium.glb",
+            "environment": "https://akias53xj4ry2g2mrnok-coffre-s3-test.s3.eu-west-3.amazonaws.com/environment.env",
             "content": ["orange", "winter", "star", "menu"]
         },
         {
             "name": "classroom",
-            "scene_glb": "public/simulator/images/classroom.glb",
-            "environment": "public/simulator/images/environment.env",
+            "scene_glb": "https://akias53xj4ry2g2mrnok-coffre-s3-test.s3.eu-west-3.amazonaws.com/classroom.glb",
+            "environment": "https://akias53xj4ry2g2mrnok-coffre-s3-test.s3.eu-west-3.amazonaws.com/environment.env",
             "content": ["orange", "winter", "star", "menu"]
         }
     ]
