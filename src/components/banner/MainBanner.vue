@@ -176,7 +176,7 @@
         }
 
         @media screen and (max-height: 768px) {
-            padding-bottom: 320px;
+            padding-bottom: 380px;
         }
 
         @media screen and (max-width: 1201px) {
