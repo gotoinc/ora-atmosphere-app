@@ -5,7 +5,7 @@
         <main-banner />
 
         <section class="bottom-section flex-grow bg-dark">
-            <div class="cont relative z-10 max-sm:!-mt-32">
+            <div class="cont relative z-10">
                 <router-view></router-view>
             </div>
         </section>
@@ -23,10 +23,6 @@
 </script>
 
 <style scoped lang="postcss">
-    main {
-        margin-top: -82px;
-    }
-
     .bottom-section {
         position: relative;
         z-index: 10;

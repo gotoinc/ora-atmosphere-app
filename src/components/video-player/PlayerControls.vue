@@ -312,21 +312,21 @@
 
     const handleAudio = (isAudioPlay: boolean) => {
         if (mainPlayer.value && audioElement.value) {
-            mainPlayer.value.muted = isAudioPlay;
+            mainPlayer.value.pause();
+            audioElement.value.pause();
 
+            mainPlayer.value.muted = isAudioPlay;
             audioElement.value.volume = volumeProgress.value;
 
             if (isAudioPlay) {
+                mainPlayer.value.pause();
+
                 audioElement.value.playbackRate = mainPlayer.value.speed;
                 audioElement.value.currentTime = mainPlayer.value.currentTime;
-
-                void audioElement.value.play();
             } else {
                 audioElement.value.pause();
                 mainPlayer.value.volume = volumeProgress.value;
             }
-
-            void mainPlayer.value.play();
         }
     };
 
@@ -422,6 +422,9 @@
 
                 mainPlayer.value.on('seeked', () => {
                     if (selectedAudioSrc.value) {
+                        audioElement.value!.pause();
+                        mainPlayer.value!.pause();
+
                         audioElement.value!.currentTime =
                             mainPlayer.value!.currentTime;
                     }
