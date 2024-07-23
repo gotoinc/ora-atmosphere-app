@@ -26,7 +26,7 @@
                             'saturate-0': isDisabled,
                         }"
                         :src="data.preview_image"
-                        class="img-cover transition-transform group-hover:scale-110"
+                        class="img-cover opacity-50 transition-transform group-hover:scale-110"
                         :alt="data.title"
                     />
                 </div>
@@ -65,7 +65,7 @@
                                 'text-grey-150': isDisabled,
                                 'text-primary-50': !isDisabled,
                             }"
-                            class="text-h3 max-xl:text-h5 max-mob-lg:text-h4"
+                            class="text-h4 max-xl:text-h5 max-mob-lg:text-h4"
                         >
                             {{ data.title }}
                         </h3>

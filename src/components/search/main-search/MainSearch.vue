@@ -385,7 +385,7 @@
         if (value) searchValue.value = value;
 
         if (
-            value ||
+            searchValue.value ||
             selectedTags.value.length > 0 ||
             selectedLangs.value.length > 0 ||
             selectedCategories.value.length > 0

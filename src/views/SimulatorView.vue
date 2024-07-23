@@ -191,7 +191,7 @@
                 const { simulator } = await initSimulator(
                     simulatorElement.value,
                     videoSrc.value,
-                    'video',
+                    mediaType.value,
                     videoElement.value
                 );
 

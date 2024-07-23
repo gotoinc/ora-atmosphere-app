@@ -10,7 +10,7 @@
                 v-if="showBackLink"
                 variant="text"
                 :icon="IconChevronLeft"
-                class="!pl-0 max-2lg:mb-10"
+                class="!pl-0"
                 @click="router.go(-1)"
             >
                 Back
@@ -18,7 +18,7 @@
 
             <div
                 :class="{ 'max-w-3xl': contentToPlay }"
-                class="fade-r banner__heading mt-[9.6vw]"
+                class="fade-r banner__heading mt-[182px] max-2lg:mt-10"
             >
                 <div class="mb-2 flex items-center gap-3">
                     <v-skeleton
@@ -53,14 +53,14 @@
 
                 <h1
                     v-else-if="contentToPlay"
-                    class="text-7xl font-extrabold max-2lg:text-[64px]"
+                    class="line-camp-3 text-7xl font-extrabold max-2lg:text-5xl"
                 >
                     {{ contentToPlay.title }}
                 </h1>
 
                 <div
                     v-if="contentToPlay && !isLoading"
-                    class="fade-t mt-8 flex gap-4"
+                    class="fade-t mt-8 flex flex-wrap gap-4"
                 >
                     <v-button
                         :loading="isSimulatorLoading"
@@ -176,7 +176,7 @@
         }
 
         @media screen and (max-height: 768px) {
-            padding-bottom: 380px;
+            padding-bottom: 320px;
         }
 
         @media screen and (max-width: 1201px) {

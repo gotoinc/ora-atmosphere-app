@@ -55,6 +55,8 @@
     import { useCatalogStore } from '@/stores/catalog.store.ts';
     import { useSearchStore } from '@/stores/search.store.ts';
 
+    // TODO: load videos by topic
+    // import { getTopicVideos } from '@/api/contents/get-topic-videos.api.ts';
     import { getVideos } from '@/api/contents/get-videos.api.ts';
     import type { SearchBody } from '@/api/search/search-contents.api.ts';
     import { searchContents } from '@/api/search/search-contents.api.ts';
