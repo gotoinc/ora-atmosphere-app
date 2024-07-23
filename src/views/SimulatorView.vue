@@ -86,7 +86,6 @@
 <script setup lang="ts">
     import { onMounted, onUnmounted, ref } from 'vue';
     import { useRouter } from 'vue-router';
-    import { useToast } from 'vue-toastification';
     import IconCross from '@img/icons/cross.svg?component';
     import type { Simulator } from '@simulator/demo';
     import { initSimulator } from '@simulator/demo/src';
@@ -99,14 +98,11 @@
     import { storeToRefs } from 'pinia';
     import { useCatalogStore } from '@/stores/catalog.store.ts';
 
-    import { getBlobFile } from '@/api/contents/get-file.api.ts';
-    import { useFileType } from '@/hooks/useFileType.ts';
     import { plyrOptions } from '@/libs/plyr/plyr-options.ts';
 
     type SphereDiameter = 100 | 80 | 60;
 
     const router = useRouter();
-    const toast = useToast();
 
     const { contentToPlay, isSimulatorLoading } =
         storeToRefs(useCatalogStore());
@@ -115,7 +111,7 @@
     const simulatorContainer = ref<HTMLDivElement>();
     const videoElement = ref<HTMLVideoElement>();
     const videoSrc = ref('');
-    const mediaType = ref<'video' | 'image'>();
+    const mediaType = ref<'video' | 'image'>('video');
 
     const activeDiameter = ref<SphereDiameter>(80);
     const simulatorInstance = ref<Simulator | null>(null);
@@ -151,19 +147,10 @@
         }
     };
 
-    const loadVideoFile = async () => {
+    const loadVideoFile = () => {
+        // TODO: load media type for simulator
         if (contentToPlay.value) {
-            try {
-                const blob = await getBlobFile(contentToPlay.value.file);
-
-                if (blob) {
-                    videoSrc.value = URL.createObjectURL(blob);
-                    mediaType.value = useFileType(blob);
-                }
-            } catch (e) {
-                toast.error('Content is not found');
-                closePage();
-            }
+            videoSrc.value = contentToPlay.value.file;
         }
     };
 
@@ -185,9 +172,9 @@
         }
 
         if (simulatorElement.value) {
-            await loadVideoFile();
+            loadVideoFile();
 
-            if (videoSrc.value && mediaType.value) {
+            if (videoSrc.value) {
                 const { simulator } = await initSimulator(
                     simulatorElement.value,
                     videoSrc.value,
