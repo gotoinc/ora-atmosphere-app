@@ -28,6 +28,16 @@ export const useCatalogStore = defineStore(
             void router.push({ name: 'simulatorView' });
         };
 
+        const ensureFullUrl = (path: string) => {
+            const baseUrl = 'http://127.0.0.1:8000';
+
+            if (!/^https?:\/\//i.test(path)) {
+                return `${baseUrl}${path}`;
+            }
+
+            return path;
+        };
+
         return {
             isDescriptionOpen,
             selectedContent,
@@ -37,6 +47,7 @@ export const useCatalogStore = defineStore(
             contentToPlay,
             playSimulator,
             openVideoPopup,
+            ensureFullUrl,
         };
     },
     {

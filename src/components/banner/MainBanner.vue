@@ -139,7 +139,7 @@
 
 <style scoped lang="postcss">
     .banner {
-        padding-bottom: 37vh;
+        padding-bottom: 43vh;
         max-height: 1080px;
         min-height: 900px;
         height: 100vh;
@@ -176,7 +176,7 @@
         }
 
         @media screen and (max-height: 768px) {
-            padding-bottom: 380px;
+            padding-bottom: 360px;
         }
 
         @media screen and (max-width: 1201px) {
