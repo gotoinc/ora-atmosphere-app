@@ -144,11 +144,10 @@
                         {{ data.title }}
                     </h3>
 
-                    <div class="video-card__text mb-8 overflow-y-auto pr-2.5">
-                        <p>
-                            {{ data.description }}
-                        </p>
-                    </div>
+                    <div
+                        ref="descriptionContainer"
+                        class="video-card__text prose-sm mb-8 overflow-y-auto pr-2.5"
+                    ></div>
 
                     <ul v-if="data.tags" class="flex flex-wrap gap-2">
                         <li
@@ -214,6 +213,7 @@
     const isDisabled = computed(() => props.disable && !isAuthenticated.value);
 
     const descriptionElement = ref<HTMLDivElement | null>(null);
+    const descriptionContainer = ref<HTMLDivElement | null>(null);
     const descriptionElementHeight = ref(0);
 
     const reference = ref<HTMLElement | null>(null);
@@ -236,6 +236,10 @@
                 : 0);
 
     onMounted(() => {
+        if (descriptionContainer.value && props.data.description) {
+            descriptionContainer.value.innerHTML = props.data.description;
+        }
+
         setHeight();
     });
 </script>

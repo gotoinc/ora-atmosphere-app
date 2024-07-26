@@ -23,6 +23,20 @@ input {
     @apply rounded-3xl border border-solid border-white-100;
 }
 
+.prose-sm {
+    ul {
+        list-style: disc;
+    }
+
+    ol {
+        list-style: decimal;
+    }
+
+    a {
+        @apply text-primary-50 underline;
+    }
+}
+
 .tag {
     @apply rounded-3xl border border-solid border-white-100 cursor-pointer overflow-hidden px-4 py-1 text-sm font-semibold lowercase transition-colors xl:hover:bg-white-100 xl:hover:text-dark;
 
