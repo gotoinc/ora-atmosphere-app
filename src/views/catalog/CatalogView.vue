@@ -46,7 +46,9 @@
                             }"
                             :img="group.image"
                             :name="group.name"
-                            :disable="group.requires_auth"
+                            :disable="
+                                category.requires_auth || group.requires_auth
+                            "
                         />
                     </fancy-carousel>
                 </div>
@@ -85,7 +87,7 @@
     const toast = useToast();
 
     const isCatalogLink = (category: Category, length: number) => {
-        return length > 10
+        return length > 10 && !category.requires_auth
             ? {
                   name: 'catalogCategoryView',
                   params: {

@@ -398,7 +398,8 @@
             if (mainPlayer.value && audioElement.value) {
                 // Pause audio with player
                 mainPlayer.value.on('pause', () => {
-                    if (selectedAudioSrc.value) audioElement.value!.pause();
+                    if (selectedAudioSrc.value && audioElement.value)
+                        audioElement.value.pause();
                 });
 
                 // Play audio with player

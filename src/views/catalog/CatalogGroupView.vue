@@ -49,7 +49,10 @@
     import CardSkeleton from '@/components/catalog/CardSkeleton.vue';
     import CategoryCard from '@/components/catalog/CategoryCard.vue';
 
-    import { getGroupTopics } from '@/api/catalog/get-topics.api.ts';
+    import { storeToRefs } from 'pinia';
+    import { useCatalogStore } from '@/stores/catalog.store.ts';
+
+    import { getGroup } from '@/api/catalog/get-group.api.ts';
     import {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         useTransformFromPath,
@@ -60,6 +63,8 @@
     const route = useRoute();
     const toast = useToast();
 
+    const { currentGroup } = storeToRefs(useCatalogStore());
+
     const isGroupPage = computed(() => route.name === 'catalogGroupView');
 
     const isLoading = ref(true);
@@ -67,9 +72,12 @@
 
     const loadTopics = async () => {
         try {
-            const res = await getGroupTopics(route.params.groupId as string);
+            const res = await getGroup(route.params.groupId as string);
 
-            topicData.value = res ?? [];
+            if (res) {
+                topicData.value = res.topics;
+                currentGroup.value = res;
+            }
         } catch (err) {
             toast.error('Themes were not found');
         } finally {
@@ -84,8 +92,10 @@
     });
 
     onMounted(() => {
-        if (isGroupPage.value) {
-            void loadTopics();
+        if (isGroupPage.value && currentGroup.value) {
+            topicData.value = currentGroup.value.topics;
+
+            isLoading.value = false;
         }
     });
 </script>
