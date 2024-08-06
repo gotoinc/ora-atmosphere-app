@@ -29,14 +29,14 @@
         padding-bottom: 105px;
 
         .cont {
-            margin-top: -28vh;
+            margin-top: -35vh;
 
             @media screen and (min-height: 1080px) {
-                margin-top: -264px;
+                margin-top: -380px;
             }
 
             @media screen and (max-height: 768px) {
-                margin-top: -272px;
+                margin-top: -200px;
             }
 
             @media screen and (max-width: 1201px) {

@@ -31,4 +31,6 @@ axios.defaults.baseURL = 'https://api-staging.atmosphere.space';
 
 export const cleanAxios = axios.create();
 
+export const cleanAxios = axios.create();
+
 export default axios;

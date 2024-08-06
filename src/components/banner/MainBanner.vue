@@ -10,7 +10,7 @@
                 v-if="showBackLink"
                 variant="text"
                 :icon="IconChevronLeft"
-                class="!pl-0"
+                class="!absolute top-20 !pl-0 max-2lg:top-10"
                 @click="router.go(-1)"
             >
                 Back
@@ -18,7 +18,7 @@
 
             <div
                 :class="{ 'max-w-3xl': contentToPlay }"
-                class="fade-r banner__heading mt-[182px] max-2lg:mt-10"
+                class="fade-r banner__heading"
             >
                 <div class="mb-2 flex items-center gap-3">
                     <v-skeleton
@@ -139,13 +139,13 @@
 
 <style scoped lang="postcss">
     .banner {
-        padding-bottom: 37vh;
+        padding-bottom: 34vh;
         max-height: 1080px;
         min-height: 900px;
         height: 100vh;
 
         .cont {
-            min-height: 468px;
+            min-height: 430px;
         }
 
         &__img {
@@ -172,11 +172,11 @@
         }
 
         @media screen and (min-height: 1080px) {
-            padding-bottom: 455px;
+            padding-bottom: 370px;
         }
 
         @media screen and (max-height: 768px) {
-            padding-bottom: 320px;
+            padding-bottom: 235px;
         }
 
         @media screen and (max-width: 1201px) {

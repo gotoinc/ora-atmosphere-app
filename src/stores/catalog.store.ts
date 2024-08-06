@@ -28,6 +28,7 @@ export const useCatalogStore = defineStore(
             void router.push({ name: 'simulatorView' });
         };
 
+   
         return {
             isDescriptionOpen,
             selectedContent,

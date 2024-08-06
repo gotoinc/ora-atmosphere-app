@@ -18,7 +18,7 @@
                 class="video-card__bg relative flex h-full w-full items-center justify-center overflow-hidden rounded-2xl bg-primary-dark p-2 text-center text-h2 transition-all max-xl:h-[180px] max-xl:rounded-b-none max-xl:text-h3"
             >
                 <div
-                    class="absolute left-0 top-0 -z-10 z-10 h-full w-full before:absolute before:left-0 before:top-0 before:z-10 before:h-full before:w-full before:content-normal before:bg-primary-100/35"
+                    class="absolute left-0 top-0 z-10 h-full w-full before:absolute before:left-0 before:top-0 before:z-10 before:h-full before:w-full before:content-normal before:bg-primary-100/35"
                 >
                     <img
                         v-if="data.preview_image"
@@ -65,7 +65,7 @@
                                 'text-grey-150': isDisabled,
                                 'text-primary-50': !isDisabled,
                             }"
-                            class="text-h4 max-xl:text-h5 max-mob-lg:text-h4"
+                            class="text-left text-h4 max-xl:text-h5 max-mob-lg:text-h4"
                         >
                             {{ data.title }}
                         </h3>
@@ -301,6 +301,17 @@
                     .video-card__content {
                         opacity: 1;
                         visibility: visible;
+                    }
+                }
+            }
+        }
+
+        @media screen and (min-width: 1920px) {
+            &.expand {
+                &:hover:not(.disable) {
+                    .video-card__wrap {
+                        min-width: 460px;
+                        height: 250px;
                     }
                 }
             }
