@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import { defineStore } from 'pinia';
 
 import router from '@/router';
+import type { Group, Topic } from '@/ts/catalog';
 import type { VideoContent } from '@/ts/contents';
 
 export const useCatalogStore = defineStore(
@@ -16,6 +17,9 @@ export const useCatalogStore = defineStore(
         const isVideoPlayerOpened = ref(false);
         const isDescriptionOpen = ref(false);
 
+        const currentGroup = ref<Group>();
+        const currentTopic = ref<Topic>();
+
         const openVideoPopup = (content: VideoContent) => {
             isContentPopupOpen.value = true;
             isDescriptionOpen.value = true;
@@ -28,7 +32,6 @@ export const useCatalogStore = defineStore(
             void router.push({ name: 'simulatorView' });
         };
 
-   
         return {
             isDescriptionOpen,
             selectedContent,
@@ -36,6 +39,8 @@ export const useCatalogStore = defineStore(
             isContentPopupOpen,
             isVideoPlayerOpened,
             contentToPlay,
+            currentGroup,
+            currentTopic,
             playSimulator,
             openVideoPopup,
         };
