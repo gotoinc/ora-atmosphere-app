@@ -65,7 +65,7 @@
                                 'text-grey-150': isDisabled,
                                 'text-primary-50': !isDisabled,
                             }"
-                            class="text-h4 max-xl:text-h5 max-mob-lg:text-h4"
+                            class="text-left text-h4 max-xl:text-h5 max-mob-lg:text-h4"
                         >
                             {{ data.title }}
                         </h3>
