@@ -264,6 +264,7 @@
 
     import { getCategories } from '@/api/catalog/get-categories.api.ts';
     import { getLanguages } from '@/api/search/get-languages.api.ts';
+    import searchTags from '@/constants/search-tags.ts';
     import { useClickOutsideElement } from '@/hooks/useClickOutsideElement.ts';
     import type { SearchFilters } from '@/ts/search';
 
@@ -342,12 +343,7 @@
             try {
                 searchFilters.categories = (await getCategories()) ?? [];
                 searchFilters.langs = (await getLanguages()) ?? [];
-                searchFilters.tags = [
-                    'sport',
-                    'entertainment',
-                    'art',
-                    'science',
-                ];
+                searchFilters.tags = [...searchTags];
             } finally {
                 isFiltersLoading.value = false;
                 isLoaded = true;

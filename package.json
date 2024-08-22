@@ -18,7 +18,7 @@
         "@floating-ui/vue": "^1.0.6",
         "@types/js-cookie": "^3.0.6",
         "@vee-validate/yup": "^4.13.0",
-        "axios": "^1.7.2",
+        "axios": "^1.7.4",
         "body-scroll-lock": "4.0.0-beta.0",
         "browserlist": "^1.0.1",
         "js-cookie": "^3.0.5",

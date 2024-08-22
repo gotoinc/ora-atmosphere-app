@@ -46,7 +46,7 @@ export const useAuthStore = defineStore('auth', () => {
 
             if (res) {
                 Cookies.set('ora_auth', res.key, {
-                    expires: remember ? 14 : undefined,
+                    expires: remember ? 14 : 1 / 48,
                     sameSite: 'Strict',
                     secure: true,
                 });
