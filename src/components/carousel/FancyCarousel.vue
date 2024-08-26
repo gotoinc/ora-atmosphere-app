@@ -30,7 +30,47 @@
     });
 
     onMounted(() => {
-        new Carousel(carouselElement.value, options);
+        if (
+            carouselElement.value &&
+            typeof carouselElement.value !== 'string'
+        ) {
+            const fancybox = new Carousel(carouselElement.value, options);
+
+            let touchStartX = 0;
+            let touchEndX = 0;
+
+            const checkSwipe = () => {
+                if (touchEndX < touchStartX) {
+                    fancybox.slideNext();
+                }
+                if (touchEndX > touchStartX) {
+                    fancybox.slidePrev();
+                }
+            };
+
+            carouselElement.value.addEventListener(
+                'wheel',
+                (event: WheelEvent) => {
+                    if (event.deltaX > 0) {
+                        fancybox.slideNext();
+                    } else if (event.deltaX < 0) {
+                        fancybox.slidePrev();
+                    }
+                }
+            );
+
+            carouselElement.value.addEventListener(
+                'touchstart',
+                (event: TouchEvent) => {
+                    touchStartX = event.changedTouches[0].screenX;
+                }
+            );
+
+            carouselElement.value.addEventListener('touchend', (event) => {
+                touchEndX = event.changedTouches[0].screenX;
+                checkSwipe();
+            });
+        }
     });
 </script>
 
