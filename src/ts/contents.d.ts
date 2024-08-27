@@ -6,7 +6,7 @@ export interface VideoContent {
     title: string;
     description?: string;
     file: string;
-    languages: Identifiable[];
+    language: Identifiable;
     requires_auth: boolean;
     preview_image: string;
     audio_enabled: boolean;

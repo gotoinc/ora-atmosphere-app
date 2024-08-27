@@ -14,4 +14,5 @@ export interface Audio {
     video: VideoContent;
     duration: number;
     size: number;
+    language: Identifiable;
 }

@@ -66,6 +66,7 @@
                     :container="simulatorContainer"
                     :player="player"
                     :title="contentToPlay.title"
+                    :default-language="contentToPlay.language"
                     :audios="contentToPlay.audios"
                     class="plyr--full-ui absolute bottom-0 left-0 w-full px-4 pb-10"
                 />

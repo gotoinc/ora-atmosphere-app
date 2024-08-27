@@ -86,11 +86,11 @@
 
                 <div class="flex flex-wrap items-center justify-between gap-4">
                     <ul
-                        v-if="data.languages.length > 0"
+                        v-if="data.language"
                         class="languages flex flex-wrap items-center gap-1.5"
                     >
                         <li
-                            v-for="lang in data.languages"
+                            v-for="lang in getAllLanguages(data)"
                             :key="lang.id"
                             class="tag tag--lang pointer-events-none"
                         >
@@ -218,6 +218,18 @@
 
     const reference = ref<HTMLElement | null>(null);
     const tooltip = ref<HTMLElement | null>(null);
+
+    const getAllLanguages = (video: VideoContent) => {
+        if (!video.audios) {
+            return [];
+        }
+
+        const audioLangs = video.audios
+            .map((audio) => audio.language)
+            .filter((item) => item.id !== video.language.id);
+
+        return [video.language, ...audioLangs];
+    };
 
     const { floatingStyles } = useFloatingTooltip(reference, tooltip);
 

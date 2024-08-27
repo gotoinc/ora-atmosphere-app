@@ -104,7 +104,7 @@
                 <div class="controls-grid">
                     <!-- Audio -->
                     <div
-                        v-if="audios && audios.length > 0"
+                        v-if="audiosFiltered && audiosFiltered.length > 0"
                         class="control--action control relative w-full max-md:static"
                     >
                         <button type="button" class="control" data-plyr="speed">
@@ -122,16 +122,36 @@
 
                             <div class="grid grid-cols-2 gap-x-10">
                                 <button
-                                    v-for="{ file, name, id } in audios"
+                                    v-if="defaultLanguage"
+                                    class="lang-btn"
+                                    :class="{
+                                        active: isDefaultAudioSelected,
+                                    }"
+                                    @click="selectDefaultAudio"
+                                >
+                                    <span class="line-camp-2">
+                                        {{ defaultLanguage.name }}
+                                        [Original]
+                                    </span>
+                                </button>
+
+                                <button
+                                    v-for="{
+                                        file,
+                                        id,
+                                        language,
+                                    } in audiosFiltered"
                                     :key="id"
                                     class="lang-btn"
                                     :class="{
-                                        active: selectedAudioSrc === file,
+                                        active:
+                                            selectedAudioSrc === file &&
+                                            !isDefaultAudioSelected,
                                     }"
                                     @click="changeAudioSrc(file)"
                                 >
                                     <span class="line-camp-2">
-                                        {{ name }}
+                                        {{ language.name }}
                                     </span>
                                 </button>
                             </div>
@@ -256,7 +276,7 @@
     import { isIOS } from '@/utils/navigator.utils.ts';
 
     import 'plyr/dist/plyr.css';
-    import type { Audio } from '@/ts/common';
+    import type { Audio, Identifiable } from '@/ts/common';
 
     interface Props {
         title: string;
@@ -264,6 +284,7 @@
         fullscreen?: boolean;
         container?: HTMLElement;
         audios?: Audio[];
+        defaultLanguage?: Identifiable;
         muted?: boolean;
         audioEnabled?: boolean;
     }
@@ -279,6 +300,16 @@
     const audioElement = ref<HTMLAudioElement>();
     const selectedAudioSrc = ref('');
 
+    const audiosFiltered = computed(() =>
+        props.audios?.filter(
+            (audio) =>
+                props.defaultLanguage &&
+                audio.language.id !== props.defaultLanguage.id
+        )
+    );
+
+    const isDefaultAudioSelected = ref(true);
+
     const isFullScreenActive = ref(false);
 
     // Speed options
@@ -293,15 +324,16 @@
 
     changeSpeed(1);
 
+    const selectDefaultAudio = () => {
+        isDefaultAudioSelected.value = true;
+
+        selectedAudioSrc.value = '';
+        handleAudio(false);
+    };
+
     const changeAudioSrc = (src: string) => {
         if (audioElement.value) {
-            if (selectedAudioSrc.value === src) {
-                selectedAudioSrc.value = '';
-
-                handleAudio(false);
-
-                return;
-            }
+            isDefaultAudioSelected.value = false;
 
             selectedAudioSrc.value = src;
             audioElement.value.src = src;
