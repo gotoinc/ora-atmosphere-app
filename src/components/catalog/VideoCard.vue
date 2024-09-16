@@ -49,7 +49,8 @@
                             :class="{
                                 'bg-white-75 text-grey-100': isDisabled,
                                 'bg-white-100 text-primary-100': !isDisabled,
-                                'pointer-events-none opacity-50': !data.file,
+                                'pointer-events-none opacity-50':
+                                    !data.video_files.length,
                             }"
                             class="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full transition-colors hover:bg-white-75"
                             @click.stop="emits('play')"
@@ -85,16 +86,13 @@
                 </div>
 
                 <div class="flex flex-wrap items-center justify-between gap-4">
-                    <ul
-                        v-if="data.language"
-                        class="languages flex flex-wrap items-center gap-1.5"
-                    >
+                    <ul class="languages flex flex-wrap items-center gap-1.5">
                         <li
-                            v-for="lang in getAllLanguages(data)"
-                            :key="lang.id"
+                            v-for="(lang, idx) in getAllLanguages(data)"
+                            :key="idx"
                             class="tag tag--lang pointer-events-none"
                         >
-                            {{ lang.name }}
+                            {{ lang }}
                         </li>
                     </ul>
 
@@ -220,15 +218,11 @@
     const tooltip = ref<HTMLElement | null>(null);
 
     const getAllLanguages = (video: VideoContent) => {
-        if (!video.audios) {
-            return [];
-        }
+        const audioLangs =
+            video.audios?.map((audio) => audio.language.name) ?? [];
+        const videoLangs = video.video_files.map((item) => item.language.name);
 
-        const audioLangs = video.audios
-            .map((audio) => audio.language)
-            .filter((item) => item.id !== video.language.id);
-
-        return [video.language, ...audioLangs];
+        return Array.from(new Set([...audioLangs, ...videoLangs]));
     };
 
     const { floatingStyles } = useFloatingTooltip(reference, tooltip);

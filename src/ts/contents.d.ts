@@ -5,8 +5,7 @@ export interface VideoContent {
     id: number;
     title: string;
     description?: string;
-    file: string;
-    language: Identifiable;
+    video_files: VideoFile[];
     requires_auth: boolean;
     preview_image: string;
     audio_enabled: boolean;
@@ -18,4 +17,9 @@ export interface VideoContent {
     topic: Topic;
     audios?: Audio[];
     tags?: string;
+}
+
+export interface VideoFile {
+    file: string;
+    language: Identifiable;
 }

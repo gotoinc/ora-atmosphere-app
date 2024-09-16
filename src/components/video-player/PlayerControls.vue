@@ -55,7 +55,7 @@
                     <!-- Volume -->
                     <div class="volume__control control control--action">
                         <button
-                            v-if="audioEnabled"
+                            v-if="content.audio_enabled"
                             type="button"
                             aria-label="Mute"
                             class="h-full w-full"
@@ -98,13 +98,13 @@
                 </div>
 
                 <h3 class="text-xl max-sm:hidden">
-                    {{ title }}
+                    {{ content.title }}
                 </h3>
 
                 <div class="controls-grid">
                     <!-- Audio -->
                     <div
-                        v-if="audiosFiltered && audiosFiltered.length > 0"
+                        v-if="audios && audios.length > 0"
                         class="control--action control relative w-full max-md:static"
                     >
                         <button type="button" class="control" data-plyr="speed">
@@ -122,7 +122,7 @@
 
                             <div class="grid grid-cols-2 gap-x-10">
                                 <button
-                                    v-if="defaultLanguage"
+                                    v-if="defaultAudio"
                                     class="lang-btn"
                                     :class="{
                                         active: isDefaultAudioSelected,
@@ -130,28 +130,24 @@
                                     @click="selectDefaultAudio"
                                 >
                                     <span class="line-camp-2">
-                                        {{ defaultLanguage.name }}
+                                        {{ defaultAudio.language.name }}
                                         [Original]
                                     </span>
                                 </button>
 
                                 <button
-                                    v-for="{
-                                        file,
-                                        id,
-                                        language,
-                                    } in audiosFiltered"
-                                    :key="id"
+                                    v-for="(item, idx) in audios"
+                                    :key="idx"
                                     class="lang-btn"
                                     :class="{
                                         active:
-                                            selectedAudioSrc === file &&
+                                            selectedAudioSrc === item.file &&
                                             !isDefaultAudioSelected,
                                     }"
-                                    @click="changeAudioSrc(file)"
+                                    @click="changeAudioSrc(item)"
                                 >
                                     <span class="line-camp-2">
-                                        {{ language.name }}
+                                        {{ item.language.name }}
                                     </span>
                                 </button>
                             </div>
@@ -276,20 +272,24 @@
     import { isIOS } from '@/utils/navigator.utils.ts';
 
     import 'plyr/dist/plyr.css';
-    import type { Audio, Identifiable } from '@/ts/common';
+    import type { Audio } from '@/ts/common';
+    import type { VideoContent, VideoFile } from '@/ts/contents';
 
     interface Props {
-        title: string;
+        content: VideoContent;
         player?: Plyr;
         fullscreen?: boolean;
         container?: HTMLElement;
-        audios?: Audio[];
-        defaultLanguage?: Identifiable;
         muted?: boolean;
         audioEnabled?: boolean;
     }
 
+    interface Emits {
+        (e: 'change-src', value: string): void;
+    }
+
     const props = defineProps<Props>();
+    const emits = defineEmits<Emits>();
 
     const mainPlayer = computed<Plyr | undefined>(() => props.player);
 
@@ -299,14 +299,15 @@
 
     const audioElement = ref<HTMLAudioElement>();
     const selectedAudioSrc = ref('');
+    const selectedSource = ref<Audio | VideoFile>();
 
-    const audiosFiltered = computed(() =>
-        props.audios?.filter(
-            (audio) =>
-                props.defaultLanguage &&
-                audio.language.id !== props.defaultLanguage.id
-        )
-    );
+    const audios = computed(() => {
+        return props.content.video_files.length > 1
+            ? props.content.video_files.slice(1)
+            : props.content.audios;
+    });
+
+    const defaultAudio = computed(() => props.content.video_files[0]);
 
     const isDefaultAudioSelected = ref(true);
 
@@ -315,6 +316,9 @@
     // Speed options
     const speedOptions = [0.5, 0.75, 1, 1.25, 1.5];
     const activeSpeed = ref(speedOptions[2]);
+
+    const isAudioSource = (item?: Audio | VideoFile): item is Audio =>
+        !!item && item.hasOwnProperty('video');
 
     const changeSpeed = (option: number) => {
         activeSpeed.value = option;
@@ -326,25 +330,41 @@
 
     const selectDefaultAudio = () => {
         isDefaultAudioSelected.value = true;
-
         selectedAudioSrc.value = '';
-        handleAudio(false);
+
+        selectedSource.value = defaultAudio.value;
+
+        if (audios.value) {
+            if (isAudioSource(audios.value[0])) {
+                handleAudio(false);
+            } else {
+                selectedSource.value = defaultAudio.value;
+                emits('change-src', defaultAudio.value.file);
+            }
+        }
     };
 
-    const changeAudioSrc = (src: string) => {
-        if (audioElement.value) {
-            isDefaultAudioSelected.value = false;
+    const changeAudioSrc = (item: Audio | VideoFile) => {
+        selectedAudioSrc.value = item.file;
+        selectedSource.value = item;
+        isDefaultAudioSelected.value = false;
 
-            selectedAudioSrc.value = src;
-            audioElement.value.src = src;
+        if (mainPlayer.value) {
+            mainPlayer.value.pause();
+        }
 
-            handleAudio(true);
+        if (isAudioSource(item)) {
+            if (audioElement.value) {
+                audioElement.value.src = item.file;
+                handleAudio(true);
+            }
+        } else {
+            emits('change-src', item.file);
         }
     };
 
     const handleAudio = (isAudioPlay: boolean) => {
         if (mainPlayer.value && audioElement.value) {
-            mainPlayer.value.pause();
             audioElement.value.pause();
 
             mainPlayer.value.muted = isAudioPlay;
@@ -430,7 +450,10 @@
             if (mainPlayer.value && audioElement.value) {
                 // Pause audio with player
                 mainPlayer.value.on('pause', () => {
-                    if (selectedAudioSrc.value && audioElement.value)
+                    if (
+                        isAudioSource(selectedSource.value) &&
+                        audioElement.value
+                    )
                         audioElement.value.pause();
                 });
 
@@ -440,21 +463,21 @@
                         mainPlayer.value!.volume = volumeProgress.value;
                     }
 
-                    if (selectedAudioSrc.value) {
+                    if (isAudioSource(selectedSource.value)) {
                         mainPlayer.value!.muted = true;
                         void audioElement.value!.play();
                     }
                 });
 
                 mainPlayer.value.on('ratechange', () => {
-                    if (selectedAudioSrc.value) {
+                    if (isAudioSource(selectedSource.value)) {
                         audioElement.value!.playbackRate =
                             mainPlayer.value!.speed;
                     }
                 });
 
                 mainPlayer.value.on('seeked', () => {
-                    if (selectedAudioSrc.value) {
+                    if (isAudioSource(selectedSource.value)) {
                         audioElement.value!.pause();
                         mainPlayer.value!.pause();
 

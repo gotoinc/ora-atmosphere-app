@@ -5,15 +5,15 @@
         crossorigin="anonymous"
         playsinline
     >
-        <source :src="contentToPlay.file" />
+        <source :src="contentToPlay.video_files[0].file" />
     </video>
 
     <div v-if="contentToPlay" ref="controls">
         <player-controls
-            :title="contentToPlay.title"
-            :audios="contentToPlay.audios"
-            fullscree
+            :content="contentToPlay"
+            fullscreen
             :player="player"
+            @change-src="changeVideoSrc"
         />
 
         <button
@@ -79,6 +79,12 @@
     const closePlayer = () => {
         player.value?.pause();
         emits('close');
+    };
+
+    const changeVideoSrc = (src: string) => {
+        if (videoElement.value) {
+            videoElement.value.src = src;
+        }
     };
 
     onMounted(() => {

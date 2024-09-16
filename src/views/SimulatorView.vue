@@ -62,13 +62,11 @@
             <div v-if="contentToPlay" ref="controls">
                 <player-controls
                     :muted="isMuted"
-                    :audio-enabled="contentToPlay.audio_enabled"
+                    :content="contentToPlay"
                     :container="simulatorContainer"
                     :player="player"
-                    :title="contentToPlay.title"
-                    :default-language="contentToPlay.language"
-                    :audios="contentToPlay.audios"
                     class="plyr--full-ui absolute bottom-0 left-0 w-full px-4 pb-10"
+                    @change-src="changeVideoSrc"
                 />
             </div>
 
@@ -151,7 +149,7 @@
     const loadVideoFile = () => {
         // TODO: load media type for simulator
         if (contentToPlay.value) {
-            videoSrc.value = contentToPlay.value.file;
+            videoSrc.value = contentToPlay.value.video_files[0].file;
         }
     };
 
@@ -163,6 +161,16 @@
                 resolve();
             });
         });
+    };
+
+    const changeVideoSrc = (src: string) => {
+        videoSrc.value = src;
+
+        if (simulatorInstance.value?.video) {
+            simulatorInstance.value.video.src = src;
+            simulatorInstance.value.video.pause();
+            player.value?.pause();
+        }
     };
 
     onMounted(async () => {

@@ -24,7 +24,7 @@
             </router-link>
         </p>
 
-        <p class="text-grey-100">
+        <p v-if="false" class="text-grey-100">
             This page is protected by Google reCAPTCHA to ensure you're not a
             bot.
             <a
