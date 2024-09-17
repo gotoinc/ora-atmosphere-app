@@ -66,7 +66,10 @@
                         :loading="isSimulatorLoading"
                         variant="white"
                         :icon="IconPlay"
-                        :disabled="!contentToPlay.video_files.length"
+                        :disabled="
+                            contentToPlay.video_files &&
+                            !contentToPlay.video_files.length
+                        "
                         icon-class="!w-2.5 !h-3 mr-2"
                         @click="catalogStore.playSimulator"
                     >

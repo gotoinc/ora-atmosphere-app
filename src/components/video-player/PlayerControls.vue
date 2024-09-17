@@ -463,6 +463,8 @@
                         mainPlayer.value!.volume = volumeProgress.value;
                     }
 
+                    mainPlayer.value!.speed = activeSpeed.value;
+
                     if (isAudioSource(selectedSource.value)) {
                         mainPlayer.value!.muted = true;
                         void audioElement.value!.play();
