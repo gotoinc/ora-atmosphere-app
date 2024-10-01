@@ -53,9 +53,11 @@
                     </button>
 
                     <!-- Volume -->
-                    <div class="volume__control control control--action">
+                    <div
+                        v-if="!isIOS()"
+                        class="volume__control control control--action"
+                    >
                         <button
-                            v-if="content.audio_enabled"
                             type="button"
                             aria-label="Mute"
                             class="h-full w-full"
@@ -76,7 +78,6 @@
                         </button>
 
                         <div
-                            v-if="!isIOS()"
                             class="plyr__volume control-modal rounded-sm bg-grey-500 p-0.5"
                         >
                             <input

@@ -3,7 +3,7 @@ import { useThrowError } from '@/hooks/useThrowError.ts';
 
 export const authPasswordReset = async (email: string) => {
     try {
-        const res = await axios.post(`/auth/password/reset/`, {
+        const res = await axios.post(`/auth/password-reset/`, {
             email,
         });
 
