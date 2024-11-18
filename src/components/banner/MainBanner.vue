@@ -142,7 +142,7 @@
 
 <style scoped lang="postcss">
     .banner {
-        padding-bottom: 34vh;
+        padding-bottom: 30vh;
         max-height: 1080px;
         min-height: 900px;
         height: 100vh;
