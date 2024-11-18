@@ -35,9 +35,9 @@
                 margin-top: -380px;
             }
 
-            @media screen and (max-height: 768px) {
+            /*@media screen and (max-height: 768px) {
                 margin-top: -200px;
-            }
+            }*/
 
             @media screen and (max-width: 1201px) {
                 margin-top: -120px;
@@ -47,7 +47,7 @@
         &:before {
             content: '';
             position: absolute;
-            top: -160px;
+            top: -35vh;
             pointer-events: none;
 
             width: 100%;
@@ -59,7 +59,7 @@
             );
 
             @media screen and (max-width: 1201px) {
-                top: -100px;
+                top: -118px;
             }
         }
     }

@@ -85,6 +85,7 @@
 <script setup lang="ts">
     import { onMounted, onUnmounted, ref } from 'vue';
     import { useRouter } from 'vue-router';
+    import { useToast } from 'vue-toastification';
     import IconCross from '@img/icons/cross.svg?component';
     import type { Simulator } from '@simulator/demo';
     import { initSimulator } from '@simulator/demo/src';
@@ -102,6 +103,7 @@
     type SphereDiameter = 100 | 80 | 60;
 
     const router = useRouter();
+    const toast = useToast();
 
     const { contentToPlay, isSimulatorLoading } =
         storeToRefs(useCatalogStore());
@@ -184,40 +186,48 @@
             loadVideoFile();
 
             if (videoSrc.value) {
-                const { simulator } = await initSimulator(
-                    simulatorElement.value,
-                    videoSrc.value,
-                    mediaType.value,
-                    videoElement.value
-                );
+                try {
+                    const { simulator } = await initSimulator(
+                        simulatorElement.value,
+                        videoSrc.value,
+                        mediaType.value,
+                        videoElement.value
+                    );
 
-                player.value = new Plyr(
-                    videoElement.value as HTMLVideoElement,
-                    {
-                        controls: controls.value,
-                        autoplay: false,
-                        muted: true,
-                        fullscreen: {
-                            enabled: false,
-                        },
-                        ...plyrOptions,
-                    }
-                );
+                    player.value = new Plyr(
+                        videoElement.value as HTMLVideoElement,
+                        {
+                            controls: controls.value,
+                            autoplay: false,
+                            muted: true,
+                            fullscreen: {
+                                enabled: false,
+                            },
+                            ...plyrOptions,
+                        }
+                    );
 
-                // Wait for loading scene and video resource
-                await Promise.all([
-                    createPromiseFromCallback((callback) => {
-                        simulator.onFinish(callback);
-                    }),
-                    createPromiseFromCallback((callback) => {
-                        simulator.onLoadedMedia(callback);
-                    }),
-                ]);
+                    // Wait for loading scene and video resource
+                    await Promise.all([
+                        createPromiseFromCallback((callback) => {
+                            simulator.onFinish(callback);
+                        }),
+                        createPromiseFromCallback((callback) => {
+                            simulator.onLoadedMedia(callback);
+                        }),
+                    ]);
 
-                setPlayerToStart();
+                    setPlayerToStart();
 
-                simulatorInstance.value = simulator;
-                isSimulatorLoading.value = false;
+                    simulatorInstance.value = simulator;
+                    isSimulatorLoading.value = false;
+                } catch {
+                    closePage();
+                    isSimulatorLoading.value = false;
+                    toast.error(
+                        'The video had some trouble loading. Please try again later'
+                    );
+                }
             }
         }
     });

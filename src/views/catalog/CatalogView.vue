@@ -27,7 +27,7 @@
                 >
                     <catalog-link
                         :to="isCatalogLink(category, category.groups.length)"
-                        class="mb-4"
+                        class="mb-6"
                     >
                         {{ category.name }}
                     </catalog-link>
