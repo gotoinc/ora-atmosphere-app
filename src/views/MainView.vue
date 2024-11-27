@@ -61,6 +61,10 @@
             @media screen and (max-width: 1201px) {
                 top: -100px;
             }
+
+            @media screen and (min-height: 1440px) {
+                top: -500px;
+            }
         }
     }
 </style>
