@@ -177,6 +177,7 @@
     import IconPlay from '@img/icons/play.svg?component';
     import IconVoiceOff from '@img/icons/voice-off.svg?component';
     import IconVoiceOn from '@img/icons/voice-on.svg?component';
+    import DOMPurify from 'dompurify';
 
     import { storeToRefs } from 'pinia';
     import { useAuthStore } from '@/stores/auth.store.ts';
@@ -243,7 +244,9 @@
 
     onMounted(() => {
         if (descriptionContainer.value && props.data.description) {
-            descriptionContainer.value.innerHTML = props.data.description;
+            descriptionContainer.value.innerHTML = DOMPurify.sanitize(
+                props.data.description
+            );
         }
 
         setHeight();
