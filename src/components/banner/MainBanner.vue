@@ -142,13 +142,15 @@
 
 <style scoped lang="postcss">
     .banner {
-        padding-bottom: 30vh;
+        padding-bottom: 400px;
         max-height: 1080px;
         min-height: 900px;
         height: 100vh;
 
         .cont {
             min-height: 430px;
+            display: flex;
+            align-items: center;
         }
 
         &__img {
@@ -175,12 +177,12 @@
         }
 
         @media screen and (min-height: 1080px) {
-            padding-bottom: 370px;
+            padding-bottom: 420px;
         }
 
-        @media screen and (max-height: 768px) {
-            padding-bottom: 235px;
-        }
+        /*@media screen and (max-height: 768px) {
+            padding-bottom: 300px;
+        }*/
 
         @media screen and (max-width: 1201px) {
             max-height: 625px;

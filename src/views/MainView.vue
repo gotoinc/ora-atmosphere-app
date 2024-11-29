@@ -29,7 +29,7 @@
         padding-bottom: 105px;
 
         .cont {
-            margin-top: -35vh;
+            margin-top: -380px;
 
             @media screen and (min-height: 1080px) {
                 margin-top: -380px;
@@ -47,7 +47,7 @@
         &:before {
             content: '';
             position: absolute;
-            top: -35vh;
+            top: -380px;
             pointer-events: none;
 
             width: 100%;
@@ -58,12 +58,12 @@
                 #141414 7.48%
             );
 
-            @media screen and (max-width: 1201px) {
-                top: -118px;
+            @media screen and (min-height: 1440px) {
+                top: -380px;
             }
 
-            @media screen and (min-height: 1440px) {
-                top: -500px;
+            @media screen and (max-width: 1201px) {
+                top: -118px;
             }
         }
     }
