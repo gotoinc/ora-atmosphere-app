@@ -61,7 +61,7 @@
                         </button>
 
                         <h3
-                            v-show="!openDescription"
+                            v-show="!openDescription || !data.description"
                             :class="{
                                 'text-grey-150': isDisabled,
                                 'text-primary-50': !isDisabled,
@@ -123,6 +123,12 @@
                                 class="h-6 w-6 object-contain"
                                 alt=""
                             />
+
+                            <component
+                                :is="IconStream"
+                                v-if="data.is_realtime"
+                                class="h-7 w-7 text-white-100"
+                            />
                         </div>
 
                         <div class="tag tag--lang pointer-events-none">
@@ -138,14 +144,19 @@
                     :aria-hidden="!openDescription"
                     class="video-card__desc mt-6 overflow-hidden pb-1 text-left transition-all aria-hidden:mt-0 aria-hidden:h-0"
                 >
-                    <h3 class="mb-6 text-h3 text-primary-50 xl:text-h4">
+                    <h3
+                        v-if="data.description"
+                        class="mb-6 text-h3 text-primary-50 xl:text-h4"
+                    >
                         {{ data.title }}
                     </h3>
 
                     <div
                         ref="descriptionContainer"
                         class="video-card__text prose-sm mb-8 overflow-y-auto pr-2.5"
-                    ></div>
+                    >
+                        <h3>No description</h3>
+                    </div>
 
                     <ul v-if="data.tags" class="flex flex-wrap gap-2">
                         <li
@@ -175,6 +186,7 @@
     import { computed, nextTick, onMounted, ref, watch } from 'vue';
     import IconChevronDown from '@img/icons/chevron-down.svg?component';
     import IconPlay from '@img/icons/play.svg?component';
+    import IconStream from '@img/icons/stream.svg?component';
     import IconVoiceOff from '@img/icons/voice-off.svg?component';
     import IconVoiceOn from '@img/icons/voice-on.svg?component';
     import DOMPurify from 'dompurify';
