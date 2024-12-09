@@ -7,8 +7,9 @@ export interface VideoContent {
     description?: string;
     video_files: VideoFile[];
     requires_auth: boolean;
-    preview_image: string;
+    preview_image?: string;
     audio_enabled: boolean;
+    is_realtime: boolean;
     narration_enabled: boolean;
     show_on_main_banner: boolean;
     visible_for_unregistered: boolean;
