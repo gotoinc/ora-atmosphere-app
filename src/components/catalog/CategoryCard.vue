@@ -33,7 +33,7 @@
             Sign in or Sign up to access our entire catalog
         </div>
 
-        <span class="relative z-10">
+        <span class="relative z-10 break-all">
             {{ name }}
         </span>
     </div>

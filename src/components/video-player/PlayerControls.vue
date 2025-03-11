@@ -123,7 +123,10 @@
 
                             <div class="grid grid-cols-2 gap-x-10">
                                 <button
-                                    v-if="defaultAudio"
+                                    v-if="
+                                        defaultContent &&
+                                        defaultContent.media_type !== 'image'
+                                    "
                                     class="lang-btn"
                                     :class="{
                                         active: isDefaultAudioSelected,
@@ -131,7 +134,7 @@
                                     @click="selectDefaultAudio"
                                 >
                                     <span class="line-camp-2">
-                                        {{ defaultAudio.language.name }}
+                                        {{ defaultContent.language.name }}
                                         [Original]
                                     </span>
                                 </button>
@@ -308,7 +311,7 @@
             : props.content.audios;
     });
 
-    const defaultAudio = computed(() => props.content.video_files[0]);
+    const defaultContent = computed(() => props.content.video_files[0]);
 
     const isDefaultAudioSelected = ref(true);
 
@@ -333,14 +336,14 @@
         isDefaultAudioSelected.value = true;
         selectedAudioSrc.value = '';
 
-        selectedSource.value = defaultAudio.value;
+        selectedSource.value = defaultContent.value;
 
         if (audios.value) {
             if (isAudioSource(audios.value[0])) {
                 handleAudio(false);
             } else {
-                selectedSource.value = defaultAudio.value;
-                emits('change-src', defaultAudio.value.file);
+                selectedSource.value = defaultContent.value;
+                emits('change-src', defaultContent.value.file);
             }
         }
     };

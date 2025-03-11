@@ -99,6 +99,7 @@
     import { useCatalogStore } from '@/stores/catalog.store.ts';
 
     import { plyrOptions } from '@/libs/plyr/plyr-options.ts';
+    import type { MediaType } from '@/ts/contents';
 
     type SphereDiameter = 100 | 80 | 60;
 
@@ -111,8 +112,8 @@
     const simulatorElement = ref<HTMLDivElement | null>(null);
     const simulatorContainer = ref<HTMLDivElement>();
     const videoElement = ref<HTMLVideoElement>();
-    const videoSrc = ref('');
-    const mediaType = ref<'video' | 'image'>('video');
+    const contentSrc = ref('');
+    const mediaType = ref<MediaType>('video');
 
     const activeDiameter = ref<SphereDiameter>(80);
     const simulatorInstance = ref<Simulator | null>(null);
@@ -149,9 +150,9 @@
     };
 
     const loadVideoFile = () => {
-        // TODO: load media type for simulator
         if (contentToPlay.value) {
-            videoSrc.value = contentToPlay.value.video_files[0].file;
+            contentSrc.value = contentToPlay.value.video_files[0].file;
+            mediaType.value = contentToPlay.value.video_files[0].media_type;
         }
     };
 
@@ -166,7 +167,7 @@
     };
 
     const changeVideoSrc = (src: string) => {
-        videoSrc.value = src;
+        contentSrc.value = src;
 
         if (simulatorInstance.value?.video) {
             simulatorInstance.value.video.src = src;
@@ -185,11 +186,11 @@
         if (simulatorElement.value) {
             loadVideoFile();
 
-            if (videoSrc.value) {
+            if (contentSrc.value) {
                 try {
                     const { simulator } = await initSimulator(
                         simulatorElement.value,
-                        videoSrc.value,
+                        contentSrc.value,
                         mediaType.value,
                         videoElement.value
                     );
@@ -207,15 +208,10 @@
                         }
                     );
 
-                    // Wait for loading scene and video resource
-                    await Promise.all([
-                        createPromiseFromCallback((callback) => {
-                            simulator.onFinish(callback);
-                        }),
-                        createPromiseFromCallback((callback) => {
-                            simulator.onLoadedMedia(callback);
-                        }),
-                    ]);
+                    // Wait for loading scene
+                    await createPromiseFromCallback((callback) => {
+                        simulator.onFinish(callback);
+                    });
 
                     setPlayerToStart();
 

@@ -409,6 +409,9 @@ export class Simulator {
                 }
                 let tex = new Texture(content.URL, this.scene, true);
                 tex.onLoadObservable.addOnce(updateEmissive(tex));
+
+                this._onLoadedMedia();
+
                 return;
         }
     }
