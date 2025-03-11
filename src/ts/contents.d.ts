@@ -20,7 +20,10 @@ export interface VideoContent {
     tags?: string;
 }
 
+export type MediaType = 'image' | 'video';
+
 export interface VideoFile {
     file: string;
+    media_type: MediaType;
     language: Identifiable;
 }
